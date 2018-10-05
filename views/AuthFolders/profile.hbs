@@ -1,0 +1,35 @@
+{{>home}}
+
+        <h1 class="teal-text">Official EduBird Profile</h1>
+        <p>{{user.email}}</p>
+
+        <h2>Your Schools: </h2>
+
+
+        {{#each databaseData}}
+            
+             <ul class="collection">
+
+    <li class="collection-item avatar">
+      <i class="material-icons circle teal"></i>
+      <span class="title">{{{name}}}</span>
+      <p>{{{description}}} <br>
+    
+      </p>
+      <a href="/school/main/info/{{{secretSchoolCode}}}" class="secondary-content"><i class="material-icons">infos</i></a>
+    </li>
+    </ul>
+    
+                 
+        {{/each}}
+       
+
+
+<style>
+
+    body {
+        text-align: center;
+    }
+</style>
+    </body>
+</html>

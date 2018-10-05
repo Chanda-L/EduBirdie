@@ -1,0 +1,174 @@
+{{>home}}
+
+
+
+
+
+
+<div id="uploadLesson" style="display: none">
+  <h2>Uploading Lesson! <i class="material-icons">av_timer</i></h2>
+  <div class="progress">
+      <progress id="uploader" class="indeterminate" style="width: 0%"></progress>
+      
+  </div>
+ 
+  <p id="progress_indicator_label">
+    1%
+  </p>
+
+<label>Name:</label>
+  <input id="name" type="text">
+  <label>Description</label>
+  <input id="description" type="text">
+</div>
+        <input class="center-align" id="file"type="file" multiple>
+
+<style>
+  #uploadLesson {
+    margin: 400px;
+    
+  }
+</style>
+{{#with data }}
+
+  <p style="display: none" id="code">{{{code}}}</p>
+  <p style="display: none" id="schoolCode">{{{belongs_to}}}</p>
+  
+ 
+{{/with}}
+<p style="display: none" id="id">{{{id}}}</p>
+
+<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+<script>
+
+
+  
+console.log(document.getElementById('id').textContent)
+  // Initialize Firebase
+  
+var config = {
+    apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
+    authDomain: "edubirdie-1534842942940.firebaseapp.com",
+    databaseURL: "https://edubirdie-1534842942940.firebaseio.com",
+    projectId: "edubirdie-1534842942940",
+    storageBucket: "edubirdie-1534842942940.appspot.com",
+    messagingSenderId: "1077918538165"
+};
+  firebase.initializeApp(config);
+
+  let db = firebase.firestore();
+  var storage = firebase.storage();
+
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    console.log("yes")
+  } else {
+    // No user is signed in.
+  }
+});
+  var progress_indicator = document.getElementById('progress_indicator_label');
+  var uploader = document.getElementById('uploader');
+  var fileButton = document.getElementById('file');
+  let code = document.getElementById('code');
+  let schoolCode = document.getElementById('belongs_to');
+
+  console.log(code.textContent)
+  var uploadForm = document.getElementById('uploadLesson')
+
+
+  fileButton.addEventListener('change', function(e) {
+      var file = e.target.files[0];
+
+      uploadForm.style.display = "block"
+      var storageRef = firebase.storage().ref('videos/' + file.name);
+
+      var task = storageRef.put(file)
+
+    task.on('state_changed',
+
+
+      function progress(snapshot) {
+          let percentage = (snapshot.bytesTransferred / 
+          snapshot.totalBytes) * 100;
+          progress_indicator.textContent = Math.round(percentage) + "%";
+      },
+
+      function error(err) {
+          
+      },
+
+      function complete() {
+          uploadForm.style.display = "none"
+          
+              alert("logged in")
+              
+              let text = "";
+            let possible = 
+           "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+           for (var i = 0; i < 5; i++) {
+               text += possible.charAt(Math.floor(Math.random() * possible.length))
+           }
+
+           let mai_url;
+            let storageRef = storage.ref();
+                storageRef.child("videos/" + file.name).getDownloadURL().then(function(url) {
+                    // `url` is the download URL for 'images/stars.jpg'
+                  
+                    // This can be downloaded directly:
+                    var xhr = new XMLHttpRequest();
+                    xhr.responseType = 'blob';
+                    xhr.onload = function(event) {
+                      var blob = xhr.response;
+                    };
+                    xhr.open('GET', url);
+                    xhr.send();
+
+                    main_url = url;
+
+                    //Save url and video to database
+                     db.collection("users")
+                .doc(document.getElementById('id').textContent)
+                .collection("school")
+                .doc(document.getElementById('schoolCode').textContent)
+                .collection("classes")
+                .doc(document.getElementById('code').textContent)
+                .collection("lessons")
+                .doc(text)
+                .set({
+                  name: document.getElementById('name').value,
+                  description: document.getElementById('description').value,
+                  class: document.getElementById('code').textContent,
+                  schoolCode: document.getElementById('schoolCode').textContent,
+                  code: text,
+                  url: file.name,
+                  downloadURL: main_url
+                }).then(function() {
+                  console.log("Success!")
+                }).catch(function(error) {
+                  console.log(error.message);
+                })
+                }).catch(function(error) {
+                    console.log(error)
+                })
+
+             
+            }
+    );
+  })
+
+  //Display progress with progress bar
+
+
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    $(document).ready(
+        $('tabs').tabs()
+    )
+</script>
+</body>
+</html>

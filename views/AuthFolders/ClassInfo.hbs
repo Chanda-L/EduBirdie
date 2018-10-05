@@ -1,0 +1,56 @@
+{{>home}}
+
+
+
+
+ 
+
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s4"><a href="#ClassInfo">Class Info</a></li>
+        <li class="tab col s4"><a class="active" href="#lessons">Lessons</a></li>
+        <li class="tab col s4">
+            <a class="active" href="#chats">
+                Chats
+        </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+        
+
+
+<div id="ClassInfo">
+
+{{#with classData}}
+<h1>{{{name}}}</h1>
+{{/with}}
+</div>
+
+<div id="lessons">
+{{#with classData}}
+    <p> add lesson: <a href="/class/main/info/{{{belongs_to}}}/{{{code}}}/add_lesson"class="waves-effect waves-light "><i class="material-icons">add</i></a></p>
+{{/with}}
+{{#each lessons}}
+<a href="/{{{schoolCode}}}/{{{class}}}/{{{code}}}/view_lesson" class="waves-effect waves-light btn">{{{name}}}</a>
+{{/each}}
+ 
+</div>
+
+<div id="chats">
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+ <script>   
+  
+    $(document).ready(function() {
+        $('.tabs').tabs()
+    })
+  
+    </script>
+
+</body>
+</html>
