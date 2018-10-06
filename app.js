@@ -90,8 +90,7 @@ app.get("/home", (req, res) => {
   
     const lessons = [];
     console.log(firebase.auth().currentUser);
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
+
             db.collection("lessons")
             .get()
             .then(function(querySnapshot) {
@@ -101,16 +100,12 @@ app.get("/home", (req, res) => {
                 });
                 console.log(lessons)
              res.render('home', {'lessons': lessons, 'user': firebase.auth().currentUser})
-    
+                
             })
-            
-        } else {
-
-        }
+     
     });
     
-    
-})
+
 
 app.get("/authenticate/sign_in", (req, res) => {
 

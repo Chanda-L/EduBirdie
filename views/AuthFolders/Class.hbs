@@ -21,7 +21,11 @@
  <button id="resume_upload" class=" btn">Resume Upload</button>
  
   
-
+<br>
+ <label for="videoTags">Tags: </label>
+  <div id="videoTags" class="chips chips-autocomplete"></div>
+ 
+ 
   <p id="progress_indicator_label">
     1%
   </p>
@@ -33,10 +37,13 @@
 </div>
         <input class="center-align" id="file"type="file" multiple>
 
+  <!-- Customizable input  -->
+
 <style>
+  
 
   #uploadLesson {
-    margin: 400px;
+    margin: 200px;
     
   }
 </style>
@@ -49,10 +56,44 @@
 {{/with}}
 <p style="display: none" id="id">{{{id}}}</p>
 
+
+
+
+{{!-- add javascript lines for use --}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
 <script>
+//video tags
+let tags_for_video = [];
 
- 
+
+//initializing the tags 
+  $('.chips').chips();
+  $('.chips-initial').chips({
+    data: [{
+      tag: 'Apple',
+    }, {
+      tag: 'Microsoft',
+    }, {
+      tag: 'Google',
+    }],
+  });
+  $('.chips-placeholder').chips({
+    placeholder: 'Enter a tag',
+    secondaryPlaceholder: '+Tag',
+  });
+  $('.chips-autocomplete').chips({
+    autocompleteOptions: {
+      data: {
+        'Apple': null,
+        'Microsoft': null,
+        'Google': null
+      },
+      limit: Infinity,
+      minLength: 1
+    }
+  });
   
 console.log(document.getElementById('id').textContent)
   // Initialize Firebase
@@ -149,7 +190,12 @@ var config = {
 
                     main_url = url;
 
+                  let currentdate = new Date();
+                  var datetime = currentdate.getDate() 
+                  + "/" + (currentdate.getMonth()+1) 
+                  + "/" + currentdate.getFullYear();
                     //Save url and video to database
+             
                   db.collection("lessons").doc(text)
                 .set({
                   name: document.getElementById('name').value,
@@ -158,6 +204,7 @@ var config = {
                   BySchool: document.getElementById('schoolCode').textContent,
                   SchoolName: document.getElementById('schoolName').textContent,
                   code: text,
+                  uploaded_at: datetime,
                   url: file.name,
                   downloadURL: main_url,
                   privacy: document.getElementById('privacy').checked, 
@@ -180,8 +227,6 @@ var config = {
 
 </script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
     $(document).ready(
         $('tabs').tabs()
