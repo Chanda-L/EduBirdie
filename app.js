@@ -88,9 +88,27 @@ app.get("/authenticate/sign_up", (req, res) =>
 
 app.get("/home", (req, res) => {
   
-    
+    const lessons = [];
     console.log(firebase.auth().currentUser);
-     return res.render('home', {'user': firebase.auth().currentUser})
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            db.collection("lessons")
+            .get()
+            .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                    lessons.push(doc.data());
+                    
+                });
+                console.log(lessons)
+             res.render('home', {'lessons': lessons, 'user': firebase.auth().currentUser})
+    
+            })
+            
+        } else {
+
+        }
+    });
+    
     
 })
 
@@ -429,14 +447,7 @@ app.get("/:school_id/:class_id/:lesson_id/view_lesson", (req, res) => {
         if (user) {
             console.log("User logged in")
 
-            db.collection("users")
-            .doc(user.uid)
-            .collection("school")
-            .doc(req.params.school_id)
-            .collection("classes")
-            .doc(req.params.class_id)
-            .collection("lessons")
-            .doc(req.params.lesson_id)
+            db.collection("lessons").doc(req.params.lesson_id)
             .get().then(function(doc) {
                 console.log("data")
                 let data = doc.data()

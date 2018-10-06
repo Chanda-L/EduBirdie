@@ -32,11 +32,18 @@
   <div class="section no-pad-bot" id="index-banner">
     <div class="container">
       <br><br>
-      <h1 class="header teal-text">Newest Content: </h1>
-      <video style="width: 25%"class="responsive-video" preload="metadata">
-        <source src="https://firebasestorage.googleapis.com/v0/b/edubirdie-1534842942940.appspot.com/o/videos%2FWriting%20a%20Classifier_%20Machine%20Learning%20Review.mp4?alt=media&token=cf2cfa3a-acdf-4054-8ebb-b3ed9cf671ed" type="video/mp4">
+      <h5 class="header teal-text">Newest Content: </h5>
+      {{#each lessons}}
+      <a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">
+      <video style="width: 25%"class=" z-depth-2 responsive-video" preload="metadata">
+        <source src="{{{downloadURL}}}" type="video/mp4">
       </video>
+      </a>
+      <p>{{{name}}}<br></p>
+      <small>by: {{{SchoolName}}}</small>
+    
 
+      {{/each}}
       <div class="row center">
         <h5 class="header col s12 light">Learning made easy.</h5>
       </div>
@@ -47,7 +54,7 @@
     </div>
   </div>
 
-  <video
+
      
    
   <div class="container">

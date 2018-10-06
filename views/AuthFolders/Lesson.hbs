@@ -29,16 +29,56 @@
 
 {{#with data}}
 <h2>{{{name}}}</h2>
-<h3>{{{description}}}</h3>
+
 
 <video style="width: 100%"class="responsive-video" controls>
     <source src="{{{downloadURL}}}" type="video/mp4">
   </video>
+<ul class="collapsible">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">info</i>Information</div>
+      <div class="collapsible-body">  
+        <span>By: {{{SchoolName}}}</span><br><br>
+        <a href="{{{downloadURL}}}"class="blue-text light-3">{{{downloadURL}}}</a> <br>
+        <span>{{{description}}}</span>
+        </div>
+    </li>
+     <li>
+      <div class="collapsible-header"><i class="material-icons">comment</i>Comments</div>
+      <div class="collapsible-body">  
+        <div class="input-field col s2">
+          <i class="material-icons prefix">comment</i>
+          <input id="comment_field" type="text" class="validate">
+          <button id="addComment" class="btn teal wave-light">Submit</button>
+        </div>
 
-  <small>{{{downloadURL}}}</small>
-{{/with}}      
+        <div class="comments">
+
+        </div>
+        </div>
+    </li>
+  </ul>
+
+
+{{/with}}   
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> 
-  
+  <script>
+    
+    document.getElementById('addComment').addEventListener('click', () => {
+      let commentText = document.getElementById('comment_field').textContent;
+      if (commentText != "") {
+        db.collection("lessons")
+      } else {
+        console.log("Empty")
+      }
+    })
+
+      $(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+ 
+  </script>
  </body>
  </html>

@@ -10,8 +10,18 @@
   <div class="progress">
       <progress id="uploader" class="indeterminate" style="width: 0%"></progress>
       
+
   </div>
+
+ <label>
+        <input id="privacy"type="checkbox" />
+        <span>Private</span>
+      </label>
+ <button id="pause_upload" class=" btn">Pause Upload</button>
+ <button id="resume_upload" class=" btn">Resume Upload</button>
  
+  
+
   <p id="progress_indicator_label">
     1%
   </p>
@@ -24,6 +34,7 @@
         <input class="center-align" id="file"type="file" multiple>
 
 <style>
+
   #uploadLesson {
     margin: 400px;
     
@@ -33,7 +44,7 @@
 
   <p style="display: none" id="code">{{{code}}}</p>
   <p style="display: none" id="schoolCode">{{{belongs_to}}}</p>
-  
+  <p style="display: none" id="schoolName">{{{name}}}</p>
  
 {{/with}}
 <p style="display: none" id="id">{{{id}}}</p>
@@ -41,11 +52,11 @@
 <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
 <script>
 
-
+ 
   
 console.log(document.getElementById('id').textContent)
   // Initialize Firebase
-  
+
 var config = {
     apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
     authDomain: "edubirdie-1534842942940.firebaseapp.com",
@@ -55,7 +66,7 @@ var config = {
     messagingSenderId: "1077918538165"
 };
   firebase.initializeApp(config);
-
+ 
   let db = firebase.firestore();
   var storage = firebase.storage();
 
@@ -77,6 +88,7 @@ var config = {
   var uploadForm = document.getElementById('uploadLesson')
 
 
+  
   fileButton.addEventListener('change', function(e) {
       var file = e.target.files[0];
 
@@ -88,10 +100,20 @@ var config = {
     task.on('state_changed',
 
 
+        
       function progress(snapshot) {
           let percentage = (snapshot.bytesTransferred / 
           snapshot.totalBytes) * 100;
           progress_indicator.textContent = Math.round(percentage) + "%";
+
+          document.getElementById('pause_upload').addEventListener('click', () => {
+            task.pause();
+            console.log("upload cancelled")
+          })
+          document.getElementById('resume_upload').addEventListener('click', () => {
+              task.resume();
+              console.log("upload resumed")
+          });
       },
 
       function error(err) {
@@ -128,22 +150,17 @@ var config = {
                     main_url = url;
 
                     //Save url and video to database
-                     db.collection("users")
-                .doc(document.getElementById('id').textContent)
-                .collection("school")
-                .doc(document.getElementById('schoolCode').textContent)
-                .collection("classes")
-                .doc(document.getElementById('code').textContent)
-                .collection("lessons")
-                .doc(text)
+                  db.collection("lessons").doc(text)
                 .set({
                   name: document.getElementById('name').value,
                   description: document.getElementById('description').value,
-                  class: document.getElementById('code').textContent,
-                  schoolCode: document.getElementById('schoolCode').textContent,
+                  InClass: document.getElementById('code').textContent,
+                  BySchool: document.getElementById('schoolCode').textContent,
+                  SchoolName: document.getElementById('schoolName').textContent,
                   code: text,
                   url: file.name,
-                  downloadURL: main_url
+                  downloadURL: main_url,
+                  privacy: document.getElementById('privacy').checked, 
                 }).then(function() {
                   console.log("Success!")
                 }).catch(function(error) {
