@@ -213,9 +213,34 @@ app.get("/school/main/info/:school_id", (req, res) => {
     let SchoolData;
     let messages = [];
     let classes = [];
+    let admin;
+  
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+            
+
             console.log(req.params.school_id)
+
+           function is_admin() {
+                db.collection("users")
+                .doc(user.uid)
+                .collection("school")
+                .doc(req.params.school_id)
+                .get().then(function(doc) {
+                    if (doc.data().admin == user.uid) {
+                        console.log("This user is the admin");
+                        return true
+                    } else {
+                        console.log("This user is not an admin");
+                        return false;
+                    }
+                })
+                .catch(function(error) {
+                    console.log("There was a database error")
+                    console.log(error.message)
+                });
+                
+            }
 
             db.collection("users")
             .doc(user.uid)
@@ -250,7 +275,11 @@ app.get("/school/main/info/:school_id", (req, res) => {
                     console.log(SchoolData)
                     console.log(messages)
                     let schoolCode = req.params.school_id
-                    res.render('./AuthFolders/yourSchool', {'SchoolData':SchoolData, 'messages': messages, 'classes': classes, 'SchoolCode': schoolCode});
+                    console.log(is_admin)
+                    is_admin();
+                    console.log(is_admin())
+                    let current_admin = is_admin()
+                    res.render('./AuthFolders/yourSchool', {'is_admin': current_admin, 'SchoolData':SchoolData, 'messages': messages, 'classes': classes, 'SchoolCode': schoolCode});
             
                 } else {
 
