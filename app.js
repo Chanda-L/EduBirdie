@@ -401,6 +401,7 @@ app.post("/authenticated/create/create_school/", (req, res) => {
         name:  schoolName,
         description: schoolDesc,
         secretSchoolCode: text, 
+        admin: firebase.auth().currentUser.uid,
     });
 
 
@@ -439,15 +440,25 @@ app.get("/class/main/info/:school_id/:class_id/add_lesson", (req, res) => {
 
 app.get("/:school_id/:class_id/:lesson_id/view_lesson", (req, res) => {
     firebase.auth().onAuthStateChanged(function(user) {
+        
         if (user) {
             console.log("User logged in")
-
+            
+            let comments = []
+            
+            
+            console.log(comments)
             db.collection("lessons").doc(req.params.lesson_id)
             .get().then(function(doc) {
                 console.log("data")
                 let data = doc.data()
 
-               res.render('./AuthFolders/Lesson', {'data': data})
+               res.render('./AuthFolders/Lesson', 
+               {'data': data, 
+                'user_email': user.email,
+                'user_code': user.uid,
+                'comments': comments}
+               );
                 
             }).catch(function(error) {
                 console.log(error.message)

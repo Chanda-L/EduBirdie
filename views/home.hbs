@@ -5,7 +5,14 @@
 <body>
   <nav class="teal lighten-4" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo teal-text darken-3">EduBirdie</a>
-    
+    <style>
+      p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 75ch;
+}
+    </style>
 
     {{#if user}} 
 
@@ -34,15 +41,21 @@
       <br><br>
       <h5 class="header teal-text">Newest Content: </h5>
       {{#each lessons}}
-      <a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">
-      <video style="width: 25%"class=" z-depth-2 responsive-video" preload="metadata">
+       <a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">
+      <div id="show_video" class="hoverable waves-effect waves-teal z-depth-1">
+     
+      <video class="" style="width: 300px"class=" responsive-video" preload="metadata">
         <source src="{{{downloadURL}}}" type="video/mp4">
       </video>
-      </a>
-      <p>{{{name}}}<br></p>
-      <small>by: {{{SchoolName}}}</small>
-    
+     
+    </a>
+      <p class="bold">{{{name}}}<br></p>
+      <small class="text-gray">by: {{{SchoolName}}} • {{{uploaded_at}}}</small>
 
+      
+   </div>
+ 
+   
       {{/each}}
       <div class="row center">
         <h5 class="header col s12 light">Learning made easy.</h5>
@@ -53,6 +66,7 @@
         
     </div>
   </div>
+
 
 
      
@@ -170,14 +184,13 @@
       });
       document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.slider');
-    var instances = M.Slider.init(elems, options);
   });
 
   // Or with jQuery
 
 
   </script>
-
+ 
   
 
 
@@ -187,9 +200,17 @@
        a:active {
            text-align: center;
        }
+
+       #show_video {
+         float: left;
+         margin: 5px;
+    
+       }
    </style>
-    
-    
+  
+    <style>
+      
+    </style>
 
     </body>
 </html>
