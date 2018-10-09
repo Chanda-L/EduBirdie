@@ -46,6 +46,7 @@
         <a href="{{{downloadURL}}}"class="blue-text light-3">{{{downloadURL}}}</a> <br>
         <span>{{{description}}}</span>
         </div>
+        {{/with}} 
     </li>
      <li>
       <div class="collapsible-header"><i class="material-icons">comment</i>Comments</div>
@@ -55,16 +56,18 @@
           <input id="comment_field" type="text" class="validate">
           <button id="addComment" class="btn teal wave-light">Submit</button>
         </div>
+         <ul class="collection">
+           {{#each comments}}
+            <li class="collection-item">{{{comments_text}}}<br>{{{ByUser}}}</li>
+            {{/each}}
+          </ul>
 
-        <div class="comments">
-          
-        </div>
+
         </div>
     </li>
   </ul>
 
-
-{{/with}}   
+  
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> 

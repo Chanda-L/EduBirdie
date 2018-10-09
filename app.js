@@ -471,23 +471,36 @@ app.get("/:school_id/:class_id/:lesson_id/view_lesson", (req, res) => {
     firebase.auth().onAuthStateChanged(function(user) {
         
         if (user) {
-            console.log("User logged in")
-            
-            let comments = []
+          
             
             
-            console.log(comments)
+            let comments = [];
             db.collection("lessons").doc(req.params.lesson_id)
             .get().then(function(doc) {
-                console.log("data")
+         
+                
                 let data = doc.data()
-
-               res.render('./AuthFolders/Lesson', 
-               {'data': data, 
-                'user_email': user.email,
-                'user_code': user.uid,
-                'comments': comments}
-               );
+                db.collection("lesson_comments")
+                    .where("on_lesson", "==", req.params.lesson_id)
+                    .get().then(snapshot => {
+                        snapshot.forEach(doc => {
+                            console.log(doc.id, '=>', doc.data());
+                            comments.push(doc.data())
+                        })
+                        
+                        console.log(comments);
+                        res.render('./AuthFolders/Lesson', 
+                        {'data': data, 
+                         'user_email': user.email,
+                         'user_code': user.uid,
+                        'comments': comments}
+                        );
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            
+             
                 
             }).catch(function(error) {
                 console.log(error.message)

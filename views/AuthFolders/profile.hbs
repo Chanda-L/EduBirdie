@@ -1,9 +1,9 @@
 {{>home}}
 
         <h1 class="teal-text">Official EduBird Profile</h1>
-        <p>{{user.email}}</p>
+       
 
-        <h2>Your Schools: </h2>
+        <h5>Your Schools: </h5>
 
 
         {{#each databaseData}}
@@ -34,16 +34,32 @@
     <i class=" large material-icons">menu</i>
   </a>
   <ul>
-    <li><a class="btn-floating red"><i class="material-icons">mode_edit</i></a></li>
-    <li><a class="btn-floating btn-medium yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+    <li><a href="" class="btn-floating red"><i class="material-icons">mode_edit</i></a></li>
+    <li><a href="#modal1" id="info" class="btn-floating btn-medium yellow darken-1"><i class="material-icons">info</i></a></li>
     <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
     <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
   </ul>
 </div>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+  
 <script>
+
+ 
 
   $(document).ready(function(){
     $('.fixed-action-btn').floatingActionButton();
+    $('.modal').modal();
+
   });
 </script>
 <style>
