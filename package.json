@@ -21,6 +21,7 @@
     "handlebars": "^4.0.12",
     "jquery": "^3.3.1",
     "materialize-css": "^1.0.0-rc.2",
+    "nodemailer": "^4.6.8",
     "nodemon": "^1.18.4"
   }
 }

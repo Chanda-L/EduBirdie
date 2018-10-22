@@ -3,39 +3,43 @@
 
 
 <body>
-  <nav class="teal lighten-4" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo teal-text darken-3">EduBirdie</a>
-    <style>
+  
+    {{#if user}} 
+<style>
       p {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 75ch;
 }
+
+
     </style>
+ 
+<nav class="navigation">
 
-    {{#if user}} 
-
+<div class="nav-wrapper">
+   <a href="#!" class="brand-logo">Logo</a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="sass.html"><i class="material-icons">search</i></a></li>
-        <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
-        <li><a href="/profile">{{ user.email }} profile</a></li>
-        <li><a href="/authenticated/create/create_school">Create School</a></li>
+        <li><a href="sass.html"><i class="material-icons left">search</i>Link with Left Icon</a></li>
+        <li><a href="badges.html"><i class="material-icons right">view_module</i>Link with Right Icon</a></li>
       </ul>
-
-     <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-
-
-
+       <form>
+        <div class="input-field">
+          <input id="search" type="search" required>
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>
+        </div>
+      </form>
+</div>
+  
+  </nav>
   
     {{else}}
   
-
     {{/if}}
+    
 
-  
-       </div>
-  </nav>
   <div class="section no-pad-bot" id="index-banner">
     <div class="container">
       <br><br>
@@ -102,7 +106,7 @@
         <img src="https://wallpaper.wiki/wp-content/uploads/2017/04/wallpaper.wiki-Modern-Architecture-Glass-Skyscrapers-4K-Wallpaper-PIC-WPC0011701.jpg"> <!-- random image -->
         <div class="caption center-align">
            <h3 class="blue darken-4 z-depth-5">What is worth fighting for? Why?</h3>
-          <h5 class="blue darken-4 z-depth-5">We would like to digitize and modernize education!</h5>
+          <h5 class="blue darken-4 z-depth-5">We want to modernize education to better suit future generations, <br> because students forget what is being taught, and don't understand what is being taught</h5>
         
       <a href="/authenticate/sign_up" class="blue darken-4  btn-large pulse">Join EduBirdie!</a>
         </div>
@@ -119,8 +123,7 @@
         <img src="https://www.wallpaper.net.in/file/16559/600x380/16:9/math-book--4k--8k--hd-school-wallpaper_389688982.jpg"> <!-- random image -->
         <div class="caption right-align">
           <h3 class="orange darken-4 z-depth-5">Challenges!</h3>
-                   <h5 class="orange darken-4 z-depth-5"> We had many ideas and it took too long but we came up with one idea
-<h5 class="orange darken-4 z-depth-5"> We had many ideas and it took too long but we came up with one idea
+          <h5 class="orange darken-4 z-depth-5"> We had many ideas and it took too long but we came up with one idea
             <br>
             Ideas were: <br>
             <p>Changing corriculum</p>
@@ -129,14 +132,17 @@
 
             Our Idea:
               <p style="font-weight: bold">We've created a web application for schools</p>
+
+            Positives:
+              <p style="font-weight: bold">We co-operated together well and there were no fights involved!</p>
           </h5>
         </div>
       </li>
       <li>
         <img src="http://getwallpapers.com/wallpaper/full/a/b/9/971982-money-backgrounds-1920x1080-for-4k.jpg"> <!-- random image -->
         <div class="caption center-align">
-          <h3>This is our big Tagline!</h3>
-          <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+          <h3>Big Ideas</h3>
+          <h5 class="light grey-text text-lighten-3">Our Idea is to modernize education by creating a website that can earn schools extra income and reminds students of what they forgot in school!</h5>
         </div>
       </li>
       <li>
@@ -145,6 +151,36 @@
           <h3 class="teal darken-4 z-depth-5">Earn an extra income by creating content!</h3>
           <h5 class="teal darken-4 z-depth-5">Convinced?</h5>
                 <a class="pulse teal darken-4 waves-effect waves-light btn-large">Join EduBirdie!</a>
+        </div>
+      </li>
+      <li>
+        <img src="http://getwallpapers.com/wallpaper/full/a/b/9/971982-money-backgrounds-1920x1080-for-4k.jpg"> <!-- random image -->
+        <div class="caption center-align">
+          <h3 class="teal darken-4 z-depth-5">How We Did It</h3>
+          <h5 class="teal darken-4 z-depth-5">
+            We had one of our teammates create a website to modernize education!         
+          </h5>
+          <a class="pulse teal darken-4 waves-effect waves-light btn-large">Join EduBirdie!</a>
+        </div>
+      </li>
+       <li>
+        <img src="http://getwallpapers.com/wallpaper/full/a/b/9/971982-money-backgrounds-1920x1080-for-4k.jpg"> <!-- random image -->
+        <div class="caption center-align">
+          <h3 class="teal darken-4 z-depth-5">References</h3>
+          <h5 class="teal darken-4 z-depth-5">
+            We had no references on a computer!
+          </h5>
+          <a class="pulse teal darken-4 waves-effect waves-light btn-large">Join EduBirdie!</a>
+        </div>
+      </li>
+      <li>
+        <img src="http://getwallpapers.com/wallpaper/full/a/b/9/971982-money-backgrounds-1920x1080-for-4k.jpg"> <!-- random image -->
+        <div class="caption center-align">
+          <h3 class="teal darken-4 z-depth-5">What does this mean to us?</h3>
+          <h5 class="teal darken-4 z-depth-5">
+            We are very passionate about this topic, we think this could help many kids in learning around the world.
+          </h5>
+          <a class="pulse teal darken-4 waves-effect waves-light btn-large">Join EduBirdie!</a>
         </div>
       </li>
     </ul>

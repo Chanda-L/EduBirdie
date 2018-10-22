@@ -6,6 +6,8 @@ var flash = require('express-flash-messages')
 const admin = require('firebase-admin');
 const path = require('path');
 const gcloud = require('@google-cloud/storage')
+let nodemailer = require('nodemailer')
+
 
 var config = {
     apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
@@ -132,13 +134,34 @@ app.post("/authenticate/sign_in", (req, res) => {
     firebase.auth().signInWithEmailAndPassword(req.body.email_log_in, req.body.password)
         .then(function(firebaseUser) {
 
-           
-
-
             console.log("Successfully Signed In!")
-         
-            return res.redirect("/home")
             console.log(firebaseUser.email)
+            //Send a success email to user!
+            let transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'chanda.lupambo@gmail.com',
+                    pass: 'Chanda5467'
+                }
+            });
+
+            let mailOptions = {
+                from: 'chanda.lupambo@gmail.com',
+                to: req.body.email_log_in,
+                subject: "Welcome To Edubirdie!",
+                text: "Get Started Learn Something New!"
+            }
+
+            transporter.sendMail(mailOptions, function(error, info) {
+                if (error) {
+                    console.log(error)
+                } else {
+                    console.log("Email Sent: " + info.response)
+                    
+                }
+            })
+            return res.redirect("/home")
+ 
         })
         .catch(function(error) {
             console.log(error.message)
@@ -558,3 +581,4 @@ app.get("/class/main/info/:school_id/:class_id/ClassInfo", (req, res) => {
         }
     })
 });
+
