@@ -18,7 +18,6 @@ var config = {
     messagingSenderId: "1077918538165"
 };
 
-
 let serviceAccount = require('./service-accounts.json');
 firebase.initializeApp(config);
 let database = firebase.database();
@@ -41,6 +40,13 @@ app.use(express.static("public"))
 app.engine('hbs', expressHbs({extname:'hbs', layoutsDir: __dirname + '/views/layouts/', partialsDir: __dirname + '/views/partials/'}));
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({extended: false}))
+
+app._router.stack.forEach(function(r){
+    if (r.route && r.route.path){
+      console.log(r.route.path)
+    }
+  })
+ 
 
 //Configure and connect to firebase backend
 
@@ -137,29 +143,7 @@ app.post("/authenticate/sign_in", (req, res) => {
             console.log("Successfully Signed In!")
             console.log(firebaseUser.email)
             //Send a success email to user!
-            let transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: 'chanda.lupambo@gmail.com',
-                    pass: 'Chanda5467'
-                }
-            });
-
-            let mailOptions = {
-                from: 'chanda.lupambo@gmail.com',
-                to: req.body.email_log_in,
-                subject: "Welcome To Edubirdie!",
-                text: "Get Started Learn Something New!"
-            }
-
-            transporter.sendMail(mailOptions, function(error, info) {
-                if (error) {
-                    console.log(error)
-                } else {
-                    console.log("Email Sent: " + info.response)
-                    
-                }
-            })
+         
             return res.redirect("/home")
  
         })
@@ -195,7 +179,30 @@ app.post("/authenticate/sign_up", (req, res) =>
             //Add An Alert notifying user they have been authenticated
             console.log("User has successfully been added!");
             console.log("Success Creatings user!!")
-            res.redirect('/authenticate/sign_in')
+            let transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'chanda.lupambo@gmail.com',
+                    pass: 'Bangweulu3'
+                }
+            });
+
+            let mailOptions = {
+                from: 'chanda.lupambo@gmail.com',
+                to: req.body.email_log_in,
+                subject: "Welcome To Edubirdie!",
+                text: "Get Started Learn Something New!"
+            }
+
+            transporter.sendMail(mailOptions, function(error, info) {
+                if (error) {
+                    console.log(error)
+                } else {
+                    console.log("Email Sent: " + info.response)
+                    res.redirect('/authenticate/sign_in')
+                }
+            })
+            
         })
         .catch(function(error) {
             console.log("There seems to be an error with the user authentication!")
@@ -349,7 +356,7 @@ app.post("/school/main/info/:school_id/add_class", (req, res) => {
                 belongs_to: req.params.school_id
             }).then(function() {
                 console.log("WOOOOO")
-                res.redirect("/school/main/info" + req.params.school_id)
+                res.redirect("/school/main/info/" + req.params.school_id)
             }).catch(function(error) {
                 console.log(error.message)
             })
@@ -456,7 +463,7 @@ app.post("/authenticated/create/create_school/", (req, res) => {
         admin: firebase.auth().currentUser.uid,
     });
 
-
+    res.redirect('/profile')
 });
 
 app.get("/class/main/info/:school_id/:class_id/add_lesson", (req, res) => {
@@ -582,3 +589,16 @@ app.get("/class/main/info/:school_id/:class_id/ClassInfo", (req, res) => {
     })
 });
 
+app.get("/home/search", (req, res) => {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            //Perform actions if the user has been logged in
+            
+
+            res.render("./AuthFolders/search");
+        } else {
+            //Perform actions if the user has not yet been authenticated
+            res.redirect("/authenticated/sign_up");
+        }
+    });
+})
