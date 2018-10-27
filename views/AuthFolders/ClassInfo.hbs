@@ -32,11 +32,25 @@
 {{#with classData}}
     <p> add lesson: <a href="/class/main/info/{{{belongs_to}}}/{{{code}}}/add_lesson"class="waves-effect waves-light "><i class="material-icons">add</i></a></p>
 {{/with}}
+ <ul class="collection">
 {{#each lessons}}
-<a href="/{{{schoolCode}}}/{{{class}}}/{{{code}}}/view_lesson" class="waves-effect waves-light btn">{{{name}}}</a>
-{{/each}}
  
-</div>
+    <li class="collection-item avatar">
+        <video class="" style="width: 300px"class=" responsive-video" preload="metadata">
+        <source src="{{{downloadURL}}}" type="video/mp4">
+      </video>
+      <br>
+      <span class="title">{{{name}}}</span>
+      <p>{{{uploaded_at}}} <br>
+         
+<a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson"class="waves-effect waves-light btn">Watch</a>
+      </p> 
+      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+    </li>
+    
+{{/each}}
+ </ul>
+
 
 <div id="chats">
 

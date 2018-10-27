@@ -548,21 +548,18 @@ app.get("/class/main/info/:school_id/:class_id/ClassInfo", (req, res) => {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
 
-            db.collection("users")
-            .doc(user.uid)
-            .collection("school")
-            .doc(req.params.school_id)
-            .collection("classes")
-            .doc(req.params.class_id)
-            .collection("lessons")
-            .get()
-            .then(function(querySnapshot) {
+            db.collection("lessons")
+            .get().then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc) {
-                    //doc.data() returned   
-                    console.log(doc.id, "=>", doc.data())
-                    //add data to array
-                    lessons.push(doc.data());
-                });
+                    if(doc.exists) {
+                        if (doc.data().InClass == req.params.class_id) {
+                            lessons.push(doc.data());
+                            console.log(lessons)
+                        }
+                    }
+                })
+            });
+        
                 db.collection("users")
                 .doc(user.uid)
                 .collection("school")
@@ -577,7 +574,6 @@ app.get("/class/main/info/:school_id/:class_id/ClassInfo", (req, res) => {
                     }
                 })
               
-            })
 
 
             .catch(function(error) {

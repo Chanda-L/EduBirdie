@@ -15,24 +15,33 @@
 
 
     </style>
- {{!-- <nav>
-    <div class=" teal nav-wrapper">
-              <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+ 
+ 
+  <nav>
+    <div class="nav-wrapper teal">
+      <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
       <a href="#!" class="brand-logo">EduBirdie</a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
+    
+    
+          
+        <li><a href="sass.html"><i class="material-icons left">search</i>Search</a></li>
+        <li><a href="badges.html"><i class="material-icons right">camera</i>Record Lesson</a></li>
 
-        <li><a href="/home/search">search</a></li>
-        <li><a href="/authenticated/create/create_school">Create School</a></li>
-        
-        <li><a href="profile">profile </a></li>
-        <li><a href="mobile.html">Mobile</a></li>
       </ul>
-      
     </div>
-  </nav> --}}
+  </nav>
 
-
+     <ul id="slide-out" class="sidenav">
+      <li><h5 class="teal-text center-align">EduBirdie</h5></li>
+      <li><a href="/home"><i class="material-icons left">home</i>Home</a></li>
+      <li><a href="/profile"><i class="material-icons left">portrait</i>Profile</a></li>
+{{!--     
+         <li><a class="subheader">View Lessons</a></li>
+      {{#each lessons}}
+          <li><a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">{{{name}}}</a><li>
+      {{/each}} --}}
+    </ul>
      
     {{else}}
   
@@ -184,52 +193,7 @@
         </div>
       </li>
     </ul>
-    {{!-- <ul class="slides">
-      <li>
-        <img src="https://wallpaper.wiki/wp-content/uploads/2017/04/wallpaper.wiki-Modern-Architecture-Glass-Skyscrapers-4K-Wallpaper-PIC-WPC0011701.jpg"> <!-- random image -->
-        <div class="caption center-align">
-          <h3 class="blue darken-4 z-depth-5">What is worth fighting for? Why?</h3>
-          <h5 class="blue darken-4 z-depth-5">We would like to digitize and modernize education!</h5>
-        
-      <a href="/authenticate/sign_up" class="blue darken-4  btn-large pulse">Join EduBirdie!</a>
-        </div>
-      </li>
-    
-      <li>
-        <img src="http://getwallpapers.com/wallpaper/full/d/4/7/834588-top-learning-wallpapers-1920x1080-free-download.jpg"> <!-- random image -->
-        <div class="caption left-align">
-          <h3 class="orange darken-4 z-depth-5">Challenges!</h3>
-          <h5 class="orange darken-4 z-depth-5"> We had many ideas and it took too long but we came up with one idea
-            <br>
-            Ideas were: <b>
-            <p>Changing corriculum</p>
-            <p>Adding and removing from the corriculum</p>
-            <p>Changing the way we teach and assess</p>
-
-            Our Idea:
-              <p style="font-weight: bold">We've created a web application for schools</p>
-          </h5>
-                <a class=" pulse orange darken-4 waves-effect waves-light btn-large">Join EduBirdie!</a>
-        </div>
-      </li>
-      
-      <li>
-        <img src="https://www.wallpaper.net.in/file/16559/600x380/16:9/math-book--4k--8k--hd-school-wallpaper_389688982.jpg"> <!-- random image -->
-        <div class="caption right-align">
-          <h3 class="red darken-4 z-depth-5">Implementation!</h3>
-          <h5 class="red darken-4 z-depth-5">On Our Website</h5>
-                <a class="pulse red darken-4 waves-effect waves-light btn-large">Join EduBirdie!</a>
-        </div>
-      </li>
-      <li>
-        <img src="http://getwallpapers.com/wallpaper/full/a/b/9/971982-money-backgrounds-1920x1080-for-4k.jpg"> <!-- random image -->
-        <div class="caption center-align">
-          <h3 class="teal darken-4 z-depth-5">Earn an extra income by creating content!</h3>
-          <h5 class="teal darken-4 z-depth-5">Convinced?</h5>
-                <a class="pulse teal darken-4 waves-effect waves-light btn-large">Join EduBirdie!</a>
-        </div>
-      </li>
-    </ul> --}}
+  
   </div>
   
   <footer class="page-footer teal">
