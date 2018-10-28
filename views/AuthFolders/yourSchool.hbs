@@ -26,8 +26,10 @@
 
 {{#if is_admin}}
 {{#with SchoolData}}
-  <a href="/shool/main/info/{{{secretSchoolCode}}}/invite/members/" class="waves-effect waves-light btn">Invite Members!<i class="material-icons left">mail</i></a>
+  <a href="/school/main/info/{{{secretSchoolCode}}}/invite/members/" class="waves-effect waves-light btn">Invite Members!<i class="material-icons left">mail</i></a>
 {{/with}}
+{{else}}
+<p>Nothing</p>
 {{/if}}
 
 </div>

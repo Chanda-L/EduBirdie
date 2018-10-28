@@ -634,5 +634,28 @@ app.post("/submit/search/:search", (req,res) => {
 })
 
 app.get("/school/main/info/:school_id/invite/members/", (req,res) => {
-    res.render("./AuthFolders/InviteMembers")
+
+    let code;
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            db.collection("users")
+              .doc(user.uid)
+              .collection("school")
+              .doc(req.params.school_id)
+              .get().then(function(doc) {
+                  if (doc.exists) {
+                      code = doc.data().secretSchoolCode;
+                      res.render("./AuthFolders/InviteMembers", {'code': code})
+                  }
+              })
+        } else { 
+            res.redirect("/authenticate/sign_up")
+        }
+    })
+})
+
+app.post("/Invite/Members", (req,res) => {
+    sendMailThroughApp(res.body.email_field, null, '<h1>From EduBirdie</h1> <p>Join My School by entering the code<p>');
+    res.redirect('/home')
 })
