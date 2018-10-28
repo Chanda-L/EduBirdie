@@ -19,9 +19,16 @@
         
 <div id="schoolinfo">
 {{#with SchoolData}}     
-    <h5>{{{name}}}</h5>
+    <h3 class="center-align teal-text ">{{{name}}}</h3>
     
 {{/with}}
+
+
+{{#if is_admin}}
+{{#with SchoolData}}
+  <a href="/shool/main/info/{{{secretSchoolCode}}}/invite/members/" class="waves-effect waves-light btn">Invite Members!<i class="material-icons left">mail</i></a>
+{{/with}}
+{{/if}}
 
 </div>
 <div id="classes">

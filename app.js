@@ -7,7 +7,7 @@ const admin = require('firebase-admin');
 const path = require('path');
 const gcloud = require('@google-cloud/storage')
 let nodemailer = require('nodemailer')
-
+let url = require('url')
 
 var config = {
     apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
@@ -21,6 +21,7 @@ var config = {
 let serviceAccount = require('./service-accounts.json');
 firebase.initializeApp(config);
 let database = firebase.database();
+
 
 
 
@@ -50,6 +51,31 @@ app._router.stack.forEach(function(r){
 
 //Configure and connect to firebase backend
 
+
+function sendMailThroughApp(email, password, html) {
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: email,
+            pass: 'Bangweulu3'
+        }
+    });
+
+    const mailOptions = {
+        from: 'chanda.lupambo@gmail.com',
+        to: email,
+        subject: 'Welcome Back!',
+        html: html,
+    };
+
+
+    transporter.sendMail(mailOptions, function (err, info) {
+        if(err)
+          console.log(err)
+        else
+          console.log(info);
+     });
+}
 function checkIfUserIsSignedIn(filename) {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -142,6 +168,11 @@ app.post("/authenticate/sign_in", (req, res) => {
 
             console.log("Successfully Signed In!")
             console.log(firebaseUser.email)
+
+            //Send sign in confirmation
+            sendMailThroughApp(req.body.email_log_in, req.body.password, '<h1>Welcome To EduBirdie!</h1><br><h3>You can earn your income by creating lessons teaching various topics or create a school to have your own learning community or integreate an existing school into edubirdie. Possibilities are <strong>EndLess</strong></h3>')
+           
+
             //Send a success email to user!
          
             return res.redirect("/home")
@@ -251,7 +282,7 @@ app.get("/school/main/info/:school_id", (req, res) => {
 
             console.log(req.params.school_id)
 
-           function is_admin() {
+           
                 db.collection("users")
                 .doc(user.uid)
                 .collection("school")
@@ -259,10 +290,10 @@ app.get("/school/main/info/:school_id", (req, res) => {
                 .get().then(function(doc) {
                     if (doc.data().admin == user.uid) {
                         console.log("This user is the admin");
-                        return true
+                        admin = true;
                     } else {
                         console.log("This user is not an admin");
-                        return false;
+                        admin =  false;
                     }
                 })
                 .catch(function(error) {
@@ -270,7 +301,7 @@ app.get("/school/main/info/:school_id", (req, res) => {
                     console.log(error.message)
                 });
                 
-            }
+            
 
             db.collection("users")
             .doc(user.uid)
@@ -305,11 +336,9 @@ app.get("/school/main/info/:school_id", (req, res) => {
                     console.log(SchoolData)
                     console.log(messages)
                     let schoolCode = req.params.school_id
-                    console.log(is_admin)
-                    is_admin();
-                    console.log(is_admin())
-                    let current_admin = is_admin()
-                    res.render('./AuthFolders/yourSchool', {'is_admin': current_admin, 'SchoolData':SchoolData, 'messages': messages, 'classes': classes, 'SchoolCode': schoolCode});
+
+
+                    res.render('./AuthFolders/yourSchool', {'is_admin': admin, 'SchoolData':SchoolData, 'messages': messages, 'classes': classes, 'SchoolCode': schoolCode});
             
                 } else {
 
@@ -597,4 +626,13 @@ app.get("/home/search", (req, res) => {
             res.redirect("/authenticated/sign_up");
         }
     });
+})
+
+app.post("/submit/search/:search", (req,res) => {
+    let id = req.params.search;
+    res.redirect("/home?" + id)
+})
+
+app.get("/school/main/info/:school_id/invite/members/", (req,res) => {
+    res.render("./AuthFolders/InviteMembers")
 })

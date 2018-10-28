@@ -17,19 +17,26 @@
     </style>
  
  
-  <nav>
-    <div class="nav-wrapper teal">
-      <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
-      <a href="#!" class="brand-logo">EduBirdie</a>
-      <ul class="right hide-on-med-and-down">
-    
-    
-          
-        <li><a href="sass.html"><i class="material-icons left">search</i>Search</a></li>
-        <li><a href="badges.html"><i class="material-icons right">camera</i>Record Lesson</a></li>
-
+  <nav class="nav-extended teal">
+    <div class="nav-wrapper ">
+          <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+      <a href="#" class="brand-logo">EduBirdie</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/profile">Record Lesson<i class="material-icons right">camera</i></a></li>
+        <li><a href="/authenticated/create/create_school">Create School<i class="material-icons left">add</i></a></li>
+        <li><a href="/profile">Profile</a></li>
       </ul>
     </div>
+    <div class="nav-content">
+      <ul class="tabs tabs-transparent">
+        <li class="tab col s3"><a class="active" href="#home"><i class="material-icons left">home</i>Home</a></li>
+        <li class="tab col s3"><a  href="#search">Search<i class="material-icons left">search</i></a></li>
+      </ul>
+     
+      
+    </div>
+
   </nav>
 
      <ul id="slide-out" class="sidenav">
@@ -47,8 +54,8 @@
   
     {{/if}}
     
-
-  <div class="section no-pad-bot" id="index-banner">
+<div id="home">
+ <div class="section no-pad-bot" id="index-banner">
     <div class="container">
       <br><br>
       <h5 class="header teal-text">Newest Content: </h5>
@@ -78,6 +85,42 @@
         
     </div>
   </div>
+
+</div>
+
+<div id="search">
+    <nav>
+    <div class="nav-wrapper teal">
+      <form action="/submit/search/:search" method="POST">
+        <div class="input-field">
+          <input name="search" id="search" type="search" required>
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
+
+  <ul class="collection">
+{{#each lessons}}
+ 
+    <li class="collection-item avatar">
+        <video class="" style="width: 300px"class=" responsive-video" preload="metadata">
+        <source src="{{{downloadURL}}}" type="video/mp4">
+      </video>
+      <br>
+      <span class="title">{{{name}}}</span>
+      <p>{{{uploaded_at}}} <br>
+         
+<a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson"class="waves-effect waves-light btn">Watch</a>
+      </p> 
+      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+    </li>
+    
+{{/each}}
+ </ul>
+</div>
+ 
 
 
 
@@ -260,6 +303,13 @@
     
        }
    </style>
+   <script>   
+  
+    $(document).ready(function() {
+        $('.tabs').tabs()
+    })
+  
+    </script>
   
     <style>
       
