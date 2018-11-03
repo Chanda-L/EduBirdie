@@ -656,6 +656,6 @@ app.get("/school/main/info/:school_id/invite/members/", (req,res) => {
 })
 
 app.post("/Invite/Members", (req,res) => {
-    sendMailThroughApp(res.body.email_field, null, '<h1>From EduBirdie</h1> <p>Join My School by entering the code<p>');
+    sendMailThroughApp(res.body.email_field, null, '<h1>From EduBirdy</h1> <p>Join My School by entering the code<p>');
     res.redirect('/home')
 })
