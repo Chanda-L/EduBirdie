@@ -9,6 +9,13 @@ const gcloud = require('@google-cloud/storage')
 let nodemailer = require('nodemailer')
 let url = require('url')
 
+
+//----- Keep Database Queries shallow
+//----- Avoid increase in payment from nested data 
+//----- Sync authentication with database data
+//----- Keep Storage low to not use to much and overload storage
+
+
 var config = {
     apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
     authDomain: "edubirdie-1534842942940.firebaseapp.com",
@@ -365,21 +372,14 @@ app.post("/school/main/info/:school_id/add_class", (req, res) => {
             let possible = 
            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 
-           for (var i = 0; i < 5; i++) {
+           for (var i = 0; i < 20; i++) {
                text += possible.charAt(Math.floor(Math.random() * possible.length))
            }
 
-            let classRef = db.
-            collection("users").
-            doc(user.uid).
-            collection("school").
-            doc(req.params.school_id).
-            collection("classes").
-            doc(text);
-
+            let classRef = db.collection("classes").doc(text);
            
 
-              classRef.set({
+            classRef.set({
                 name: req.body.ClassName,
                 code: text,
                 belongs_to: req.params.school_id
@@ -431,7 +431,7 @@ app.get("/profile", (req, res) => {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
          
-            db.collection("users").doc(user.uid).collection("school").get().then(function(querySnapshot) {
+            db.collection("schools").where('admin', '==', user.uid).get().then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc) {
                     // doc.data() is never undefined for query doc snapshots
                     databaseData.push(doc.data());
@@ -479,11 +479,10 @@ app.post("/authenticated/create/create_school/", (req, res) => {
 
     schoolName = req.body.schoolName
     schoolDesc = req.body.schoolDescription
-    var documentRef = db.collection('users')
-        .doc(firebase.auth()
-        .currentUser.uid)
-        .collection("school")
-        .doc(text);
+
+    //add school document in collection of schools to firebase database
+    var documentRef = db.collection('schools').doc(text)
+
 
     documentRef.set({
         name:  schoolName,
