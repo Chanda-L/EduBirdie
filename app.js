@@ -44,6 +44,16 @@ const app = express();
 console.log("hi")
 app.use(flash())
 
+
+// Since this is the last non-error-handling
+// middleware use()d, we assume 404, as nothing else
+// responded.
+
+// $ curl http://localhost:3000/notfound
+// $ curl http://localhost:3000/notfound -H "Accept: application/json"
+// $ curl http://localhost:3000/notfound -H "Accept: text/plain"
+
+
 app.use(express.static("public"))
 app.engine('hbs', expressHbs({extname:'hbs', layoutsDir: __dirname + '/views/layouts/', partialsDir: __dirname + '/views/partials/'}));
 app.set('view engine', 'hbs')
@@ -83,6 +93,8 @@ function sendMailThroughApp(email, password, html) {
           console.log(info);
      });
 }
+
+
 function checkIfUserIsSignedIn(filename) {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -290,10 +302,7 @@ app.get("/school/main/info/:school_id", (req, res) => {
             console.log(req.params.school_id)
 
            
-                db.collection("users")
-                .doc(user.uid)
-                .collection("school")
-                .doc(req.params.school_id)
+                db.collection("schools").doc(req.params.school_id)
                 .get().then(function(doc) {
                     if (doc.data().admin == user.uid) {
                         console.log("This user is the admin");
@@ -310,11 +319,8 @@ app.get("/school/main/info/:school_id", (req, res) => {
                 
             
 
-            db.collection("users")
-            .doc(user.uid)
-            .collection("school")
-            .doc(req.params.school_id)
-            .collection("classes")
+            db.collection("classes")
+            .where('belongs_to', '==', req.params.school_id)
             .get()
             .then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc) {
@@ -332,8 +338,7 @@ app.get("/school/main/info/:school_id", (req, res) => {
             }).catch(function(error) {
 
             });
-            db.collection("users").doc(user.uid)
-            .collection("school")
+            db.collection("schools")
             .doc(req.params.school_id)
             .get().then(function(doc) {
 
@@ -498,13 +503,7 @@ app.get("/class/main/info/:school_id/:class_id/add_lesson", (req, res) => {
     let databaseData;
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            db.collection("users")
-            .doc(user.uid)
-            .collection("school")
-            .doc(req.params.school_id)
-            .collection("classes")
-            .doc(req.params.class_id)
-            .get()
+            db.collection("classes").doc(req.params.class_id)
             .then(function(doc) {
                 if (doc.exists) {
                     console.log("document exists")
@@ -588,11 +587,7 @@ app.get("/class/main/info/:school_id/:class_id/ClassInfo", (req, res) => {
                 })
             });
         
-                db.collection("users")
-                .doc(user.uid)
-                .collection("school")
-                .doc(req.params.school_id)
-                .collection("classes")
+                db.collection("classes")
                 .doc(req.params.class_id)
                 .get().then(function(doc) {
                     if (doc.exists) {
@@ -658,3 +653,8 @@ app.post("/Invite/Members", (req,res) => {
     sendMailThroughApp(res.body.email_field, null, '<h1>From EduBirdy</h1> <p>Join My School by entering the code<p>');
     res.redirect('/home')
 })
+
+app.get('/documentDoesntExist', (req, res) => {
+    res.render('./AuthFolders/DocumentHasNoExistence')
+})
+
