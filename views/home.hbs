@@ -1,0 +1,319 @@
+{{> home}}
+
+
+
+<body>
+  
+    {{#if user}} 
+<style>
+      p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 75ch;
+}
+
+
+    </style>
+ 
+ 
+  <nav class="nav-extended teal">
+    <div class="nav-wrapper ">
+          <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+      <a href="#" class="brand-logo">EduBirdy</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/profile">Record Lesson<i class="material-icons right">camera</i></a></li>
+        <li><a href="/authenticated/create/create_school">Create School<i class="material-icons left">add</i></a></li>
+        <li><a href="/profile">Profile</a></li>
+      </ul>
+    </div>
+    <div class="nav-content">
+      <ul class="tabs tabs-transparent">
+        <li class="tab col s3"><a class="active" href="#home"><i class="material-icons left">home</i>Home</a></li>
+        <li class="tab col s3"><a  href="#search">Search<i class="material-icons left">search</i></a></li>
+      </ul>
+     
+      
+    </div>
+
+  </nav>
+
+     <ul id="slide-out" class="sidenav">
+      <li><h5 class="teal-text center-align">EduBirdy</h5></li>
+      <li><a href="/home"><i class="material-icons left">home</i>Home</a></li>
+      <li><a href="/profile"><i class="material-icons left">portrait</i>Profile</a></li>
+{{!--     
+         <li><a class="subheader">View Lessons</a></li>
+      {{#each lessons}}
+          <li><a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">{{{name}}}</a><li>
+      {{/each}} --}}
+    </ul>
+     
+    {{else}}
+  
+    {{/if}}
+    
+<div id="home">
+ <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <h5 class="header teal-text">Newest Content: </h5>
+      {{#each lessons}}
+       <a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">
+      <div id="show_video" class="hoverable waves-effect waves-teal z-depth-1">
+     
+      <video class="" style="width: 300px"class=" responsive-video" preload="metadata">
+        <source src="{{{downloadURL}}}" type="video/mp4">
+      </video>
+     
+    </a>
+      <p class="bold">{{{name}}}<br></p>
+      <small class="text-gray">by: {{{SchoolName}}} • {{{uploaded_at}}}</small>
+
+      
+   </div>
+ 
+   
+      {{/each}}
+      <div class="row center">
+        <h5 class="header col s12 light">Learning made easy.</h5>
+      </div>
+      <div class="row center">
+      </div>
+      <br><br>
+        
+    </div>
+  </div>
+
+</div>
+
+<div id="search">
+    <nav>
+    <div class="nav-wrapper teal">
+      <form action="/submit/search/:search" method="POST">
+        <div class="input-field">
+          <input name="search" id="search" type="search" required>
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
+
+  <ul class="collection">
+{{#each lessons}}
+ 
+    <li class="collection-item avatar">
+        <video class="" style="width: 300px"class=" responsive-video" preload="metadata">
+        <source src="{{{downloadURL}}}" type="video/mp4">
+      </video>
+      <br>
+      <span class="title">{{{name}}}</span>
+      <p>{{{uploaded_at}}} <br>
+         
+<a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson"class="waves-effect waves-light btn">Watch</a>
+      </p> 
+      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+    </li>
+    
+{{/each}}
+ </ul>
+</div>
+ 
+
+
+
+     
+   
+  <div class="container">
+    <div class="section">
+
+      {{#if user}}
+       <ul id="slide-out" class="sidenav">
+    <li><div class="user-view">
+
+      <a href="#name"><span class="white-text name"></span></a>
+      <a href="#email"><span class="teal-text email">{{user.email}}</span></a>
+    </div></li>
+    <li><a href="#!"><i class="material-icons">add</i>Create School</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">profile</a></li>
+    <li><a class="waves-effect" href="#!">EduBirdy Profile<i class="material-icons">portrait</i></a></li>
+    
+  </ul>
+  {{else}} 
+  
+<!--   Icon Section   -->
+      
+    </div>
+    <br><br>
+  </div>
+
+   <div class="slider fullscreen">
+     <ul class="slides">
+      <li>
+        <img src="https://wallpaper.wiki/wp-content/uploads/2017/04/wallpaper.wiki-Modern-Architecture-Glass-Skyscrapers-4K-Wallpaper-PIC-WPC0011701.jpg"> <!-- random image -->
+        <div class="caption center-align">
+           <h3 class="blue darken-4 z-depth-5">What is worth fighting for? Why?</h3>
+          <h5 class="blue darken-4 z-depth-5">We want to modernize education to better suit future generations, <br> because students forget what is being taught, and don't understand what is being taught</h5>
+        
+      <a href="/authenticate/sign_up" class="blue darken-4  btn-large pulse">Join EduBirdy!</a>
+        </div>
+      </li>
+      <li>
+        <img src="http://getwallpapers.com/wallpaper/full/d/4/7/834588-top-learning-wallpapers-1920x1080-free-download.jpg"> <!-- random image -->
+        <div class="caption left-align">
+          <h3 class="red darken-4 z-depth-5">Implementation!</h3>
+          <h5 class="red darken-4 z-depth-5">On Our Website</h5>
+                <a class="pulse red darken-4 waves-effect waves-light btn-large">Join EduBirdy!</a>
+        </div>
+      </li>
+      <li>
+        <img src="https://www.wallpaper.net.in/file/16559/600x380/16:9/math-book--4k--8k--hd-school-wallpaper_389688982.jpg"> <!-- random image -->
+        <div class="caption right-align">
+          <h3 class="orange darken-4 z-depth-5">Challenges!</h3>
+          <h5 class="orange darken-4 z-depth-5"> We had many ideas and it took too long but we came up with one idea
+            <br>
+            Ideas were: <br>
+            <p>Changing corriculum</p>
+            <p>Adding and removing from the corriculum</p>
+            <p>Changing the way we teach and assess</p>
+
+            Our Idea:
+              <p style="font-weight: bold">We've created a web application for schools</p>
+
+            Positives:
+              <p style="font-weight: bold">We co-operated together well and there were no fights involved!</p>
+          </h5>
+                          <a class="pulse red darken-4 waves-effect waves-light btn-large">Join EduBirdy!</a>
+        </div>
+      </li>
+      <li>
+        <img src="https://www.sciencenewsforstudents.org/sites/default/files/scald-image/860_main_Brain_imaging%20copy.png"> <!-- random image -->
+        <div class="caption center-align">
+          <h3 class="teal darken-4 z-depth-5">Big Ideas</h3>
+          <h5 class=" teal darken-4 z-depth-5 light grey-text text-lighten-3">Our Idea is to modernize education by creating a website that can earn schools extra income and reminds students of what they forgot in school!</h5>
+        </div>
+      </li>
+      <li>
+        <img src="http://getwallpapers.com/wallpaper/full/a/b/9/971982-money-backgrounds-1920x1080-for-4k.jpg"> <!-- random image -->
+        <div class="caption center-align">
+          <h3 class="teal darken-4 z-depth-5">Earn an extra income by creating content!</h3>
+          <h5 class="teal darken-4 z-depth-5">Convinced?</h5>
+                <a class="pulse teal darken-4 waves-effect waves-light btn-large">Join EduBirdy!</a>
+        </div>
+      </li>
+      <li>
+        <img src="http://footage.framepool.com/shotimg/qf/729769110-question-mark-pie-chart-doubting-doodle-internet.jpg"> <!-- random image -->
+        <div class="caption center-align">
+          <h3 class="teal darken-4 z-depth-5">How We Did It</h3>
+          <h5 class="teal darken-4 z-depth-5">
+            We had one of our teammates create a website to modernize education!         
+          </h5>
+          <a class="pulse teal darken-4 waves-effect waves-light btn-large">Join EduBirdy!</a>
+        </div>
+      </li>
+       <li>
+        <img src="http://getwallpapers.com/wallpaper/full/a/b/9/971982-money-backgrounds-1920x1080-for-4k.jpg"> <!-- random image -->
+        <div class="caption center-align">
+          <h3 class="teal darken-4 z-depth-5">References</h3>
+          <h5 class="teal darken-4 z-depth-5">
+            We had no references on a computer!
+          </h5>
+          <a class="pulse teal darken-4 waves-effect waves-light btn-large">Join EduBirdy!</a>
+        </div>
+      </li>
+      <li>
+        <img src="http://getwallpapers.com/wallpaper/full/a/b/9/971982-money-backgrounds-1920x1080-for-4k.jpg"> <!-- random image -->
+        <div class="caption center-align">
+          <h3 class="teal darken-4 z-depth-5">What does this mean to us?</h3>
+          <h5 class="teal darken-4 z-depth-5">
+            We are very passionate about this topic, we think this could help many kids in learning around the world.
+          </h5>
+          <a class="pulse teal darken-4 waves-effect waves-light btn-large">Join EduBirdy!</a>
+        </div>
+      </li>
+    </ul>
+  
+  </div>
+  
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">EduBirdy</h5>
+          <p class="grey-text text-lighten-4">We are a team of midde
+            l school students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">The EduBirdy Team</a>
+      </div>
+    </div>
+  </footer>
+  {{/if}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+      $(document).ready(function(){
+        $('.sidenav').sidenav();
+        $('.slider').slider();
+      });
+      document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.slider');
+  });
+
+  // Or with jQuery
+
+
+  </script>
+ 
+  
+
+
+             <!--JavaScript at end of body for optimized loading-->
+  
+   <style>
+       a:active {
+           text-align: center;
+       }
+
+       #show_video {
+         float: left;
+         margin: 5px;
+    
+       }
+   </style>
+   <script>   
+  
+    $(document).ready(function() {
+        $('.tabs').tabs()
+    })
+  
+    </script>
+  
+    <style>
+      
+    </style>
+
+    </body>
+</html>

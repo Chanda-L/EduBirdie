@@ -1,19 +1,9 @@
 {{>home}}
 
 
-<div id="add_to_database_progress">
-<div class="center-align preloader-wrapper big active">
-      <div class="spinner-layer spinner-blue">
-        <div class="circle-clipper left">
-          <div class="circle"></div>
-        </div><div class="gap-patch">
-          <div class="circle"></div>
-        </div><div class="circle-clipper right">
-          <div class="circle"></div>
-        </div>
-      </div>
-</div>
-</div>
+
+
+
 
 <div id="uploadLesson" style="display: none">
   <h2>Uploading Lesson! <i class="material-icons">av_timer</i></h2>
@@ -23,13 +13,8 @@
 
   </div>
 
- <p id="progress_indicator_label">
-    1%
-  </p>
  <label>
-   <div style: "width: 200px;">
         <input id="privacy"type="checkbox" />
-    </div>
         <span>Private</span>
       </label>
  <button id="pause_upload" class=" btn">Pause Upload</button>
@@ -41,7 +26,9 @@
   <div id="videoTags" class="chips chips-autocomplete"></div>
  
  
- 
+  <p id="progress_indicator_label">
+    1%
+  </p>
 
 <label>Name:</label>
   <input id="name" type="text">
@@ -109,7 +96,6 @@ let tags_for_video = [];
       minLength: 1
     }
   });
-
   
 console.log(document.getElementById('id').textContent)
   // Initialize Firebase
@@ -135,16 +121,12 @@ var config = {
     // No user is signed in.
   }
 });
-
-  let circularProgressBar = document.getElementById('add_to_database_progress')
-  let progress_indicator = document.getElementById('progress_indicator_label');
-  let uploader = document.getElementById('uploader');
-  let fileButton = document.getElementById('file');
+  var progress_indicator = document.getElementById('progress_indicator_label');
+  var uploader = document.getElementById('uploader');
+  var fileButton = document.getElementById('file');
   let code = document.getElementById('code');
   let schoolCode = document.getElementById('belongs_to');
 
-
-  circularProgressBar.style.display = "none";
   console.log(code.textContent)
   var uploadForm = document.getElementById('uploadLesson')
 
@@ -178,19 +160,15 @@ var config = {
       },
 
       function error(err) {
-        //Show error to client
-        console.log(err.message);
-        alert("An error occured while uploading lesson!");
+          
       },
 
       function complete() {
-
-          M.toast({html: "successfully uploaded your lesson!"})
-
-          document.getElementById('file').style.display = "none";
           uploadForm.style.display = "none"
-          circularProgressBar.style.display = 'block';
-            let text = "";
+          
+              alert("logged in")
+              
+              let text = "";
             let possible = 
            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 
@@ -213,7 +191,7 @@ var config = {
                     xhr.send();
 
                     main_url = url;
-                  //Get upload date to apply to database lesson!
+
                   let currentdate = new Date();
                   var datetime = currentdate.getDate() 
                   + "/" + (currentdate.getMonth()+1) 
@@ -222,9 +200,6 @@ var config = {
              
                   db.collection("lessons").doc(text)
                 .set({
-                  //Set all the data that will save to database
-
-                  //---------
                   name: document.getElementById('name').value,
                   description: document.getElementById('description').value,
                   InClass: document.getElementById('code').textContent,
@@ -236,11 +211,8 @@ var config = {
                   downloadURL: main_url,
                   privacy: document.getElementById('privacy').checked, 
                 }).then(function() {
-                  //Successful upload and database save!
                   console.log("Success!")
-                  window.location.pathname = '/profile'
                 }).catch(function(error) {
-                  //An error has occured
                   console.log(error.message);
                 })
                 }).catch(function(error) {

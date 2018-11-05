@@ -1,0 +1,124 @@
+{{>home}}
+
+
+
+
+
+
+{{!-- <img
+<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
+    authDomain: "edubirdie-1534842942940.firebaseapp.com",
+    databaseURL: "https://edubirdie-1534842942940.firebaseio.com",
+    projectId: "edubirdie-1534842942940",
+    storageBucket: "edubirdie-1534842942940.appspot.com",
+    messagingSenderId: "1077918538165"
+  };
+
+  
+  firebase.initializeApp(config);
+
+  let db = firebase.firestore();
+  var storage = firebase.storage();
+</script>
+--}}
+<p id="name"style="display: none">{{user_email}}</p>
+{{#with data}}
+
+<p id="code"style="display: none">{{{code}}}</p>
+{{/with}}
+
+{{#with data}}
+<h2 class="center-align teal-text">{{{name}}}</h2>
+
+
+<video style="width: 100%"class="responsive-video" controls>
+    <source src="{{{downloadURL}}}" type="video/mp4">
+  </video>
+<ul class="collapsible">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">info</i>Information</div>
+      <div class="collapsible-body">  
+        <span>By: {{{SchoolName}}}</span><br><br>
+        <a href="{{{downloadURL}}}"class="blue-text light-3">{{{downloadURL}}}</a> <br>
+        <span>{{{description}}}</span>
+        </div>
+        {{/with}} 
+    </li>
+     <li>
+      <div class="collapsible-header"><i class="material-icons">comment</i>Comments</div>
+      <div class="collapsible-body">  
+        <div class="input-field col s2">
+          <i class="material-icons prefix">comment</i>
+          <input id="comment_field" type="text" class="validate">
+          <button id="addComment" class="btn teal wave-light">Submit</button>
+        </div>
+         <ul class="collection">
+           {{#each comments}}
+            <li class="collection-item">{{{comments_text}}}<br>{{{ByUser}}}</li>
+            {{/each}}
+          </ul>
+
+
+        </div>
+    </li>
+  </ul>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> 
+ <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+  <script>
+    var config = {
+    apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
+    authDomain: "edubirdie-1534842942940.firebaseapp.com",
+    databaseURL: "https://edubirdie-1534842942940.firebaseio.com",
+    projectId: "edubirdie-1534842942940",
+    storageBucket: "edubirdie-1534842942940.appspot.com",
+    messagingSenderId: "1077918538165"
+};
+  firebase.initializeApp(config);
+ 
+  let db = firebase.firestore();
+
+    document.getElementById('addComment').addEventListener('click', () => {
+      let commentText = document.getElementById('comment_field').textContent;
+          let text = "";
+            let possible = 
+           "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+           for (var i = 0; i < 10; i++) {
+               text += possible.charAt(Math.floor(Math.random() * possible.length))
+           }
+
+      if (commentText != null) {
+        db
+        .collection('lesson_comments')
+        .doc(text)
+        .set({
+          comments_text: document.getElementById('comment_field').value,
+          ByUser: document.getElementById('name').textContent,
+          on_lesson: document.getElementById('code').textContent,
+          code: text
+        }).then(function() {
+            console.log("Successfully added comment!")
+              M.toast({html: 'Successfully added your comment!'})
+        }).catch(function(error) {
+            M.toast({html: 'There was an error adding your comment!'})
+        });
+      } else {
+        console.log("Empty")
+      }
+    })
+
+      $(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+ 
+  </script>
+ </body>
+ </html>

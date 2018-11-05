@@ -1,0 +1,124 @@
+{{>home}}
+
+
+
+
+ 
+
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s4"><a href="#ClassInfo">Class Info</a></li>
+        <li class="tab col s4"><a class="active" href="#lessons">Lessons</a></li>
+        <li class="tab col s4"><a href="#chats">Chats</a></li>
+      </ul>
+    </div>
+  </div>
+        
+
+
+<div id="ClassInfo">
+
+{{#with classData}}
+<h1 class="teal-text center-align">{{{name}}}</h1>
+
+{{/with}}
+</div>
+
+<div id="chats">
+    <h1 class="center-align teal-text">Chat to the class!</h1>
+    {{!-- 
+    add the messaging function into the application code for frontend messaging!
+
+    No refresh messaging
+     --}}
+
+
+ <div class="row">
+    <div class="col s10">
+      <div class="row">
+        <div class="input-field col s12">
+            <i class="material-icons prefix">textsms</i>
+            <input id="messageText" name="message" type="text" id="autocomplete-input"class="autocomplete">
+            <label for="autocomplete-input">Type A Message...</label>
+        </div>
+      </div>
+    </div>
+    <button id="submitMessage" class="btn" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
+  </div>
+
+     
+     {{!-- Javascript code for saving messages to database and notifying client on frontend! --}}
+        
+
+  </div>
+<div id="lessons">
+{{#with classData}}
+    <p> add lesson: <a href="/class/main/info/{{{belongs_to}}}/{{{code}}}/add_lesson"class="waves-effect waves-light "><i class="material-icons">add</i></a></p>
+{{/with}}
+ <ul class="collection">
+{{#each lessons}}
+ 
+    <li class="collection-item avatar">
+        <video class="" style="width: 300px"class=" responsive-video" preload="metadata">
+        <source src="{{{downloadURL}}}" type="video/mp4">
+      </video>
+      <br>
+      <span class="title">{{{name}}}</span>
+      <p>{{{uploaded_at}}} <br>
+         
+<a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson"class="waves-effect waves-light btn">Watch</a>
+      </p> 
+      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+    </li>
+    
+{{/each}}
+ </ul>
+
+
+
+<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+<script>   
+  
+    $(document).ready(function() {
+        $('.tabs').tabs()
+    })
+  
+</script>
+
+<script>
+    var config = {
+        apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
+        authDomain: "edubirdie-1534842942940.firebaseapp.com",
+        databaseURL: "https://edubirdie-1534842942940.firebaseio.com",
+        projectId: "edubirdie-1534842942940",
+        storageBucket: "edubirdie-1534842942940.appspot.com",
+        messagingSenderId: "1077918538165"
+    };
+
+
+    firebase.initializeApp(config);
+ 
+    let db = firebase.firestore();
+
+    let SubmitButton = document.getElementById("submitMessage");
+    let messageField = document.getElementById("messageText");
+
+    SubmitButton.addEventListener("click", () => {
+      if (messageField.value != "") {
+        let messageText = messageField.value;
+        console.log("text is: " + messageText)
+        
+      } else {
+        console.log("Field is empty.")
+        M.toast({html: 'Please fill in field!'})
+      }
+    })
+</script>
+  
+</body>
+</html>
