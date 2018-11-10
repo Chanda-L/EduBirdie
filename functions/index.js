@@ -154,23 +154,31 @@ app.get("/authenticate/sign_up", (req, res) =>
 
 app.get("/home", (req, res) => {
   
-    const lessons = [];
-    console.log(firebase.auth().currentUser);
+    let lessons = [];
 
-        db.collection("lessons")
-        .get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    lessons.push(doc.data());
-                    
-                });
-                console.log(lessons)
-             return res.render('home', {'lessons': lessons, 'user': firebase.auth().currentUser})
-                
-            }).catch((error) => {
+            console.log(firebase.auth().currentUser);
+                firebase.auth().onAuthStateChanged((user) => {
+                    if (user) {
+                    db.collection("lessons")
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            lessons.push(doc.data());
+                                
+                        });
+                        return res.render('home', {'lessons': lessons, 'user': firebase.auth().currentUser});
 
-            })
-     
+                    }).catch(function(error) {
+                        console.log(error.message);
+                       
+                    });
+                } else {
+                //Perform actions if user not authenticated
+                return res.render('home', {'user': firebase.auth().currentUser});
+                                console.log("User not authorized to see videos!");
+                }
+            });
+        
     });
     
 
@@ -685,3 +693,12 @@ app.get('/documentDoesntExist', (req, res) => {
 
 
 exports.app = functions.https.onRequest(app);
+
+app.get("/authenticate/google_sign_up", (req, res) => {
+
+
+})
+
+app.get("/edubirdy/contact", (req,res) => {
+    res.render("./AuthFolders/contact");
+})

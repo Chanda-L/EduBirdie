@@ -1,27 +1,31 @@
 {{>home}}
+<nav>
+    <div class="teal accent-4 z-depth-4 nav-wrapper">
+      <a id="logo" href="#" class="brand-logo">Edubirdy</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="collapsible.html">Settings<i class="material-icons left"> settingss</i></a></li>
+      </ul>
+    </div>
+  </nav>
 
-        <h2 class="teal-text">{{user.email}}</h2>
-       
-
-        <h5>Your Schools: </h5>
+        <h2 id="logo" style="font-weight: bold;" class="teal-text">Edubirdy Profile</h2>
 
 
-        {{#each databaseData}}
-            
-             <ul class="collection">
 
-    <li class="collection-item avatar">
-      <i class="material-icons circle teal"></i>
-      <span class="title">{{{name}}}</span>
-      <p>{{{description}}} <br>
-    
-      </p>
-      <a href="/school/main/info/{{{secretSchoolCode}}}" class="secondary-content"><i class="material-icons">infos</i></a>
-    </li>
-    </ul>
-    
-                 
-        {{/each}}
+<style>
+  
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+#logo {
+  font-family: 'Pacifico'
+}
+  p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 75ch;
+}
+</style>
+ 
 
 
          

@@ -1,0 +1,28 @@
+{
+  "name": "pblproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "begin"
+  },
+  "author": "Chanda",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/storage": "^2.0.3",
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.1.3",
+    "express": "^4.16.3",
+    "express-flash": "git://github.com/RGBboy/express-flash.git",
+    "express-flash-messages": "^0.1.1",
+    "express-handlebars": "^3.0.0",
+    "firebase": "^5.5.0",
+    "firebase-admin": "^6.0.0",
+    "handlebars": "^4.0.12",
+    "jquery": "^3.3.1",
+    "materialize-css": "^1.0.0-rc.2",
+    "nodemailer": "^4.6.8",
+    "nodemon": "^1.18.4",
+    "url": "^0.11.0"
+  }
+}
