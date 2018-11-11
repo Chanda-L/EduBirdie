@@ -139,8 +139,7 @@ app.get("/authenticate/sign_up", (req, res) =>
         if (user) {
           // User is signed in.
           console.log("you are already logged in :)")
-          res.redirect('/home');
-
+          
         } else {
           // No user is signed in.
           console.log(firebase.auth().currentUser);
@@ -163,22 +162,19 @@ app.get("/home", (req, res) => {
                     .get()
                     .then((querySnapshot) => {
                         querySnapshot.forEach((doc) => {
-                            lessons.push(doc.data());
-                                
+                            lessons.push(doc.data()); 
                         });
-                        return res.render('home', {'lessons': lessons, 'user': firebase.auth().currentUser});
-
                     }).catch(function(error) {
                         console.log(error.message);
                        
                     });
                 } else {
                 //Perform actions if user not authenticated
-                return res.render('home', {'user': firebase.auth().currentUser});
-                                console.log("User not authorized to see videos!");
+                console.log("User not authorized to see videos!");
                 }
+                
             });
-        
+            return res.render('home', {'lessons': lessons, 'user': firebase.auth().currentUser});
     });
     
 
@@ -189,7 +185,7 @@ app.get("/authenticate/sign_in", (req, res) => {
         if (user) {
           // User is signed in.
           console.log("you are already logged in :)")
-          
+    
         } else {
           // No user is signed in.
           console.log("User is null")
@@ -275,7 +271,7 @@ app.post("/authenticate/sign_up", (req, res) =>
                     console.log(error)
                 } else {
                     console.log("Email Sent: " + info.response)
-                    return res.redirect('/authenticate/sign_in')
+             
                 }
             })
         
@@ -294,6 +290,7 @@ app.post("/authenticate/sign_up", (req, res) =>
         console.log("error" + errorMessage)
         console.log("code" + errorCode)
     });
+    return res.redirect("/home")
 });
 
 app.get("/authenticate/log_out", (req, res) => {
@@ -701,4 +698,35 @@ app.get("/authenticate/google_sign_up", (req, res) => {
 
 app.get("/edubirdy/contact", (req,res) => {
     res.render("./AuthFolders/contact");
+})
+
+//Settings page for profile
+app.get("/profile/:user_id/settings", (req,res) => {
+    let data;
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            //Perform functions if user is authenticated
+            console.log("User entered settings page")
+            
+            db.collection("users")
+              .doc(req.params.user_id)
+              .get()
+              .then(function(doc) {
+                if (doc.exists) {
+                    //Get documents data
+                    data = doc.data();
+                }
+              }).catch(function(error) {
+                  //Error message as error occured
+                    console.log(
+                        error.message
+                        );
+              });
+        } else {
+            //perform functions if user is not authenticated
+            console.log("user not authenticated")
+            res.redirect("/authenticate/sign_up")
+        }
+    })
+    return res.render("./AuthFolders/settings",{'data': data});
 })
