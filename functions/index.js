@@ -154,27 +154,26 @@ app.get("/authenticate/sign_up", (req, res) =>
 app.get("/home", (req, res) => {
   
     let lessons = [];
-
-            console.log(firebase.auth().currentUser);
-                firebase.auth().onAuthStateChanged((user) => {
-                    if (user) {
+    
+                
                     db.collection("lessons")
                     .get()
                     .then((querySnapshot) => {
                         querySnapshot.forEach((doc) => {
-                            lessons.push(doc.data()); 
+                             lessons.push(doc.data()); 
                         });
+                        return res.render('home', {'lessons': lessons, 'user': firebase.auth().currentUser});
+
                     }).catch(function(error) {
                         console.log(error.message);
                        
                     });
-                } else {
+         
                 //Perform actions if user not authenticated
                 console.log("User not authorized to see videos!");
-                }
                 
-            });
-            return res.render('home', {'lessons': lessons, 'user': firebase.auth().currentUser});
+           
+            
     });
     
 
@@ -716,6 +715,7 @@ app.get("/profile/:user_id/settings", (req,res) => {
                     //Get documents data
                     data = doc.data();
                 }
+                return res.render("./AuthFolders/settings",{'data': data});
               }).catch(function(error) {
                   //Error message as error occured
                     console.log(
@@ -728,5 +728,5 @@ app.get("/profile/:user_id/settings", (req,res) => {
             res.redirect("/authenticate/sign_up")
         }
     })
-    return res.render("./AuthFolders/settings",{'data': data});
+  
 })

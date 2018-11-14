@@ -4,7 +4,6 @@
 
 
 
-
 {{!-- <img
 <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
 <script>
@@ -51,10 +50,14 @@
      <li>
       <div class="collapsible-header"><i class="material-icons">comment</i>Comments</div>
       <div class="collapsible-body">  
+     
         <div class="input-field col s2">
           <i class="material-icons prefix">comment</i>
           <input id="comment_field" type="text" class="validate">
+
+  
           <button id="addComment" class="btn teal wave-light">Submit</button>
+
         </div>
          <ul class="collection">
            {{#each comments}}
@@ -107,6 +110,7 @@
         }).then(function() {
             console.log("Successfully added comment!")
               M.toast({html: 'Successfully added your comment!'})
+                   location.reload();
         }).catch(function(error) {
             M.toast({html: 'There was an error adding your comment!'})
         });

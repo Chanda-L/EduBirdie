@@ -1,6 +1,12 @@
 {{>home}}
 
-
+<style>
+  @media only screen and (max-width: 768px) {
+    .head {
+      font-size: 20px;
+    }
+  }
+</style>
 <div id="add_to_database_progress">
 <div class="center-align preloader-wrapper big active">
       <div class="spinner-layer spinner-blue">
@@ -16,7 +22,7 @@
 </div>
 
 <div id="uploadLesson" style="display: none">
-  <h2>Uploading Lesson! <i class="material-icons">av_timer</i></h2>
+  <h2 class="head">Uploading Lesson! <i class="material-icons">av_timer</i></h2>
   <div class="progress">
       <progress id="uploader" class="indeterminate" style="width: 0%"></progress>
       
@@ -54,14 +60,15 @@
         
   <!-- Customizable input  -->
 
-<style>
+{{!-- <style>
   
+@media only screen and (max-width: 768px) {
+ #uploadLesson {
 
-  #uploadLesson {
-    margin: 200px;
-    
   }
-</style>
+}
+ 
+</style> --}}
 {{#with data }}
 
   <p style="display: none" id="code">{{{code}}}</p>
@@ -76,7 +83,7 @@
 
 {{!-- add javascript lines for use --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
 <script>
 //video tags

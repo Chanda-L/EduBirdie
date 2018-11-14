@@ -11,12 +11,7 @@
 #logo {
   font-family: 'Pacifico'
 }
-  p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 75ch;
-}
+  
 </style>
  
  {{#if user}}
@@ -24,7 +19,6 @@
     <div class="nav-wrapper ">
           <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
       <a id="logo" href="#" class="brand-logo">EduBirdy</a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="/profile">Record Lesson<i class="material-icons right">camera</i></a></li>
         <li><a href="/authenticated/create/create_school">Create School<i class="material-icons left">add</i></a></li>
@@ -56,6 +50,17 @@
    
   
     
+<style>
+ @media only screen and (max-width: 768px) {
+   #video-container {
+
+    margin: auto;
+    width: 50%;
+
+  
+   }
+ }
+</style>
     
 <div id="home">
  <div class="section no-pad-bot" id="index-banner">
@@ -63,10 +68,11 @@
       <br><br>
       <h5 class="header teal-text">Newest Content: </h5>
       {{#each lessons}}
+      <div id="video-container">
        <a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">
       <div id="show_video" class="hoverable waves-effect waves-teal z-depth-1">
      
-      <video class="" style="width: 300px"class=" responsive-video" preload="metadata">
+      <video class="" style="width: 200px;"class=" responsive-video" preload="metadata">
         <source src="{{{downloadURL}}}" type="video/mp4">
       </video>
      
@@ -74,7 +80,7 @@
       <p class="bold">{{{name}}}<br></p>
       <small class="text-gray">by: {{{SchoolName}}} • {{{uploaded_at}}}</small>
 
-      
+      </div>
    </div>
  
    
@@ -109,7 +115,7 @@
   <ul class="collection">
 {{#each lessons}}
  
-    <li class="collection-item avatar">
+    <li id="video" class="collection-item avatar home-video">
         <video class="" style="width: 300px"class=" responsive-video" preload="metadata">
         <source src="{{{downloadURL}}}" type="video/mp4">
       </video>
@@ -125,6 +131,7 @@
 {{/each}}
  </ul>
 </div>
+
 
 
 
@@ -161,6 +168,8 @@
 
   <nav>
     <div class="teal accent-4 z-depth-4 nav-wrapper">
+       <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        
       <a id="logo" href="#" class="brand-logo">Edubirdy</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authenticate/sign_in">Log In</a></li>
@@ -170,11 +179,28 @@
     </div>
   </nav>
 
+
+  <ul id="slide-out" class="sidenav">
+    <li><div class="user-view">
+      <div class="background">
+        <img src="https://cdn.hipwallpaper.com/i/70/22/P1Nzdt.jpg">
+      </div>
+    </div></li>
+      <li><a class="subheader">Join EduBirdy</a></li>
+
+    <li><a href="/authenticate/sign_up"><i class="material-icons">email</i>Sign Up</a></li>
+    <li><a href="/authenticate/sign_in"><i class="material-icons">phone</i>Sign In</a></li>
+    <li><a href="/edubirdie/terms_of_service"><i class="material-icons">T</i>Terms of service</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Support</a></li>
+    <li><a class="waves-effect" href="/edubirdie/help">Help</a></li>
+    <li><a href="/edubirdy/contact"><i class="material-icons">contact_phone</i>Contact Us</a></li>
+  </ul>
+ 
   <h1 id="logo" class="white-text center-align " style="font-weight: bold;">Edubirdy</h1>
   <h5 class="white-text center-align" style="font-weight: bold;">Want money? Have something to teach?</h5>
   <a id="join_button" href="authenticate/sign_up" style="font-weight: bold;"class=" black-text center-align btn-large pulse teal accent-3 ">Join Edubirdy!</a>
-    <h1 id="logo" class="teal-text text-accent-4 center-align " style="font-size: 100px;">Going Live <strong id="logo" class="teal-text text-accent-3">22' January '19</strong></h1>
-
+   
         <footer class="teal accent-4 z-depth-4 page-footer">
           <div class="container">
             <div class="row">
@@ -204,9 +230,18 @@
             
 <style>
   #join_button {
-     margin-left: 46%;
-     margin-top: 40px;
-    border-radius: 20px;
+       display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    border-radius: 30px;
+    width: 40%;
+  }
+  @media only screen and (max-width: 768px) {
+    #join_button {
+      font-size: 12px;
+      width: 60%;
+    }
   }
   .page-footer {
     margin-top: 30%;

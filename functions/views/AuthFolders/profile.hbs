@@ -1,9 +1,10 @@
 {{>home}}
 <nav>
     <div class="teal accent-4 z-depth-4 nav-wrapper">
+  <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <a id="logo" href="#" class="brand-logo">Edubirdy</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/profile/{{user.uid}}/settings/">Settings<i class="material-icons left"> settingss</i></a></li>
+        <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/profile/{{user.uid}}/settings/">Settings<i class="material-icons left"> settings</i></a></li>
       </ul>
     </div>
   </nav>
@@ -11,12 +12,29 @@
         <h2 id="logo" style="font-weight: bold;" class="teal-text">Edubirdy Profile</h2>
 
 
+<ul id="slide-out" class="sidenav">
+    <li><div class="user-view">
+      <a href="#name"><span class="white-text name">John Doe</span></a>
+      <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+    </div></li>
+    <li><a href="/profile/{{user.uid}}/settings/"><i class="material-icons">settings</i>Settings</a></li>
+    <li><a href="/home"><i class="material-icons left">home</i>Home</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Other</a></li>
+    <li><a class="waves-effect" href="/authenticated/create/create_school"><i class="material-icons left">add</i>Create School</a></li>
+  </ul>
 
+  
 <style>
   
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
 #logo {
   font-family: 'Pacifico'
+}
+
+.schools {
+  margin-left: 20%;
+  margin-right: 20%;
 }
   p {
     white-space: nowrap;
@@ -25,9 +43,21 @@
     max-width: 75ch;
 }
 </style>
- 
+ <div class="schools ">
+ <ul class="collection ">
+   {{#each databaseData}}
+    <li class="collection-item avatar">
+      <img src="" alt="" class="circle">
+      <p>{{{name}}}<br>
+        {{{description}}}
+      </p>
+      <a href="/school/main/info/{{{secretSchoolCode}}}" class="btn teal">View</a>
+      
+    </li>
 
- 
+    {{/each}}
+    </ul>
+ </div>
          
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -46,15 +76,6 @@
 </div>
 
   <!-- Modal Structure -->
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <h4>Modal Header</h4>
-      <p>A bunch of text</p>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-  </div>
   
 <script>
 
@@ -63,6 +84,7 @@
   $(document).ready(function(){
     $('.fixed-action-btn').floatingActionButton();
     $('.modal').modal();
+    $('.sidenav').sidenav();
 
   });
 </script>
