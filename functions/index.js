@@ -1,5 +1,5 @@
 //Imports into firebase project
-
+const alert = require('alert-node')
 let express = require('express')
 var expressHbs = require('express-handlebars')
 var bodyParser = require('body-parser')
@@ -162,6 +162,7 @@ app.get("/home", (req, res) => {
                         querySnapshot.forEach((doc) => {
                              lessons.push(doc.data()); 
                         });
+                        
                         return res.render('home', {'lessons': lessons, 'user': firebase.auth().currentUser});
 
                     }).catch(function(error) {
@@ -172,7 +173,8 @@ app.get("/home", (req, res) => {
                 //Perform actions if user not authenticated
                 console.log("User not authorized to see videos!");
                 
-           
+               
+                
             
     });
     
@@ -217,7 +219,12 @@ app.post("/authenticate/sign_in", (req, res) => {
  
         })
         .catch((error) => {
-            console.log(error.message)
+        console.log(error.message)
+            
+        //Send the error message to the client side
+        res.send('<h1 style="text-align: center; font-family: sans-serif; font-weight: bold; color: green;">' 
+        + error.message + 
+        '</h1><a href="/authenticate/sign_up" style="text-decoration: none;  color: green; text-align: center; font-family: sans-serif;" class="btn">Go Back</a> ')
         });
 })
 
@@ -273,9 +280,10 @@ app.post("/authenticate/sign_up", (req, res) =>
              
                 }
             })
-        
+            res.redirect("/home")
         })
         .catch((error) => {
+            //Handle the authentication error
             console.log("There seems to be an error with the user authentication!")
             console.log(error.message);
             throw new Error(error.message)
@@ -284,12 +292,18 @@ app.post("/authenticate/sign_up", (req, res) =>
 
        
     }).catch((error) => {
+        //all error codes
         var errorCode = error.code;
         var errorMessage = error.message;
         console.log("error" + errorMessage)
         console.log("code" + errorCode)
+
+        //Send the error message to the client side
+        res.send('<h1 style="text-align: center; font-family: sans-serif; font-weight: bold; color: green;">' 
+        + errorMessage + 
+        '</h1><a href="/authenticate/sign_up" style="text-decoration: none;  color: green; text-align: center; font-family: sans-serif;" class="btn">Go Back</a> ')
     });
-    return res.redirect("/home")
+   
 });
 
 app.get("/authenticate/log_out", (req, res) => {
@@ -298,11 +312,15 @@ app.get("/authenticate/log_out", (req, res) => {
         .auth()
         .signOut()
         .then(() => {
-            console.log("We're very sorry you left");
-            res.render('./AuthFolders/logOut');
+            //render log out page
+            return res.render('./AuthFolders/logOut');
         })
-        .catch(() => {
-            console.log("error signing out!")
+        .catch((error) => {
+            //log out the error message
+            console.log(error.message)
+
+            //Send error message to user that log in was unsuccessful 
+            res.send("<h1>There was an error logging you out</h1>" + "<h4>" + error.message + "</h4>")
         })
 }); 
 
@@ -679,8 +697,32 @@ app.get("/school/main/info/:school_id/invite/members/", (req,res) => {
 })
 
 app.post("/Invite/Members", (req,res) => {
-    sendMailThroughApp(res.body.email_field, null, '<h1>From EduBirdy</h1> <p>Join My School by entering the code<p>');
-    res.redirect('/home')
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: req.body.email_field,
+            pass: 'Bangweulu3'
+        }
+    });
+
+    const mailOptions = {
+        from: req.body.email_field,
+        to: req.body.send_to,
+        subject: 'Welcome Back!',
+        html: '<h1>Inviting you</h1>',
+    };
+
+
+    transporter.sendMail(mailOptions, (err, info) => {
+        if(err) {
+          console.log(err)
+          alert("An error has occured")
+         } else {
+          console.log(info);
+          alert("Successfully invited members!")
+          res.redirect('/')
+         }
+     });
 })
 
 app.get('/documentDoesntExist', (req, res) => {
@@ -730,3 +772,44 @@ app.get("/profile/:user_id/settings", (req,res) => {
     })
   
 })
+
+app.get("/:school_id/join/school", (req, res) => {
+  res.render("./AuthFolders/join_school",{'school_id': req.params.school_id})  
+})
+
+
+//Join School post method 
+
+//...
+app.post("join/school/:school_id", (req,res) => {
+
+    const school_directory =  db.collection("schools").doc(req.params.school_id);
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+           school_directory.get().then((doc) => {
+                if (doc.exists) {
+                    if (req.body.school_code === req.params.school_id) {
+                        membersCollection = school_directory.collection("members").doc(user.uid);
+
+                        membersCollection.set({
+                            'email': user.email,
+                            'uid': user.uid
+                        });
+
+                        console.log("Success joining school!")
+                        res.redirect("/home")
+                    }
+                } else {
+                    console.log("School Doesn't Exist")
+                    res.redirect("/documentDoesntExist");
+                }
+            }).catch(function(error) {
+                console.log(error.message);
+                alert("It Seems an error had occured")
+            });
+            
+        } else {
+            res.redirect("/authenticate/sign_up");
+        }
+    })
+});
