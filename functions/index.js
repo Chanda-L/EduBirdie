@@ -1,16 +1,16 @@
 //Imports into firebase project
-const alert = require('alert-node')
-let express = require('express')
-var expressHbs = require('express-handlebars')
-var bodyParser = require('body-parser')
+var alert = require('alert-node');
+var express = require('express');
+var expressHbs = require('express-handlebars');
+var bodyParser = require('body-parser');
 var firebase = require('firebase');
-var flash = require('express-flash-messages')
-const admin = require('firebase-admin');
-const path = require('path');
-const gcloud = require('@google-cloud/storage')
-let nodemailer = require('nodemailer')
-let url = require('url')
-const functions = require('firebase-functions');
+var flash = require('express-flash-messages');
+var admin = require('firebase-admin');
+var path = require('path');
+var gcloud = require('@google-cloud/storage');
+var nodemailer = require('nodemailer');
+var url = require('url');
+var functions = require('firebase-functions');
 
 
 /* eslint-disable consistent-return */
@@ -165,7 +165,7 @@ app.get("/home", (req, res) => {
                         
                         return res.render('home', {'lessons': lessons, 'user': firebase.auth().currentUser});
 
-                    }).catch(function(error) {
+                    }).catch((error) =>{
                         console.log(error.message);
                        
                     });
@@ -733,7 +733,10 @@ app.get('/documentDoesntExist', (req, res) => {
 exports.app = functions.https.onRequest(app);
 
 app.get("/authenticate/google_sign_up", (req, res) => {
-
+    //TODO: add google authentication into edubirdy
+    //google auth methods
+    //google auth log in and out
+    //sync authentication with database
 
 })
 
@@ -752,13 +755,13 @@ app.get("/profile/:user_id/settings", (req,res) => {
             db.collection("users")
               .doc(req.params.user_id)
               .get()
-              .then(function(doc) {
+              .then((doc) => {
                 if (doc.exists) {
                     //Get documents data
                     data = doc.data();
                 }
                 return res.render("./AuthFolders/settings",{'data': data});
-              }).catch(function(error) {
+              }).catch((error) =>{
                   //Error message as error occured
                     console.log(
                         error.message
@@ -813,3 +816,62 @@ app.post("join/school/:school_id", (req,res) => {
         }
     })
 });
+
+app.get("/edubird/error/", (req,res) => {
+    return res.render(//Add in error code and template
+    
+    );
+})
+
+app.get("/edubird/search", (req,res) => {
+    //Render search.hbs file 
+    const searchArray = [];
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            //Get query string parameter
+            let user_search = req.query.s;
+            console.log(req.query.s)
+            // add database functions
+            // Search and limit the amount of data returned
+            // Return schools and lessons relating to search
+
+            if (user_search !== 'undefined') {
+                //Get database data from cloud firestore
+                let lessons = db.collection("lessons");
+
+                //Get database data
+                lessons.get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        let nameString = doc.data().name;
+                        if (nameString === user_search) {
+                            //Search relation success!
+                            console.log("added user search ")
+                            searchArray.push(doc.data());
+                        } else {
+                            console.log("search doesn't relate")
+                        }
+                    });
+                    return res.render("./AuthFolders/search", {'search': searchArray})
+                }).catch((err) => {  
+                    console.log(err.message)
+                });
+                
+            } else {
+                console.log("User hasn't entered any text")
+            }
+
+    } else {
+        console.log("User not authenticated");
+        return res.redirect("/authenticate/sign_up");
+    }
+    })
+
+    
+})
+
+app.post('/edubird/search', (req, res) => {
+    //redirect back to get route to add query string parameter
+    res.redirect("/edubird/search?s=" + req.body.SearchBar)
+   
+})
+

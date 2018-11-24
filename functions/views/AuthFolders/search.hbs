@@ -1,23 +1,55 @@
 {{>home}}
 
 <body>
-    
+   
   <nav>
-    <div class="nav-wrapper">
-      <form>
+    <div class="nav-wrapper teal">
+      <form id="search_form" method="POST" action="/edubird/search">
         <div class="input-field">
-          <input id="search" type="search" required>
-          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+          <input name="SearchBar" id="search" type="search" required>
+          <label class="label-icon" for="search"><i class="material-icons">search</i> </label>
           <i class="material-icons">close</i>
+         
         </div>
       </form>
     </div>
   </nav>
+
+
+
+    <ul class="collection">
+      {{!-- add in all successful searches --}}
+
+      {{#each search}}
+      
+
+      
+    <li id="video" class="collection-item avatar home-video">
+        <video class="" style="width: 300px"class=" responsive-video" preload="metadata">
+        <source src="{{{downloadURL}}}" type="video/mp4">
+      </video>
+      <br>
+      <span class="title">{{{name}}}</span>
+      <p>{{{uploaded_at}}} <br>
+         
+<a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson"class="waves-effect waves-light btn">Watch</a>
+      </p> 
+      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+    </li>
+      {{/each}}
+    </ul>
+            
+
+{{!-- Search box javascript query string --}}
+<script>
+  //console.log("hi")
+  //console.log(window.location.href) 
+ document.getElementById('search_form').onsubmit = function() {
+   
+   text = window.location.href + document.getElementById('search').value;
+   console.log(text);
+ }
+</script>
 </body>
-
-
-<h3 class="center-align teal-text">Search for lessons to watch...</h3>
-
-
 
 </html>

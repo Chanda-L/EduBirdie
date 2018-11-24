@@ -6,14 +6,42 @@
   
     
 <style>
-  
+
+ 
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
 #logo {
   font-family: 'Pacifico'
 }
-  
+
+ #join_button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    border-radius: 30px;
+    width: 40%;
+  }
+  @media only screen and (max-width: 768px) {
+    #join_button {
+      font-size: 12px;
+      width: 60%;
+    }
+  }
+  .page-footer {
+    margin-top: 30%;
+  }
+
 </style>
  
+
+
+
+
+
+
+
+
+ {{!-- html structure below --}}
  {{#if user}}
   <nav class="nav-extended teal">
     <div class="nav-wrapper ">
@@ -60,6 +88,10 @@
   
    }
  }
+
+ #video-container {
+   display: inline-block;
+ }
 </style>
     
 <div id="home">
@@ -70,9 +102,9 @@
       {{#each lessons}}
       <div id="video-container">
        <a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">
-      <div id="show_video" class="hoverable waves-effect waves-teal z-depth-1">
+      <div id="show_video" class="">
      
-      <video class="" style="width: 200px;"class=" responsive-video" preload="metadata">
+      <video class="" style="width: 250px;"class=" responsive-video" preload="metadata">
         <source src="{{{downloadURL}}}" type="video/mp4">
       </video>
      
@@ -88,14 +120,12 @@
       <div class="row center">
         <h5 class="header col s12 light">Learning made easy.</h5>
       </div>
-      <div class="row center">
-      </div>
       <br><br>
         
     </div>
   </div>
 
-</div>
+
 
 
 <div id="search">
@@ -160,7 +190,14 @@
   {{else}} 
   
 <!--   Icon Section   -->
-      
+<style>
+      html {
+    background-image: url(https://wallpapersite.com/images/wallpapers/blur-background-3840x2160-spectrum-electromagnetic-4k-901.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+</style>
     </div>
     <br><br>
   </div>
@@ -228,59 +265,39 @@
           </div>
         </footer>
             
-<style>
-  #join_button {
-       display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
-    border-radius: 30px;
-    width: 40%;
-  }
-  @media only screen and (max-width: 768px) {
-    #join_button {
-      font-size: 12px;
-      width: 60%;
-    }
-  }
-  .page-footer {
-    margin-top: 30%;
-  }
 
-  html {
-    background-image: url(https://wallpapersite.com/images/wallpapers/blur-background-3840x2160-spectrum-electromagnetic-4k-901.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
-
-}
-</style>
   {{/if}}
+
+{{#if user}}
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large red">
+    <i class="large material-icons">mode_edit</i>
+  </a>
+  <ul>
+    <li><a  href="edubird/search/" class="btn-floating red"><i class="material-icons">search</i></a></li>
+    <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+    <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+    <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+  </ul>
+</div>
+      
+ {{/if}}
 
  
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
   <script>
-      $(document).ready(function(){
+      $(document).ready(function() {
+
         $('.sidenav').sidenav();
         $('.slider').slider();
+        $('.fixed-action-btn').floatingActionButton();
       });
-      document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.slider');
-  });
-
-  // Or with jQuery
-
-
   </script>
- 
-  
-
-
-
-             <!--JavaScript at end of body for optimized loading-->
-  
-   
+          
    <script>   
   
     $(document).ready(function() {
@@ -289,12 +306,7 @@
   
     </script>
   
-    <style>
-      body {
-        margin: 0px;
-        padding: 0px;
-      }
-    </style>
+ 
 
     </body>
 </html>
