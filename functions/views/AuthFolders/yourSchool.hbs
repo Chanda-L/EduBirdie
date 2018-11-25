@@ -1,5 +1,12 @@
 {{>home}}
+<style>
 
+ 
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+#logo {
+  font-family: 'Pacifico'
+}
+</style>
 
   <div class="row">
     <div class="col s12">
@@ -19,21 +26,29 @@
         
 <div id="schoolinfo">
 {{#with SchoolData}}     
-    <h3 class="center-align teal-text ">{{{name}}}</h3>
-
-    
-    
+    <h3 id="logo" class="center-align teal-text ">{{{name}}}</h3>
 {{/with}}
 
 
 {{#if is_admin}}
 {{#with SchoolData}}
-  <a href="/school/main/info/{{{secretSchoolCode}}}/invite/members/" class="waves-effect waves-light btn">Invite Members!<i class="material-icons left">mail</i></a>
+  <a style="width: 100%;"href="/school/main/info/{{{secretSchoolCode}}}/invite/members/" class="waves-effect waves-light btn">Invite Members!<i class="material-icons left">mail</i></a>
 {{/with}}
 {{else}}
 <p>Nothing</p>
 {{/if}}
 
+
+<h5 id="logo" class="teal-text center-align">Members: </h5>
+<ul class="collection">
+{{#if is_admin}} 
+{{#each members}} 
+   
+      <li class="collection-item">{{{email}}}<br></br><a href="edubird/school/remove/user" class="circle btn"><i class="material-icons left">delete</i>remove</a></li>
+            
+{{/each}}
+{{/if}}
+</ul>
 </div>
 <div id="classes">
     <h4 class="center-align">add a class to your wonderful school!   <a class="btn-floating btn-large pulse teal"><i class="material-icons">add</i></a></h4>

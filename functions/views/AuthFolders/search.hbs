@@ -1,7 +1,34 @@
 {{>home}}
 
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+#logo {
+  font-family: 'Pacifico'
+}
+
+</style>
 <body>
-   
+   <!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
+  <li><a href="#!">lessons</a></li>
+  <li><a href="#!">schools</a></li>
+  
+</ul>
+<nav>
+  <div class="nav-wrapper teal">
+    <a id="logo" href="#!" class="brand-logo">Edubirdy</a>
+    <ul class="right hide-on-med-and-down">
+      <li><a href="sass.html">Home<i class="material-icons left">home</i></a></li>
+
+      <!-- Dropdown Trigger -->
+      <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Filter<i class="material-icons right">filter_list</i></a></li>
+    </ul>
+  </div>
+</nav>
+
+
+        
   <nav>
     <div class="nav-wrapper teal">
       <form id="search_form" method="POST" action="/edubird/search">
@@ -16,11 +43,19 @@
   </nav>
 
 
+    <ul class="collection">
+      {{#each schools}} 
+        <li style="font-weight: bold;" class="black-text collection-item">{{{name}}}<br><a class="btn" href="/{{{secretSchoolCode}}}/join/school/">Join!</a></li>
+        {{!-- Join School Button --}}
+        
+      {{/each}}
+    </ul>
 
     <ul class="collection">
       {{!-- add in all successful searches --}}
 
-      {{#each search}}
+      <h2 id="logo" class="center-align teal-text">Lessons </h2>
+      {{#each lessons}}
       
 
       
@@ -36,10 +71,21 @@
       </p> 
       <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
     </li>
+      {{else}}
+        <h5 class="teal-text center-align">Search for lessons or schools...</h5>
+
       {{/each}}
     </ul>
             
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+  //document.ready materialize javascript function
+  $(document).ready(function() {
+    $(".dropdown-trigger").dropdown();
+  })
+</script>
 {{!-- Search box javascript query string --}}
 <script>
   //console.log("hi")

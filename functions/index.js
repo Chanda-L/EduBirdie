@@ -133,6 +133,10 @@ app.listen(3000, () => {
     console.log("port = 3000, server = localhost;")
 });
 
+app.get("/", (req, res) => {
+    return res.redirect("/home");
+});
+
 app.get("/authenticate/sign_up", (req, res) => 
 {
     firebase.auth().onAuthStateChanged((user) => {
@@ -332,6 +336,7 @@ app.get("/school/main/info/:school_id", (req, res) => {
     let SchoolData;
     let messages = [];
     let classes = [];
+    let members = [];
     let admin;
   
     firebase.auth().onAuthStateChanged((user) => {
@@ -373,7 +378,18 @@ app.get("/school/main/info/:school_id", (req, res) => {
                 console.log(error.message)
                 return error.message;
             })
-
+            db.collection("schools")
+            .doc(req.params.school_id)
+            .collection("members")
+            .get()
+            .then((querySnapshot) =>{
+                querySnapshot.forEach((doc) => {
+                    //Add members into members array
+                    members.push(doc.data());
+                })  
+            }).catch((error) => {
+                console.log(error.message);
+            })
             db.collection("users").doc(user.uid).collection("school").doc(req.params.school_id).collection("messages").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     messages.push(doc.data());
@@ -395,7 +411,7 @@ app.get("/school/main/info/:school_id", (req, res) => {
                     let schoolCode = req.params.school_id
 
 
-                    return res.render('./AuthFolders/yourSchool', {'is_admin': admin, 'SchoolData':SchoolData, 'messages': messages, 'classes': classes, 'SchoolCode': schoolCode});
+                    return res.render('./AuthFolders/yourSchool', {'is_admin': admin, 'SchoolData':SchoolData, 'messages': messages, 'classes': classes, 'members': members, 'SchoolCode': schoolCode});
             
                 } else {
 
@@ -480,7 +496,7 @@ app.get("/profile", (req, res) => {
     let databaseCode;
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-         
+             
             db.collection("schools").where('admin', '==', user.uid).get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     // doc.data() is never undefined for query doc snapshots
@@ -655,19 +671,7 @@ app.get("/class/main/info/:school_id/:class_id/ClassInfo", (req, res) => {
     })
 });
 
-app.get("/home/search", (req, res) => {
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            //Perform actions if the user has been logged in
-            
 
-            res.render("./AuthFolders/search");
-        } else {
-            //Perform actions if the user has not yet been authenticated
-            res.redirect("/authenticated/sign_up");
-        }
-    });
-})
 
 app.post("/submit/search/:search", (req,res) => {
     let id = req.params.search;
@@ -777,42 +781,56 @@ app.get("/profile/:user_id/settings", (req,res) => {
 })
 
 app.get("/:school_id/join/school", (req, res) => {
-  res.render("./AuthFolders/join_school",{'school_id': req.params.school_id})  
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            return res.render("./AuthFolders/join_school",{'school_id': req.params.school_id})  
+        } else {
+            return res.redirect("/authenticate/sign_up")
+        }
+    });
+  
 })
 
 
 //Join School post method 
 
 //...
-app.post("join/school/:school_id", (req,res) => {
+app.post("/join/school/:school_id", (req,res) => {
 
     const school_directory =  db.collection("schools").doc(req.params.school_id);
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
            school_directory.get().then((doc) => {
                 if (doc.exists) {
-                    if (req.body.school_code === req.params.school_id) {
+                    console.log("code: " + req.body.school_code)
+                    console.log("code: " + req.params.school_id)
+                    if (req.body.school_code.toString() === req.params.school_id.toString()) {
                         membersCollection = school_directory.collection("members").doc(user.uid);
 
+                        //Add user to the members collection
                         membersCollection.set({
                             'email': user.email,
-                            'uid': user.uid
+                            'uid': user.uid,
+                            'user_status': 'member',
                         });
 
                         console.log("Success joining school!")
-                        res.redirect("/home")
+                        return res.redirect("/home")
+
+                    } else {
+                        console.log("That code seems to be invalid")
+                        res.send("<h1>The code: " + req.body.school_code + ", seems to be invalid");
                     }
                 } else {
                     console.log("School Doesn't Exist")
-                    res.redirect("/documentDoesntExist");
                 }
-            }).catch(function(error) {
+            }).catch((error) => {
                 console.log(error.message);
                 alert("It Seems an error had occured")
             });
             
         } else {
-            res.redirect("/authenticate/sign_up");
+            return res.redirect("/authenticate/sign_up");
         }
     })
 });
@@ -825,7 +843,8 @@ app.get("/edubird/error/", (req,res) => {
 
 app.get("/edubird/search", (req,res) => {
     //Render search.hbs file 
-    const searchArray = [];
+    const lessonsArray = [];
+    const schoolsArray = [];
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
             //Get query string parameter
@@ -836,22 +855,42 @@ app.get("/edubird/search", (req,res) => {
             // Return schools and lessons relating to search
 
             if (user_search !== 'undefined') {
-                //Get database data from cloud firestore
+                //Get database lessons from cloud firestore
                 let lessons = db.collection("lessons");
-
-                //Get database data
+                //Get database of schools from cloud firestore
+                let schools = db.collection("schools")
+                //Get database data for schools
+                schools.get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        let nameString = doc.data().name;
+                        if (nameString.includes(user_search)) {
+                            //Search relation Sucess!!
+                            if (doc.data().admin === user.uid) {
+                                
+                                //Do nothing as user is already admin and therefor cant join.
+                            } else {
+                                schoolsArray.push(doc.data())
+                            }
+                        } else {
+                            console.log("A school with that name has not been found!")
+                        }
+                    })
+                }).catch((err) => {
+                    console.log(err.message)
+                })
+                //Get database data for lessons
                 lessons.get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
                         let nameString = doc.data().name;
-                        if (nameString === user_search) {
+                        if (nameString.includes(user_search)) {
                             //Search relation success!
                             console.log("added user search ")
-                            searchArray.push(doc.data());
+                            lessonsArray.push(doc.data());
                         } else {
                             console.log("search doesn't relate")
                         }
                     });
-                    return res.render("./AuthFolders/search", {'search': searchArray})
+                    return res.render("./AuthFolders/search", {'lessons': lessonsArray, 'schools': schoolsArray})
                 }).catch((err) => {  
                     console.log(err.message)
                 });
@@ -859,19 +898,30 @@ app.get("/edubird/search", (req,res) => {
             } else {
                 console.log("User hasn't entered any text")
             }
-
+            
     } else {
         console.log("User not authenticated");
         return res.redirect("/authenticate/sign_up");
     }
+    
     })
-
+   
     
 })
 
 app.post('/edubird/search', (req, res) => {
     //redirect back to get route to add query string parameter
     res.redirect("/edubird/search?s=" + req.body.SearchBar)
-   
 })
 
+//Remove users from school route
+app.get("/edubird/school/remove/user", (req,res) => {
+    firebase.auth().onAuthStateChanged((user) => {
+        //user is signed in 
+        if (user) {
+            
+        } else {
+
+        }
+    })
+})
