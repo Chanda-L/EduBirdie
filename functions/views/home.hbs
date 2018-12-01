@@ -3,12 +3,12 @@
 
 
 <body>
-  
-    
-<style>
 
- 
-@import url('https://fonts.googleapis.com/css?family=Pacifico');
+
+  <style>
+
+
+    @import url('https://fonts.googleapis.com/css?family=Pacifico');
 #logo {
   font-family: 'Pacifico'
 }
@@ -32,54 +32,69 @@
   }
 
 </style>
- 
 
-
-
-
-
-
-
-
- {{!-- html structure below --}}
- {{#if user}}
+  {{!-- html structure below --}}
+  {{#if user}}
   <nav class="nav-extended teal">
     <div class="nav-wrapper ">
-          <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+      <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
       <a id="logo" href="#" class="brand-logo">EduBirdy</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="/profile">Record Lesson<i class="material-icons right">camera</i></a></li>
         <li><a href="/authenticated/create/create_school">Create School<i class="material-icons left">add</i></a></li>
         <li><a class="btn" href="/profile">Profile</a></li>
+          <li>
+          <button id="helpTrigger" class="btn">
+          Help
+          
+          </button>
+          </li>
       </ul>
     </div>
     <div class="nav-content">
       <ul class="tabs tabs-transparent">
-        <li class="tab col s3"><a class="active" href="#home"><i class="material-icons left">home</i>Home</a></li>
-        <li class="tab col s3"><a  href="#search">Search<i class="material-icons left">search</i></a></li>
+        <li class="tab col s12"><a class="active" href="#home"><i class="material-icons left">home</i>Home</a></li>
       </ul>
-     
-      
+
+
     </div>
 
   </nav>
 
-     <ul id="slide-out" class="sidenav">
-      <li><h5 class="teal-text center-align">EduBirdy</h5></li>
-      <li><a href="/home"><i class="material-icons left">home</i>Home</a></li>
-      <li><a href="/profile"><i class="material-icons left">portrait</i>Profile</a></li>
-{{!--     
-         <li><a class="subheader">View Lessons</a></li>
-      {{#each lessons}}
-          <li><a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">{{{name}}}</a><li>
+  <ul id="slide-out" class="sidenav">
+    <li>
+      <h5 class="teal-text center-align">EduBirdy</h5>
+    </li>
+    <li><a href="/home"><i class="material-icons left">home</i>Home</a></li>
+    <li><a href="/profile"><i class="material-icons left">portrait</i>Profile</a></li>
+    {{!--
+    <li><a class="subheader">View Lessons</a></li>
+    {{#each lessons}}
+    <li><a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">{{{name}}}</a>
+    <li>
       {{/each}} --}}
-    </ul>
- 
-   
-  
-    
-<style>
- @media only screen and (max-width: 768px) {
+  </ul>
+
+<!-- Element Showed -->
+
+  <!-- Tap Target Structure -->
+  <div class="tap-target  light-blue" data-target="menu">
+    <div class="tap-target-content  ">
+      <h2 style="margin-left: 80px;"id="logo" class="white-text">Help </h2>
+      <p class="white-text"> tap on me again to view different opitons for: 
+        <br> <strong>creating a school 
+          <br> Searching
+          <br> profile 
+          <br> and to upload your lesson
+          </strong>
+          <strong> <p>click the help icon to see me again!</p></strong>
+        </p>
+    </div>
+  </div>
+
+
+  <style>
+    @media only screen and (max-width: 768px) {
    #video-container {
 
     margin: auto;
@@ -93,111 +108,85 @@
    display: inline-block;
  }
 </style>
-    
-<div id="home">
- <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-      <br><br>
-      <h5 class="header teal-text">Newest Content: </h5>
-      {{#each lessons}}
-      <div id="video-container">
-       <a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">
-      <div id="show_video" class="">
-     
-      <video class="" style="width: 250px;"class=" responsive-video" preload="metadata">
-        <source src="{{{downloadURL}}}" type="video/mp4">
-      </video>
-     
-    </a>
-      <p class="bold">{{{name}}}<br></p>
-      <small class="text-gray">by: {{{SchoolName}}} • {{{uploaded_at}}}</small>
 
+  <div id="home">
+    <div class="section no-pad-bot" id="index-banner">
+      <div class="container">
+        <br><br>
+        <h5 class="header teal-text">Newest Content: </h5>
+        {{#each lessons}}
+        <div id="video-container">
+          <a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">
+            <div id="show_video" class="">
+
+              <video class="" style="width: 250px;" class=" responsive-video" preload="metadata">
+                <source src="{{{downloadURL}}}" type="video/mp4">
+              </video>
+
+          </a>
+          <p class="bold">{{{name}}}<br></p>
+          <small class="text-gray">by: {{{SchoolName}}} • {{{uploaded_at}}}</small>
+
+        </div>
       </div>
-   </div>
- 
-   
+
+
       {{/each}}
       <div class="row center">
         <h5 class="header col s12 light">Learning made easy.</h5>
       </div>
       <br><br>
-        
+
     </div>
   </div>
 
 
 
 
-<div id="search">
-    <nav>
-    <div class="nav-wrapper teal">
-      <form action="/submit/search/:search" method="POST">
-        <div class="input-field">
-          <input name="search" id="search" type="search" required>
-          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-          <i class="material-icons">close</i>
-        </div>
-      </form>
-    </div>
-  </nav>
-  
 
-  <ul class="collection">
-{{#each lessons}}
- 
-    <li id="video" class="collection-item avatar home-video">
-        <video class="" style="width: 300px"class=" responsive-video" preload="metadata">
-        <source src="{{{downloadURL}}}" type="video/mp4">
-      </video>
-      <br>
-      <span class="title">{{{name}}}</span>
-      <p>{{{uploaded_at}}} <br>
-         
-<a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson"class="waves-effect waves-light btn">Watch</a>
-      </p> 
-      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-    </li>
-    
-{{/each}}
- </ul>
-</div>
+
+   
 
 
 
 
 
-       {{/if}}
+  {{/if}}
 
-       
-         {{#if user}}
+
+  {{#if user}}
   <div class="container">
     <div class="section">
 
 
-       <ul id="slide-out" class="sidenav">
-    <li><div class="user-view">
+      <ul id="slide-out" class="sidenav">
+        <li>
+          <div class="user-view">
 
-      <a href="#name"><span class="white-text name"></span></a>
-      <a href="#email"><span class="teal-text email">{{user.email}}</span></a>
-    </div></li>
-    <li><a href="#!"><i class="material-icons">add</i>Create School</a></li>
-    <li><a href="#!">Second Link</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">profile</a></li>
-    <li><a class="waves-effect" href="#!">EduBirdy Profile<i class="material-icons">portrait</i></a></li>
-    
-  </ul>
-  {{else}} 
-  
-<!--   Icon Section   -->
-<style>
-      html {
-    background-image: url(https://wallpapersite.com/images/wallpapers/blur-background-3840x2160-spectrum-electromagnetic-4k-901.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
+            <a href="#name"><span class="white-text name"></span></a>
+            <a href="#email"><span class="teal-text email">{{user.email}}</span></a>
+          </div>
+        </li>
+        <li><a href="#!"><i class="material-icons">add</i>Create School</a></li>
+        <li><a href="#!">Second Link</a></li>
+        <li>
+          <div class="divider"></div>
+        </li>
+        <li><a class="subheader">profile</a></li>
+        <li><a class="waves-effect" href="#!">EduBirdy Profile<i class="material-icons">portrait</i></a></li>
 
-}
-</style>
+      </ul>
+      {{else}}
+
+      <!--   Icon Section   -->
+      <style>
+        html {
+          background-image: url(https://wallpapersite.com/images/wallpapers/blur-background-3840x2160-spectrum-electromagnetic-4k-901.jpg);
+          background-repeat: no-repeat;
+          background-position: center;
+
+        }
+      </style>
     </div>
     <br><br>
   </div>
@@ -205,8 +194,8 @@
 
   <nav>
     <div class="teal accent-4 z-depth-4 nav-wrapper">
-       <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-        
+      <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
       <a id="logo" href="#" class="brand-logo">Edubirdy</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authenticate/sign_in">Log In</a></li>
@@ -218,95 +207,106 @@
 
 
   <ul id="slide-out" class="sidenav">
-    <li><div class="user-view">
-      <div class="background">
-        <img src="https://cdn.hipwallpaper.com/i/70/22/P1Nzdt.jpg">
+    <li>
+      <div class="user-view">
+        <div class="background">
+          <img src="https://cdn.hipwallpaper.com/i/70/22/P1Nzdt.jpg">
+        </div>
       </div>
-    </div></li>
-      <li><a class="subheader">Join EduBirdy</a></li>
+    </li>
+    <li><a class="subheader">Join EduBirdy</a></li>
 
     <li><a href="/authenticate/sign_up"><i class="material-icons">email</i>Sign Up</a></li>
     <li><a href="/authenticate/sign_in"><i class="material-icons">phone</i>Sign In</a></li>
     <li><a href="/edubirdie/terms_of_service"><i class="material-icons">T</i>Terms of service</a></li>
-    <li><div class="divider"></div></li>
+    <li>
+      <div class="divider"></div>
+    </li>
     <li><a class="subheader">Support</a></li>
     <li><a class="waves-effect" href="/edubirdie/help">Help</a></li>
     <li><a href="/edubirdy/contact"><i class="material-icons">contact_phone</i>Contact Us</a></li>
   </ul>
- 
+
   <h1 id="logo" class="white-text center-align " style="font-weight: bold;">Edubirdy</h1>
   <h5 class="white-text center-align" style="font-weight: bold;">Want money? Have something to teach?</h5>
-  <a id="join_button" href="authenticate/sign_up" style="font-weight: bold;"class=" black-text center-align btn-large pulse teal accent-3 ">Join Edubirdy!</a>
-   
-        <footer class="teal accent-4 z-depth-4 page-footer">
-          <div class="container">
-            <div class="row">
-              <div class="col l6 s12">
-                <h5 style="font-weight: bold;" id="logo" class="white-text">EduBirdy</h5>
-                <p class="grey-text "></p>
-              </div>
-              <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Navigate</h5>
-                <ul>
-                  <li><a  style="font-weight: bold;" class="grey-text text-lighten-3" href="/edubirdie/contact">Contact</a></li>
-                  <li><a  style="font-weight: bold;" class="grey-text text-lighten-3" href="#!">Help</a></li>
-                  <li><a  style="font-weight: bold;" class="grey-text text-lighten-3" href="/authenticate/log_in">Log in</a></li>
-                  <li><a  style="font-weight: bold;" class="grey-text text-lighten-3" href="#!">Terms Of Service</a></li>
-                  <li><a  style="font-weight: bold;" class="grey-text text-lighten-3" href="#!">Sign Up</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="footer-copyright">
-            <div class="container">
-            © 2018 Copyright Text
-          
-            </div>
-          </div>
-        </footer>
-            
+  <a id="join_button" href="authenticate/sign_up" style="font-weight: bold;" class=" black-text center-align btn-large pulse teal accent-3 ">Join
+    Edubirdy!</a>
+
+  <footer class="teal accent-4 z-depth-4 page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 style="font-weight: bold;" id="logo" class="white-text">EduBirdy</h5>
+          <p class="grey-text "></p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Navigate</h5>
+          <ul>
+            <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="/edubirdie/contact">Contact</a></li>
+            <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="#!">Help</a></li>
+            <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="/authenticate/log_in">Log in</a></li>
+            <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="#!">Terms Of Service</a></li>
+            <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="#!">Sign Up</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        © 2018 Copyright Text
+
+      </div>
+    </div>
+  </footer>
+
 
   {{/if}}
 
-{{#if user}}
-<div class="fixed-action-btn">
-  <a class="btn-floating btn-large red">
-    <i class="large material-icons">mode_edit</i>
-  </a>
-  <ul>
-    <li><a  href="edubird/search/" class="btn-floating red"><i class="material-icons">search</i></a></li>
-    <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-    <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-    <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-  </ul>
-</div>
-      
- {{/if}}
+  {{#if user}}
+  <div class="fixed-action-btn">
+    <a id="menu" class="btn-floating btn-large light-blue">
+      <i class="large material-icons">menu</i>
+    </a>
+    <ul>
+      <li><a href="edubird/search/" class="btn-floating red"><i class="material-icons">search</i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
 
- 
+  {{/if}}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 
   <script>
-      $(document).ready(function() {
+    $(document).ready(function () {
 
-        $('.sidenav').sidenav();
-        $('.slider').slider();
-        $('.fixed-action-btn').floatingActionButton();
-      });
+      $('.sidenav').sidenav();
+      $('.slider').slider();
+      $('.fixed-action-btn').floatingActionButton();
+    });
   </script>
-          
-   <script>   
-  
-    $(document).ready(function() {
-        $('.tabs').tabs()
-    })
-  
-    </script>
-  
- 
 
-    </body>
+  <script>
+
+    $(document).ready(function () {
+      $('.tabs').tabs();
+      $('.tap-target').tapTarget();
+   
+    })
+
+      document.getElementById("helpTrigger").addEventListener('click', () => {
+           $('.tap-target').tapTarget('open');
+      })
+  </script>
+
+
+
+</body>
+
 </html>

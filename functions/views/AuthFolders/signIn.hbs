@@ -1,76 +1,129 @@
 {{>home}}
 
-        <h2 style="font-weight: bold" class="center-align teal-text">EduBirdy</h2>
+<h2 style="font-weight: bold" class="center-align teal-text">EduBirdy</h2>
 
-        <div id="progressBar" class="preloader-wrapper big active">
-            <div class="spinner-layer spinner-green-only">
-                <div class="circle-clipper left">
+<div id="progressBar" class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-green-only">
+        <div class="circle-clipper left">
             <div class="circle"></div>
-            </div><div class="gap-patch">
-                <div class="circle"></div>
-            </div><div class="circle-clipper right">
+        </div>
+        <div class="gap-patch">
             <div class="circle"></div>
-            </div>
         </div>
+        <div class="circle-clipper right">
+            <div class="circle"></div>
         </div>
- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-      <script>
-        $("#progressBar").hide();
-      </script>
-        
-        <div id="signUpForm" class="col s12 m6 center-align">
-      <div class="">
+    </div>
+</div>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+<script>
+    $("#progressBar").hide();
+</script>
+
+<div id="signUpForm" class="col s12 m6 center-align">
+    <div class="">
         <div class="card-content white-text">
-          <form onsubmit="$('#signUpForm').hide(); $('#progressBar').show();" action="/authenticate/sign_in" method="POST" class="signUpForm">
-            <div class="form-group">
-                <label for="email_log_in">Email address</label>
-                <input name= "email_log_in"type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
+            <form onsubmit="$('#signUpForm').hide(); $('#progressBar').show();" action="/authenticate/sign_in" method="POST"
+                class="signUpForm">
+                <div class="form-group">
+                    <label for="email_log_in">Email address</label>
+                    <input name="email_log_in" type="email" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="Enter email">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
 
-            <div class="form-group">
-                <label for="password_log_in">Password</label>
-                <input name="password"type="password" class="form-control" id="password_log_in" placeholder="Password">
-            </div>
-           
-            <button style="margin-top: 30px;"type="submit" class="btn btn-primary"><i class="left material-icons">send</i>Log in</button>
-        </form>
+                <div class="form-group">
+                    <label for="password_log_in">Password</label>
+                    <input name="password" type="password" class="form-control" id="password_log_in" placeholder="Password">
+                </div>
+
+                {{!-- Google authentication button --}}
+                <div id="auth-buttons">
+
+                    <button style="margin-top: 30px;" type="submit" class="btn btn-primary"><i class="left material-icons">send</i>Log
+                        in</button>
+                </div>
+            </form>
         </div>
         <div class="card-action">
-          <p>By signing in you agree to the: <a href="#">Terms Of Service</a></p>
+            <p>By signing in you agree to the: <a href="#">Terms Of Service</a></p>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+</div>
+<div class="g-signin2" data-onsuccess="onSignIn" data-theme="light"></div>
 
-    
-   
+
+
+{{!-- Firebase library addition. --}}
+
+<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
 <script>
-    
+    //Config dictionary for firebase library
+    var config = {
+        apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
+        authDomain: "edubirdie-1534842942940.firebaseapp.com",
+        databaseURL: "https://edubirdie-1534842942940.firebaseio.com",
+        projectId: "edubirdie-1534842942940",
+        storageBucket: "edubirdie-1534842942940.appspot.com",
+        messagingSenderId: "1077918538165"
+    };
+    firebase.initializeApp(config);
+
+
+    function onSignIn(googleUser) {
+        console.log('Google Auth Response', googleUser);
+        // We need to register an Observer on Firebase Auth to make sure auth is initialized.
+        var unsubscribe = firebase.auth().onAuthStateChanged(function (firebaseUser) {
+            unsubscribe();
+            // Check if we are already signed-in Firebase with the correct user.
+            if (!isUserEqual(googleUser, firebaseUser)) {
+                // Build Firebase credential with the Google ID token.
+                var credential = firebase.auth.GoogleAuthProvider.credential(
+                    googleUser.getAuthResponse().id_token);
+                // Sign in with credential from the Google user.
+                firebase.auth().signInAndRetrieveDataWithCredential(credential).catch(function (error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // The email of the user's account used.
+                    var email = error.email;
+                    // The firebase.auth.AuthCredential type that was used.
+                    var credential = error.credential;
+                    // ...
+                });
+            } else {
+                console.log('User already signed-in Firebase.');
+            }
+        });
+    }
 </script>
+
+
 <style>
     @import url('https://fonts.googleapis.com/css?family=Pacifico');
-    
+
     @media only screen and (max-width: 768px) {
-        .signUpForm {
-            
-            
-        }        
-    } 
+        .signUpForm {}
+    }
 
     h2 {
         font-family: 'Pacifico';
     }
-    
-    .signUpForm { 
-    }
+
+    .signUpForm {}
 
     p {
         font-weight: bold;
         text-align: center;
     }
 </style>
-    </body>
+</body>
+
 </html>

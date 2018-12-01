@@ -1,80 +1,140 @@
 {{>home}}
 
+
+{{!-- Users can privately upload their content or upload to a specific school! --}}
 <style>
   @media only screen and (max-width: 768px) {
     .head {
       font-size: 20px;
     }
+
+    #UploadTrigger {
+    margin-top: 50%;
   }
+  }
+
+  .upload-inputs {
+    margin: auto;
+    width: 50%;
+    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+ #UploadTrigger {
+    margin-top: 30%;
+  }
+  
+
 </style>
+
 <div id="add_to_database_progress">
-<div class="center-align preloader-wrapper big active">
-      <div class="spinner-layer spinner-blue">
-        <div class="circle-clipper left">
-          <div class="circle"></div>
-        </div><div class="gap-patch">
-          <div class="circle"></div>
-        </div><div class="circle-clipper right">
-          <div class="circle"></div>
-        </div>
+  <div class="center-align preloader-wrapper big active">
+    <div class="spinner-layer spinner-blue">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
       </div>
-</div>
+      <div class="gap-patch">
+        <div class="circle"></div>
+      </div>
+      <div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="uploadLesson" style="display: none">
   <h2 class="head">Uploading Lesson! <i class="material-icons">av_timer</i></h2>
   <div class="progress">
-      <progress id="uploader" class="indeterminate" style="width: 0%"></progress>
-      
+    <progress id="uploader" class="indeterminate" style="width: 0%"></progress>
+
 
   </div>
-
- <p id="progress_indicator_label">
+  <input class="center-align" id="thumbnail" type="file" multiple>
+  <p id="progress_indicator_label">
     1%
   </p>
- <label>
-   <div style: "width: 200px;">
-        <input id="privacy"type="checkbox" />
+  <label>
+    <div style: "width: 200px;">
+      <input id="privacy" type="checkbox" />
     </div>
-        <span>Private</span>
-      </label>
- <button id="pause_upload" class=" btn">Pause Upload</button>
- <button id="resume_upload" class=" btn">Resume Upload</button>
- 
-  
-<br>
- <label for="videoTags">Tags: </label>
-  <div id="videoTags" class="chips chips-autocomplete"></div>
- 
- 
- 
+    <span>Private</span>
+  </label>
+  <button id="pause_upload" class=" btn">Pause Upload</button>
+  <button id="resume_upload" class=" btn">Resume Upload</button>
 
-<label>Name:</label>
+
+  <br>
+  <label for="videoTags">Tags: </label>
+  <div id="videoTags" class="chips chips-autocomplete"></div>
+
+
+
+
+  <label>Name:</label>
   <input id="name" type="text">
   <label>Description</label>
   <input id="description" type="text">
 </div>
 
-        <input class="center-align" id="file"type="file" multiple>
 
-        
+
+<div class="center">
+  <input class="center-align" id="file" type="file" multiple>
+</div>
+{{!-- Options button to launch a modal --}}
+<div class="center">
+  <button class=" hoverable z-depth-5 btn modal-trigger upload-inputs" data-target="upload-modal">Options
+    <i class="material-icons right">info</i>
+  </button>
   <!-- Customizable input  -->
+</div>
 
-{{!-- <style>
-  
-@media only screen and (max-width: 768px) {
- #uploadLesson {
 
-  }
-}
- 
-</style> --}}
+<div id="upload-modal" class="modal">
+  <div class="modal-content">
+    <h4 class="teal-text center-align">Upload options</h4>
+    <form action="#">
+
+      {{#each schoolOptions}}
+      <p>
+        <label>
+          <input name="group1" type="radio" checked />
+          <span>{{{name}}}</span>
+        </label>
+      </p>
+      {{/each}}
+      <p>
+        <label>
+          <input name="group1" type="radio" checked />
+          <span>Private</span>
+        </label>
+      </p>
+    </form>
+
+
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Done</a>
+  </div>
+</div>
+
+
+
+
+<div class="center">
+  <button id="UploadTrigger" class="z-depth-5 hoverable btn upload-inputs">Upload</button>
+</div>
+
+
+
 {{#with data }}
 
-  <p style="display: none" id="code">{{{code}}}</p>
-  <p style="display: none" id="schoolCode">{{{belongs_to}}}</p>
-  <p style="display: none" id="schoolName">{{{name}}}</p>
- 
+<p style="display: none" id="code">{{{code}}}</p>
+<p style="display: none" id="schoolCode">{{{belongs_to}}}</p>
+<p style="display: none" id="schoolName">{{{name}}}</p>
+
 {{/with}}
 <p style="display: none" id="id">{{{id}}}</p>
 
@@ -85,12 +145,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+<p style="display: none" id="user_id">
+
+</p>
 <script>
-//video tags
-let tags_for_video = [];
+  //video tags
+  let tags_for_video = [];
 
 
-//initializing the tags 
+  //initializing the tags 
   $('.chips').chips();
   $('.chips-initial').chips({
     data: [{
@@ -117,31 +180,31 @@ let tags_for_video = [];
     }
   });
 
-  
-console.log(document.getElementById('id').textContent)
+
+  console.log(document.getElementById('id').textContent)
   // Initialize Firebase
 
-var config = {
+  var config = {
     apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
     authDomain: "edubirdie-1534842942940.firebaseapp.com",
     databaseURL: "https://edubirdie-1534842942940.firebaseio.com",
     projectId: "edubirdie-1534842942940",
     storageBucket: "edubirdie-1534842942940.appspot.com",
     messagingSenderId: "1077918538165"
-};
+  };
   firebase.initializeApp(config);
- 
+
   let db = firebase.firestore();
   var storage = firebase.storage();
 
-  firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-    console.log("yes")
-  } else {
-    // No user is signed in.
-  }
-});
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      // User is signed in.
+      console.log("yes")
+    } else {
+      // No user is signed in.
+    }
+  });
 
   let circularProgressBar = document.getElementById('add_to_database_progress')
   let progress_indicator = document.getElementById('progress_indicator_label');
@@ -149,39 +212,48 @@ var config = {
   let fileButton = document.getElementById('file');
   let code = document.getElementById('code');
   let schoolCode = document.getElementById('belongs_to');
-
-
+  let thumbnail = document.getElementById('thumbnail');
+  let uploadButton = document.getElementById("UploadTrigger")
   circularProgressBar.style.display = "none";
   console.log(code.textContent)
   var uploadForm = document.getElementById('uploadLesson')
 
 
-  
-  fileButton.addEventListener('change', function(e) {
-      var file = e.target.files[0];
 
-      uploadForm.style.display = "block"
-      var storageRef = firebase.storage().ref('videos/' + file.name);
+  uploadButton.addEventListener('click', function (e) {
 
-      var task = storageRef.put(file)
+    var file;
+    if (document.getElementById('file').files.length == 0) {
+        //Notify user
+         M.toast({ html: "Please choose a video to upload!"})
+    } else {
+        file = fileButton.files[0];
+        
+
+   
+
+    uploadForm.style.display = "block"
+    var storageRef = firebase.storage().ref('videos/' + file.name);
+
+    var task = storageRef.put(file)
 
     task.on('state_changed',
 
 
-        
-      function progress(snapshot) {
-          let percentage = (snapshot.bytesTransferred / 
-          snapshot.totalBytes) * 100;
-          progress_indicator.textContent = Math.round(percentage) + "%";
 
-          document.getElementById('pause_upload').addEventListener('click', () => {
-            task.pause();
-            console.log("upload cancelled")
-          })
-          document.getElementById('resume_upload').addEventListener('click', () => {
-              task.resume();
-              console.log("upload resumed")
-          });
+      function progress(snapshot) {
+        let percentage = (snapshot.bytesTransferred /
+          snapshot.totalBytes) * 100;
+        progress_indicator.textContent = Math.round(percentage) + "%";
+
+        document.getElementById('pause_upload').addEventListener('click', () => {
+          task.pause();
+          console.log("upload cancelled")
+        })
+        document.getElementById('resume_upload').addEventListener('click', () => {
+          task.resume();
+          console.log("upload resumed")
+        });
       },
 
       function error(err) {
@@ -192,82 +264,87 @@ var config = {
 
       function complete() {
 
-          M.toast({html: "successfully uploaded your lesson!"})
+        M.toast({ html: "successfully uploaded your lesson!" })
 
-          document.getElementById('file').style.display = "none";
-          uploadForm.style.display = "none"
-          circularProgressBar.style.display = 'block';
-            let text = "";
-            let possible = 
-           "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        document.getElementById('file').style.display = "none";
+        uploadForm.style.display = "none"
+        circularProgressBar.style.display = 'block';
+        let text = "";
+        let possible =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 
-           for (var i = 0; i < 5; i++) {
-               text += possible.charAt(Math.floor(Math.random() * possible.length))
-           }
+        for (var i = 0; i < 5; i++) {
+          text += possible.charAt(Math.floor(Math.random() * possible.length))
+        }
 
-           let mai_url;
-            let storageRef = storage.ref();
-                storageRef.child("videos/" + file.name).getDownloadURL().then(function(url) {
-                    // `url` is the download URL for 'images/stars.jpg'
-                  
-                    // This can be downloaded directly:
-                    var xhr = new XMLHttpRequest();
-                    xhr.responseType = 'blob';
-                    xhr.onload = function(event) {
-                      var blob = xhr.response;
-                    };
-                    xhr.open('GET', url);
-                    xhr.send();
+        let mai_url;
+        let storageRef = storage.ref();
+        storageRef.child("videos/" + file.name).getDownloadURL().then(function (url) {
+          // `url` is the download URL for 'images/stars.jpg'
 
-                    main_url = url;
-                  //Get upload date to apply to database lesson!
-                  let currentdate = new Date();
-                  var datetime = currentdate.getDate() 
-                  + "/" + (currentdate.getMonth()+1) 
-                  + "/" + currentdate.getFullYear();
-                    //Save url and video to database
-             
-                  db.collection("lessons").doc(text)
-                .set({
-                  //Set all the data that will save to database
+          // This can be downloaded directly:
+          var xhr = new XMLHttpRequest();
+          xhr.responseType = 'blob';
+          xhr.onload = function (event) {
+            var blob = xhr.response;
+          };
+          xhr.open('GET', url);
+          xhr.send();
 
-                  //---------
-                  name: document.getElementById('name').value,
-                  description: document.getElementById('description').value,
-                  InClass: document.getElementById('code').textContent,
-                  BySchool: document.getElementById('schoolCode').textContent,
-                  SchoolName: document.getElementById('schoolName').textContent,
-                  code: text,
-                  uploaded_at: datetime,
-                  url: file.name,
-                  downloadURL: main_url,
-                  privacy: document.getElementById('privacy').checked, 
-                }).then(function() {
-                  //Successful upload and database save!
-                  console.log("Success!")
-                  window.location.pathname = '/profile'
-                }).catch(function(error) {
-                  //An error has occured
-                  console.log(error.message);
-                })
-                }).catch(function(error) {
-                    console.log(error)
-                })
+          main_url = url;
+          //Get upload date to apply to database lesson!
+          let currentdate = new Date();
+          var datetime = currentdate.getDate()
+            + "/" + (currentdate.getMonth() + 1)
+            + "/" + currentdate.getFullYear();
+          //Save url and video to database
 
-             
-            }
-    );
+
+
+
+        });
+
+        db.collection("lessons").doc(text)
+          .set({
+            //Set all the data that will save to database
+
+            //---------
+            name: document.getElementById('name').value,
+            description: document.getElementById('description').value,
+            InClass: document.getElementById('code').textContent,
+            BySchool: document.getElementById('schoolCode').textContent,
+            SchoolName: document.getElementById('schoolName').textContent,
+            uploader: document.getElementById('user_id').textContent,
+            code: text,
+            uploaded_at: datetime,
+            url: file.name,
+            downloadURL: main_url,
+            privacy: document.getElementById('privacy').checked,
+          }).then(function () {
+            //Successful upload and database save!
+            console.log("Success!")
+            window.location.pathname = '/profile'
+          }).catch(function (error) {
+            //An error has occured
+            console.log(error.message);
+          })
+      })
+          }
   })
 
   //Display progress with progress bar
 
 
-</script>
 
+
+
+
+</script>
 <script>
-    $(document).ready(
-        $('tabs').tabs()
-    )
+  $(document).ready(function () {
+    $('.modal').modal();
+  });
 </script>
 </body>
+
 </html>

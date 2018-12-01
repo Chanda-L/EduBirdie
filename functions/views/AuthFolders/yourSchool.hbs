@@ -1,144 +1,151 @@
 {{>home}}
 <style>
 
- 
-@import url('https://fonts.googleapis.com/css?family=Pacifico');
+
+  @import url('https://fonts.googleapis.com/css?family=Pacifico');
 #logo {
   font-family: 'Pacifico'
 }
 </style>
 
-  <div class="row">
-    <div class="col s12">
-      <ul class="tabs">
-        <li class="tab col s4"><a href="#schoolinfo">School Info</a></li>
-        <li class="tab col s4"><a class="active" href="#classes">Classes</a></li>
-        <li class="tab col s4">
-            <a class="active" href="#chats">
-                Chats
+<div class="row">
+  <div class="col s12">
+    <ul class="tabs">
+      <li class="tab col s4"><a href="#schoolinfo">School Info</a></li>
+      <li class="tab col s4"><a class="active" href="#classes">Classes</a></li>
+      <li class="tab col s4">
+        <a class="active" href="#chats">
+          Chats
         </a>
-        </li>
-      </ul>
-    </div>
+      </li>
+    </ul>
   </div>
-        
-   
-        
+</div>
+
+
+
 <div id="schoolinfo">
-{{#with SchoolData}}     
-    <h3 id="logo" class="center-align teal-text ">{{{name}}}</h3>
-{{/with}}
+  {{#with SchoolData}}
+  <h3 id="logo" class="center-align teal-text ">{{{name}}}</h3>
+  {{/with}}
 
 
-{{#if is_admin}}
-{{#with SchoolData}}
-  <a style="width: 100%;"href="/school/main/info/{{{secretSchoolCode}}}/invite/members/" class="waves-effect waves-light btn">Invite Members!<i class="material-icons left">mail</i></a>
-{{/with}}
-{{else}}
-<p>Nothing</p>
-{{/if}}
+  {{#if is_admin}}
+  {{#with SchoolData}}
+  <a style="width: 100%;" href="/school/main/info/{{{secretSchoolCode}}}/invite/members/" class="waves-effect waves-light btn">Invite
+    Members!<i class="material-icons left">mail</i></a>
+  {{/with}}
+  {{else}}
+
+  {{/if}}
 
 
-<h5 id="logo" class="teal-text center-align">Members: </h5>
-<ul class="collection">
-{{#if is_admin}} 
-{{#each members}} 
-   
-      <li class="collection-item">{{{email}}}<br></br><a href="edubird/school/remove/user" class="circle btn"><i class="material-icons left">delete</i>remove</a></li>
-            
-{{/each}}
-{{/if}}
-</ul>
+  <h5 id="logo" class="teal-text center-align">Members: </h5>
+  <ul class="collection">
+    {{#if is_admin}}
+    {{#each members}}
+
+    <li class="collection-item">{{{email}}}<br></br><a href="/edubird/school/remove/{{{uid}}}/" style="margin-right: 20px;"
+        class="circle btn"><i class="material-icons left">delete</i>remove</a><a href="edubird/school/remove/user"
+        class="circle btn"><i class="material-icons left">info</i>info</a></li>
+
+    {{/each}}
+    {{else}}
+    {{#each members}}
+    <li class="collection-item">{{{email}}}><br></br><a href="edubird/school/remove/" class="circle btn"><i class="material-icons left">info</i>info</a></li>
+    {{/each}}
+    {{/if}}
+  </ul>
 </div>
 <div id="classes">
-    <h4 class="center-align">add a class to your wonderful school!   <a class="btn-floating btn-large pulse teal"><i class="material-icons">add</i></a></h4>
-  
+  <h4 class="center-align">add a class to your wonderful school! <a class="btn-floating btn-large pulse teal"><i class="material-icons">add</i></a></h4>
 
-                {{#with SchoolData}}
-    <form action="{{{secretSchoolCode}}}/add_class" method="POST">
-           
-          <div class="row">
+
+  {{#with SchoolData}}
+  <form action="{{{secretSchoolCode}}}/add_class" method="POST">
+
+    <div class="row">
       <div class="row">
         <div class="input-field col s12">
           <input id="icon_prefix" name="ClassName" type="text" class="validate">
           <label for="icon_prefix">Class Name</label>
         </div>
- 
-  </div>
-    </div>
-     </form>
-   {{/with}}
-      
-      <div class="collection">
-     {{#each classes}}
-    
-      
-        <a href="/class/main/info/{{{belongs_to}}}/{{{code}}}/ClassInfo" class="collection-item teal-text">{{{name}}}</a>
-     
-            
-     {{/each}}
-             </div>
-        </div>
+
       </div>
     </div>
+  </form>
+  {{/with}}
+
+  <div class="collection">
+    {{#each classes}}
+
+
+    <a href="/class/main/info/{{{belongs_to}}}/{{{code}}}/ClassInfo" class="collection-item teal-text">{{{name}}}</a>
+
+
+    {{/each}}
   </div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="chats">
-    <h1></h1>
+  <h1></h1>
 
 
-{{#with SchoolData}}
-<form action='{{{secretSchoolCode}}}/message_sent' method="POST">
- <div class="row">
-    <div class="col s12">
-      <div class="row">
-        <div class="input-field col s12">
-        
-       
-                      <i class="material-icons prefix">textsms</i>
-                     <input name="message" type="text" id="autocomplete-input"class="autocomplete">
-                    <label for="autocomplete-input">Type A Message...</label>
-           
-                    
-          
+  {{#with SchoolData}}
+  <form action='{{{secretSchoolCode}}}/message_sent' method="POST">
+    <div class="row">
+      <div class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+
+
+            <i class="material-icons prefix">textsms</i>
+            <input name="message" type="text" id="autocomplete-input" class="autocomplete">
+            <label for="autocomplete-input">Type A Message...</label>
+
+
+
+          </div>
         </div>
       </div>
     </div>
+  </form>
+  {{/with}}
+
+  <div class="messages">
+
+    <ul class="collection">
+      {{#each messages}}
+
+
+      <li class="collection-item avatar">
+        <img src="images/yuna.jpg" alt="" class="circle">
+        <span class="title">{{{message}}}</span>
+
+
+
+        </p>
+        <a href="#!" class="secondary-content"><i class="material-icons">info</i></a>
+      </li>
+
+
+      {{/each}}
+    </ul>
   </div>
-</form>
-     {{/with}}
-
-    <div class="messages">
-
-  <ul class="collection">
-        {{#each messages}}
-
-  
-     <li class="collection-item avatar">
-      <img src="images/yuna.jpg" alt="" class="circle">
-      <span class="title">{{{message}}}</span>
-    
-       
-       
-      </p>
-      <a href="#!" class="secondary-content"><i class="material-icons">info</i></a>
-    </li>
-  
-           
-        {{/each}}
-        </ul>
-    </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
- <script>   
-  
-    $(document).ready(function() {
-        $('.tabs').tabs()
-    })
-  
-    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+
+  $(document).ready(function () {
+    $('.tabs').tabs()
+  })
+
+</script>
 
 </body>
-</html>
 
+</html>
