@@ -523,6 +523,9 @@ app.get("/authenticated/create/create_school", (req, res) => {
 });
 
 app.post("/authenticated/create/create_school/", (req, res) => {
+  firebase.auth().onAuthStateChanged(user => {
+
+  if (user) {
   let schoolName, schoolDesc;
   let text = "";
   let possible =
@@ -542,10 +545,14 @@ app.post("/authenticated/create/create_school/", (req, res) => {
     name: schoolName,
     description: schoolDesc,
     secretSchoolCode: text,
-    admin: firebase.auth().currentUser.uid
+    admin: user.uid
   });
 
   res.redirect("/profile");
+} else {
+  res.redirect("/authenticate/sign_up")
+}
+});
 });
 
 app.get("/class/main/info/:school_id/:class_id/add_lesson", (req, res) => {

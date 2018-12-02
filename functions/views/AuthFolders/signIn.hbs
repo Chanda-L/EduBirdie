@@ -1,6 +1,31 @@
 {{>home}}
 
-<h2 style="font-weight: bold" class="center-align teal-text">EduBirdy</h2>
+<h2 style="font-weight: bold" class="center-align teal-text">Edu-Ezi</h2>
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Pacifico');
+.g-signin2{
+  width: 100%;
+}
+
+.g-signin2 > div{
+  margin: 0 auto;
+}
+    @media only screen and (max-width: 768px) {
+        .signUpForm {}
+    }
+
+    h2 {
+        font-family: 'Pacifico';
+    }
+
+    .signUpForm {}
+
+    p {
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
 
 <div id="progressBar" class="preloader-wrapper big active">
     <div class="spinner-layer spinner-green-only">
@@ -44,11 +69,10 @@
                 </div>
 
                 {{!-- Google authentication button --}}
-                <div id="auth-buttons">
-
-                    <button style="margin-top: 30px;" type="submit" class="btn btn-primary"><i class="left material-icons">send</i>Log
-                        in</button>
-                </div>
+                
+                    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="light"></div>
+                    <button style="margin-top: 30px;" type="submit" class="btn btn-primary"><i class="left material-icons">send</i>Log in</button>
+                
             </form>
         </div>
         <div class="card-action">
@@ -57,7 +81,7 @@
     </div>
 </div>
 </div>
-<div class="g-signin2" data-onsuccess="onSignIn" data-theme="light"></div>
+
 
 
 
@@ -106,24 +130,7 @@
 </script>
 
 
-<style>
-    @import url('https://fonts.googleapis.com/css?family=Pacifico');
 
-    @media only screen and (max-width: 768px) {
-        .signUpForm {}
-    }
-
-    h2 {
-        font-family: 'Pacifico';
-    }
-
-    .signUpForm {}
-
-    p {
-        font-weight: bold;
-        text-align: center;
-    }
-</style>
 </body>
 
 </html>

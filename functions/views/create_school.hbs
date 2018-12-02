@@ -1,6 +1,15 @@
 {{>home}}
-    <body>
-        <h1>Create School</h1>
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Pacifico');
+    
+    #logo {
+        font-family: 'Pacifico';
+    }
+    
+</style>
+    <body class="container">
+        <h1 class="teal-text center-align " id="logo">Create School</h1>
 
         <form action="/authenticated/create/create_school" method="POST">
             <div class="form-group">
@@ -14,8 +23,10 @@
   </div>
 
 
-  
-  <button type="submit" class="btn btn-outline-success btn-primary">Submit</button>   
+  <div style="text-align: center">
+  <button type="submit" class="btn btn-outline-success btn-primary">Submit</button> 
+  </div>  
         </form>
+
     </body>
 </html>

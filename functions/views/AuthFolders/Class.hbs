@@ -83,13 +83,17 @@
 <div class="center">
   <input class="center-align" id="file" type="file" multiple>
 </div>
-{{!-- Options button to launch a modal --}}
 <div class="center">
-  <button class=" hoverable z-depth-5 btn modal-trigger upload-inputs" data-target="upload-modal">Options
+  <button id="UploadOptions" class=" hoverable z-depth-5 btn modal-trigger upload-inputs" data-target="upload-modal">Options
     <i class="material-icons right">info</i>
   </button>
   <!-- Customizable input  -->
 </div>
+<div class="center">
+  <button id="UploadTrigger" class="z-depth-5 hoverable btn upload-inputs">Upload</button>
+</div>
+{{!-- Options button to launch a modal --}}
+
 
 
 <div id="upload-modal" class="modal">
@@ -123,9 +127,6 @@
 
 
 
-<div class="center">
-  <button id="UploadTrigger" class="z-depth-5 hoverable btn upload-inputs">Upload</button>
-</div>
 
 
 
@@ -225,11 +226,13 @@
     var file;
     if (document.getElementById('file').files.length == 0) {
         //Notify user
+
          M.toast({ html: "Please choose a video to upload!"})
     } else {
         file = fileButton.files[0];
-        
-
+        fileButton.style.display = "none"
+        uploadButton.style.display = "none"
+        document.getElementById("UploadOptions").style.display = "none"
    
 
     uploadForm.style.display = "block"
@@ -299,12 +302,7 @@
             + "/" + currentdate.getFullYear();
           //Save url and video to database
 
-
-
-
-        });
-
-        db.collection("lessons").doc(text)
+db.collection("lessons").doc(text)
           .set({
             //Set all the data that will save to database
 
@@ -328,6 +326,11 @@
             //An error has occured
             console.log(error.message);
           })
+
+
+        });
+
+        
       })
           }
   })
