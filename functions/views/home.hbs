@@ -37,12 +37,12 @@
   {{#if user}}
   <nav class="nav-extended teal">
     <div class="nav-wrapper ">
-      <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+      <a href="#" id="side-trigger" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
       <a id="logo" href="#" class="brand-logo">Edu-Ezi</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="/profile">Record Lesson<i class="material-icons right">camera</i></a></li>
         <li><a href="/authenticated/create/create_school">Create School<i class="material-icons left">add</i></a></li>
-        <li><a class="btn" href="/profile">Profile</a></li>
+        <li><a class="btn" href="/profile"id="profile-button">Profile</a></li>
           <li>
           <button id="helpTrigger" class="btn">
           Help
@@ -67,21 +67,43 @@
     </li>
     <li><a href="/home"><i class="material-icons left">home</i>Home</a></li>
     <li><a href="/profile"><i class="material-icons left">portrait</i>Profile</a></li>
-    {{!--
-    <li><a class="subheader">View Lessons</a></li>
+    
+    <li><button id="helpTrigger" style="margin-left: 20px;"class="btn black-text white"><i class="material-icons grey-text left">info</i>Help</button> </li>
+  
+  
+    <li><a class="subheader">Your Schools: </a></li>
     {{#each lessons}}
     <li><a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">{{{name}}}</a>
     <li>
-      {{/each}} --}}
+    {{/each}}
+    
   </ul>
 
+<div class="tap-target  light-blue" data-target="profile-button">
+    <div class="tap-target-content  ">
+      <h2 style="margin-left: 80px;"id="logo" class="white-text">Profile </h2>
+      <p class="white-text center-align">
+        Click here to view your schools, settings, lessons, monetization options and much more!
+      </p>
+          </strong>
+          
+        </p>
+    </div>
+  </div>
 <!-- Element Showed -->
+<div class="tap-target  light-blue" data-target="side-trigger">
+    <div class="tap-target-content  ">
+      <h2 style="margin-left: 80px;"id="logo" class="white-text">Navigation </h2>
+      <p class="white-text center-align"> The sidenav and navbar are where all your navigation through the app will occur. Its fluid and easy!
+        </p>
+    </div>
+  </div>
 
   <!-- Tap Target Structure -->
   <div class="tap-target  light-blue" data-target="menu">
     <div class="tap-target-content  ">
-      <h2 style="margin-left: 80px;"id="logo" class="white-text">Help </h2>
-      <p class="white-text"> tap on me again to view different opitons for: 
+      <h2 style="margin-left: 80px;"id="logo" class="center-align white-text">Help </h2>
+      <p class="white-text center-align"> tap on me again to view different opitons for: 
         <br> <strong>creating a school 
           <br> Searching
           <br> profile 
@@ -201,6 +223,7 @@
         <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authenticate/sign_in">Log In</a></li>
         <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authenticate/sign_up">Sign Up</a></li>
         <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/edubirdy/contact">Contact Us</a></li>
+        <li><button style="font-weight: bold" class="modal-trigger btn grey-text text-lighten-3 pulse" >Edu-Ezi For Schools</button></li>
       </ul>
     </div>
   </nav>
@@ -228,7 +251,7 @@
   </ul>
 
   <h1 id="logo" class="white-text center-align " style="font-weight: bold;">Edu-Ezi</h1>
-  <h5 class="white-text center-align" style="font-weight: bold;">Want money? Have something to teach?</h5>
+  <h5 class="white-text center-align" style="font-weight: bold;">Education Made Easy!</h5>
   <a id="join_button" href="authenticate/sign_up" style="font-weight: bold;" class=" black-text center-align btn-large pulse teal accent-3 ">Join
     Edu-Ezi!</a>
 
@@ -302,6 +325,7 @@
 
       document.getElementById("helpTrigger").addEventListener('click', () => {
            $('.tap-target').tapTarget('open');
+           
       })
   </script>
 

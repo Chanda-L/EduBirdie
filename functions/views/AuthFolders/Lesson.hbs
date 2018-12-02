@@ -73,9 +73,9 @@
 
 {{#with data}}
 
-<div class="show-on-large row">
+<div class=" row">
 
-<div id="video_info_player" class="col s8 ">
+<div id="video_info_player" class="col l8 s12 m12">
 
 
 
@@ -87,7 +87,6 @@
     
       <h5 class="center-align teal-text">{{{name}}}</h5>
       <span>By: {{{SchoolName}}}</span><br><br>
-      <a href="{{{downloadURL}}}" class="blue-text light-3">{{{downloadURL}}}</a> <br>
       <span>{{{description}}}</span>
    
     {{/with}}
@@ -96,7 +95,7 @@
     <div class="collapsible-header"><i class="material-icons">comment</i>Comments</div>
     <div class="collapsible-body">
 
-      <div class="input-field col s2">
+      <div class="input-field ">
         <i class="material-icons prefix">comment</i>
         <input id="comment_field" type="text" class="validate">
 
@@ -116,8 +115,9 @@
 </ul>
 </div>
 
-<div class="col s4">
-  <ul class="collection z-depth-1">
+<div class="col l4 s12 m12">
+  <ul  class=" z-depth-1">
+    <div class="">
     {{#each recommended_lessons}}
      <li id="video" class="collection-item avatar home-video">
         <video class="" style="width: 300px"class=" responsive-video" preload="metadata">
@@ -129,9 +129,9 @@
          
 <a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson"class="waves-effect waves-light btn">Watch</a>
       </p> 
-      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
     </li>
       {{/each}}
+      </div>
   </ul>
 </div>
 </div>
