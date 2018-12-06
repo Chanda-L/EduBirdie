@@ -68,7 +68,7 @@
     <li><a href="/home"><i class="material-icons left">home</i>Home</a></li>
     <li><a href="/profile"><i class="material-icons left">portrait</i>Profile</a></li>
     
-    <li><button id="helpTrigger" style="margin-left: 20px;"class="btn black-text white"><i class="material-icons grey-text left">info</i>Help</button> </li>
+    <li><button id="MobileHelpTrigger" style="margin-left: 20px;"class="btn black-text white"><i class="material-icons grey-text left">info</i>Help</button> </li>
   
   
     <li><a class="subheader">Your Schools: </a></li>
@@ -327,6 +327,10 @@
            $('.tap-target').tapTarget('open');
            
       })
+      document.getElementById("MobileHelpTrigger").addEventListener('click', () => {
+          $('.tap-target').tapTarget('open');
+      });
+
   </script>
 
 
