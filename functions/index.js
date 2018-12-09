@@ -142,25 +142,64 @@ app.get("/authenticate/sign_up", (req, res) => {
 
 app.get("/home", (req, res) => {
   let lessons = [];
+  let users = [];
 
-  db.collection("lessons")
-    .get()
-    .then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        lessons.push(doc.data());
-      });
+  let search = req.query.search;
 
-      return res.render("home", {
-        lessons: lessons,
-        user: firebase.auth().currentUser
-      });
-    })
-    .catch(error => {
-      console.log(error.message);
-    });
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      if (search !== "undefined") {
+        //Get all the user data
+        //Return the searched for users...
 
-  //Perform actions if user not authenticated
-  console.log("User not authorized to see videos!");
+        db.collection("users")
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              if (doc.exists) {
+                let user_name_correct = doc.data().name;
+                if (user_name_correct.includes(search)) {
+                  users.push(doc.data());
+                } else {
+                  //Search is incorrect
+                  console.log("Search doesnt equal anything");
+                }
+              } else {
+                //document does not exist
+                console.log("document does not exist");
+              }
+            });
+          })
+          .catch(err => {
+            //console.log the error
+            console.log(err);
+          });
+
+        db.collection("lessons")
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              lessons.push(doc.data());
+            });
+          })
+          .catch(error => {
+            console.log(error.message);
+          });
+
+        return res.render("home", {
+          lessons: lessons,
+          user: firebase.auth().currentUser,
+          user_id: user.uid,
+          searchedUsers: users
+        });
+      } else {
+        //User search is evaluated at undefined
+        console.log("User search == none");
+      }
+    } else {
+      return res.render("home");
+    }
+  });
 });
 
 app.get("/authenticate/sign_in", (req, res) => {
@@ -479,7 +518,7 @@ app.post("/school/main/info/:school_id/message_sent", (req, res) => {
     }
   });
 });
-app.get("/profile", (req, res) => {
+app.get("/profile/:user_id", (req, res) => {
   let databaseData = [];
 
   let databaseCode;
@@ -524,35 +563,34 @@ app.get("/authenticated/create/create_school", (req, res) => {
 
 app.post("/authenticated/create/create_school/", (req, res) => {
   firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      let schoolName, schoolDesc;
+      let text = "";
+      let possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  if (user) {
-  let schoolName, schoolDesc;
-  let text = "";
-  let possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      for (var i = 0; i < 5; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
 
-  for (var i = 0; i < 5; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
+      schoolName = req.body.schoolName;
+      schoolDesc = req.body.schoolDescription;
 
-  schoolName = req.body.schoolName;
-  schoolDesc = req.body.schoolDescription;
+      //add school document in collection of schools to firebase database
+      var documentRef = db.collection("schools").doc(text);
 
-  //add school document in collection of schools to firebase database
-  var documentRef = db.collection("schools").doc(text);
+      documentRef.set({
+        name: schoolName,
+        description: schoolDesc,
+        secretSchoolCode: text,
+        admin: user.uid
+      });
 
-  documentRef.set({
-    name: schoolName,
-    description: schoolDesc,
-    secretSchoolCode: text,
-    admin: user.uid
+      res.redirect("/profile");
+    } else {
+      res.redirect("/authenticate/sign_up");
+    }
   });
-
-  res.redirect("/profile");
-} else {
-  res.redirect("/authenticate/sign_up")
-}
-});
 });
 
 app.get("/class/main/info/:school_id/:class_id/add_lesson", (req, res) => {
@@ -560,36 +598,34 @@ app.get("/class/main/info/:school_id/:class_id/add_lesson", (req, res) => {
   let schoolOptions = [];
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-
       db.collection("schools")
-        .where("admin", "==", user.uid) 
+        .where("admin", "==", user.uid)
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
             if (doc.exists) {
-                schoolOptions.push(doc.data())
+              schoolOptions.push(doc.data());
             }
-          })
-        }).catch((error) => {
-          console.log(error.message)
+          });
+        })
+        .catch(error => {
+          console.log(error.message);
         });
 
-
       db.collection("classes")
-         .doc(req.params.class_id)
+        .doc(req.params.class_id)
         .get()
         .then(doc => {
           if (doc.exists) {
             console.log("document exists");
             databaseData = doc.data();
-            
 
             //Render with context
             res.render("./AuthFolders/Class", {
               id: user.uid,
               data: databaseData,
               user_id: user.uid,
-              schoolOptions: schoolOptions,
+              schoolOptions: schoolOptions
             });
           } else {
             console.log("The Document Does Not Exist");
@@ -617,11 +653,12 @@ app.get("/:school_id/:class_id/:lesson_id/view_lesson", (req, res) => {
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-            recommended_lessons.push(doc.data())
-          })
-        }).catch((err) => {
-          console.log(err.message)
+            recommended_lessons.push(doc.data());
+          });
         })
+        .catch(err => {
+          console.log(err.message);
+        });
       db.collection("lessons")
         .doc(req.params.lesson_id)
         .get()
@@ -642,7 +679,7 @@ app.get("/:school_id/:class_id/:lesson_id/view_lesson", (req, res) => {
                 user_email: user.email,
                 user_code: user.uid,
                 comments: comments,
-                recommended_lessons: recommended_lessons,
+                recommended_lessons: recommended_lessons
               });
             })
             .catch(err => {
@@ -955,7 +992,9 @@ app.get("/edubird/school/remove/user", (req, res) => {
       //let SchoolDataRef = db.collection("schools").doc().
       //TODO: ADD REMOVE FUNCTIONALITY
     } else {
-        
     }
   });
+});
+app.post("/home", (req, res) => {
+  res.redirect("/home?search=" + req.body.SearchBarParam);
 });

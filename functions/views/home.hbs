@@ -35,20 +35,45 @@
 
   {{!-- html structure below --}}
   {{#if user}}
-  <nav class="nav-extended teal">
+  <nav class="teal">
+    <div class="nav-wrapper">
+      <a href="#" id="side-trigger" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+      <a id="logo" class="brand-logo white-text">Edu-Ezi</a>
+
+      <ul class="hide-on-med-and-down right">
+        <li>
+          <div class="center row">
+            <div class="col s12 ">
+              <div class="row" id="topbarsearch">
+
+              </div>
+            </div>
+          </div>
+        </li>
+        <li> <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Search<i class="material-icons left">search</i></a></li>
+        <li><a href="sass.html" class="white-text">Create School<i class="right material-icons">add</i></a></li>
+        <li><a href="badges.html" class="white-text">Record Lesson<i class="material-icons right">camera</i></a></li>
+        <li><a href="/profile/{{user_id}}" class="white-text">Profile<i class="material-icons right">contacts</i></a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  {{!-- <nav class="nav-extended teal">
     <div class="nav-wrapper ">
       <a href="#" id="side-trigger" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
       <a id="logo" href="#" class="brand-logo">Edu-Ezi</a>
+
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="/profile">Record Lesson<i class="material-icons right">camera</i></a></li>
         <li><a href="/authenticated/create/create_school">Create School<i class="material-icons left">add</i></a></li>
-        <li><a class="btn" href="/profile"id="profile-button">Profile</a></li>
-          <li>
+        <li><a class="btn" href="/profile" id="profile-button">Profile</a></li>
+        <li>
           <button id="helpTrigger" class="btn">
-          Help
-          
+            Help
+
           </button>
-          </li>
+        </li>
       </ul>
     </div>
     <div class="nav-content">
@@ -59,58 +84,95 @@
 
     </div>
 
-  </nav>
+  </nav> --}}
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Search for users</h4>
+      <form method="POST" action="/home">
+
+        <div class="row">
+          <div class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">search</i>
+                <input name="SearchBarParam" class=" teal-text" type="text" id="autocomplete-input" class="autocomplete">
+                <label class="white-text" for="autocomplete-input">Search...</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <ul class="collection">
+        {{#each searchedUsers}}
+         <a href="/profile/{{user_id}}" class="collection-item">{{{name}}}</a>
+         {{/each}}
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+
+
 
   <ul id="slide-out" class="sidenav">
     <li>
       <h5 class="teal-text center-align">EduBirdy</h5>
     </li>
     <li><a href="/home"><i class="material-icons left">home</i>Home</a></li>
-    <li><a href="/profile"><i class="material-icons left">portrait</i>Profile</a></li>
-    
-    <li><button id="MobileHelpTrigger" style="margin-left: 20px;"class="btn black-text white"><i class="material-icons grey-text left">info</i>Help</button> </li>
-  
-  
+    <li><a href="/profile/{{user_id}}"><i class="material-icons left">portrait</i>Profile</a></li>
+
+    <li><button id="MobileHelpTrigger" style="margin-left: 20px;" class="btn black-text white"><i class="material-icons grey-text left">info</i>Help</button>
+    </li>
+
+
     <li><a class="subheader">Your Schools: </a></li>
     {{#each lessons}}
     <li><a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">{{{name}}}</a>
     <li>
-    {{/each}}
-    
+      {{/each}}
+
   </ul>
 
-<div class="tap-target  light-blue" data-target="profile-button">
+  <div class="tap-target  light-blue" data-target="profile-button">
     <div class="tap-target-content  ">
-      <h2 style="margin-left: 80px;"id="logo" class="white-text">Profile </h2>
+      <h2 style="margin-left: 80px;" id="logo" class="white-text">Profile </h2>
       <p class="white-text center-align">
         Click here to view your schools, settings, lessons, monetization options and much more!
       </p>
-          </strong>
-          
-        </p>
+      </strong>
+
+      </p>
     </div>
   </div>
-<!-- Element Showed -->
-<div class="tap-target  light-blue" data-target="side-trigger">
+  <!-- Element Showed -->
+  <div class="tap-target  light-blue" data-target="side-trigger">
     <div class="tap-target-content  ">
-      <h2 style="margin-left: 80px;"id="logo" class="white-text">Navigation </h2>
-      <p class="white-text center-align"> The sidenav and navbar are where all your navigation through the app will occur. Its fluid and easy!
-        </p>
+      <h2 style="margin-left: 80px;" id="logo" class="white-text">Navigation </h2>
+      <p class="white-text center-align"> The sidenav and navbar are where all your navigation through the app will
+        occur. Its fluid and easy!
+      </p>
     </div>
   </div>
 
   <!-- Tap Target Structure -->
   <div class="tap-target  light-blue" data-target="menu">
     <div class="tap-target-content  ">
-      <h2 style="margin-left: 80px;"id="logo" class="center-align white-text">Help </h2>
-      <p class="white-text center-align"> tap on me again to view different opitons for: 
-        <br> <strong>creating a school 
+      <h2 style="margin-left: 80px;" id="logo" class="center-align white-text">Help </h2>
+      <p class="white-text center-align"> tap on me again to view different opitons for:
+        <br> <strong>creating a school
           <br> Searching
-          <br> profile 
+          <br> profile
           <br> and to upload your lesson
-          </strong>
-          <strong> <p>click the help icon to see me again!</p></strong>
-        </p>
+        </strong>
+        <strong>
+          <p>click the help icon to see me again!</p>
+        </strong>
+      </p>
     </div>
   </div>
 
@@ -130,44 +192,51 @@
    display: inline-block;
  }
 </style>
+  {{!-- <div class="row">
+    <div class=" col l10 s12 m12"> --}}
+      <div id="home">
+        <div class="section no-pad-bot" id="index-banner">
+          <div class="container">
+            <br><br>
+            <h5 class="header teal-text">Newest Content: </h5>
+            {{#each lessons}}
+            <div id="video-container">
+              <a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">
+                <div id="show_video" class="">
 
-  <div id="home">
-    <div class="section no-pad-bot" id="index-banner">
-      <div class="container">
-        <br><br>
-        <h5 class="header teal-text">Newest Content: </h5>
-        {{#each lessons}}
-        <div id="video-container">
-          <a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">
-            <div id="show_video" class="">
+                  <video class="" style="width: 250px;" class=" responsive-video" preload="metadata">
+                    <source src="{{{downloadURL}}}" type="video/mp4">
+                  </video>
 
-              <video class="" style="width: 250px;" class=" responsive-video" preload="metadata">
-                <source src="{{{downloadURL}}}" type="video/mp4">
-              </video>
+              </a>
+              <p class="bold">{{{name}}}<br></p>
+              <small class="text-gray">by: {{{SchoolName}}} • {{{uploaded_at}}}</small>
 
-          </a>
-          <p class="bold">{{{name}}}<br></p>
-          <small class="text-gray">by: {{{SchoolName}}} • {{{uploaded_at}}}</small>
+            </div>
+          </div>
+
+
+          {{/each}}
+          <div class="row center">
+            <h5 class="header col s12 light">Learning made easy.</h5>
+          </div>
+          <br><br>
 
         </div>
       </div>
 
-
-      {{/each}}
-      <div class="row center">
-        <h5 class="header col s12 light">Learning made easy.</h5>
-      </div>
-      <br><br>
-
     </div>
-  </div>
+    {{!-- <div class=" col l2 s12 m12"> --}}
+
+
+      {{!--
+    </div> --}}
+    {{!--
+  </div> --}}
 
 
 
 
-
-
-   
 
 
 
@@ -223,7 +292,8 @@
         <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authenticate/sign_in">Log In</a></li>
         <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authenticate/sign_up">Sign Up</a></li>
         <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/edubirdy/contact">Contact Us</a></li>
-        <li><button style="font-weight: bold" class="modal-trigger btn grey-text text-lighten-3 pulse" >Edu-Ezi For Schools</button></li>
+        <li><button style="font-weight: bold" class="modal-trigger btn grey-text text-lighten-3 pulse">Edu-Ezi For
+            Schools</button></li>
       </ul>
     </div>
   </nav>
@@ -308,7 +378,7 @@
 
   <script>
     $(document).ready(function () {
-
+      $('.modal').modal();
       $('.sidenav').sidenav();
       $('.slider').slider();
       $('.fixed-action-btn').floatingActionButton();
@@ -320,16 +390,16 @@
     $(document).ready(function () {
       $('.tabs').tabs();
       $('.tap-target').tapTarget();
-   
+
     })
 
-      document.getElementById("helpTrigger").addEventListener('click', () => {
-           $('.tap-target').tapTarget('open');
-           
-      })
-      document.getElementById("MobileHelpTrigger").addEventListener('click', () => {
-          $('.tap-target').tapTarget('open');
-      });
+    document.getElementById("helpTrigger").addEventListener('click', () => {
+      $('.tap-target').tapTarget('open');
+
+    })
+    document.getElementById("MobileHelpTrigger").addEventListener('click', () => {
+      $('.tap-target').tapTarget('open');
+    });
 
   </script>
 
