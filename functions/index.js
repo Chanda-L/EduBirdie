@@ -70,6 +70,7 @@ app.engine(
 app.set("view engine", "hbs");
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//Return all routes for application
 app._router.stack.forEach(r => {
   if (r.route && r.route.path) {
     console.log(r.route.path);
@@ -100,47 +101,29 @@ function sendMailThroughApp(email, password, html) {
   });
 }
 
-function checkIfUserIsSignedIn(filename) {
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      // User is signed in.
-      console.log("you are already logged in :)");
-      res.redirect("/home");
-    } else {
-      // No user is signed in.
-      console.log(firebase.auth().currentUser);
-      console.log("User is null");
-      res.render(filename);
-    }
-  });
-}
+// function checkIfUserIsSignedIn(filename) {
+//   firebase.auth().onAuthStateChanged(user => {
+//     if (user) {
+//       // User is signed in.
+//       console.log("you are already logged in :)");
+//       res.redirect("/home");
+//     } else {
+//       // No user is signed in.
+//       console.log(firebase.auth().currentUser);
+//       console.log("User is null");
+//       res.render(filename);
+//     }
+//   });
+// }
 
 //DefaultFirebaseApp Initialization for WebApp:
-
+//Listen for port on application localhost server
 app.listen(3000, () => {
   console.log("Running on: localhost:3000");
   console.log("port = 3000, server = localhost;");
 });
 
 app.get("/", (req, res) => {
-  return res.redirect("/home");
-});
-
-app.get("/authenticate/sign_up", (req, res) => {
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      // User is signed in.
-      console.log("you are already logged in :)");
-    } else {
-      // No user is signed in.
-      console.log(firebase.auth().currentUser);
-      console.log("User is null");
-      res.render("./AuthFolders/signUp");
-    }
-  });
-});
-
-app.get("/home", (req, res) => {
   let lessons = [];
   let users = [];
 
@@ -186,7 +169,7 @@ app.get("/home", (req, res) => {
             console.log(error.message);
           });
 
-        return res.render("home", {
+        return res.render("./MainFolders/home", {
           lessons: lessons,
           user: firebase.auth().currentUser,
           user_id: user.uid,
@@ -197,61 +180,84 @@ app.get("/home", (req, res) => {
         console.log("User search == none");
       }
     } else {
-      return res.render("home");
+      //Render home with no parameters if user is not authenticated
+      return res.render("./MainFolders/home");
     }
   });
 });
 
-app.get("/authenticate/sign_in", (req, res) => {
+//Email verification steps
+//Send verification email
+app.get("/authenticate/email_verify", (req, res) => {
+  if (firebase.auth().currentUser.emailVerified === true) {
+    firebase
+      .auth()
+      .currentUser.sendEmailVerification()
+      .then(() => {
+        //Successfully sent email.
+        res.redirect("/");
+      })
+      .catch(error => {
+        //Email verification failed
+        //show error message
+        console.log(error.message);
+      });
+    return res.render("./AuthFolders/VerifyEmail");
+  } else {
+    //Users email is already verified
+    //redirect back to home screen
+    res.redirect("/");
+  }
+});
+
+//New authentication file to authenticate users
+//Main application authentication folder
+//Power authentcation in app with: SignUp, SignIn, and email verification
+app.get("/authentication/main", (req, res) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      // User is signed in.
-      console.log("you are already logged in :)");
+      //User is already authenticated
+      //redirect user to home page
+      return res.redirect("/")
     } else {
-      // No user is signed in.
-      console.log("User is null");
-      return res.render("./AuthFolders/signIn");
+      return res.render("./AuthFolders/Authenticate");
     }
   });
 });
 
-app.post("/authenticate/sign_in", (req, res) => {
+app.post("/authenticate/signIn", (req, res) => {
   firebase
     .auth()
-    .signInWithEmailAndPassword(req.body.email_log_in, req.body.password)
+    .signInWithEmailAndPassword(req.body.SignInEmail, req.body.SignInPassword)
     .then(firebaseUser => {
       console.log("Successfully Signed In!");
       console.log(firebaseUser.email);
 
-      //Send sign in confirmation
-      sendMailThroughApp(
-        req.body.email_log_in,
-        req.body.password,
-        "<h1>Welcome To EduBirdie!</h1><br><h3>You can earn your income by creating lessons teaching various topics or create a school to have your own learning community or integreate an existing school into edubirdie. Possibilities are <strong>EndLess</strong></h3>"
-      );
-
       //Send a success email to user!
-
-      return res.redirect("/home");
+      if (firebase.auth().currentUser.emailVerified) {
+        //User is verified and can proceed to home page
+        return res.redirect("/");
+      } else {
+        //User is not verified
+        //Send verification email
+        return res.redirect("/authenticate/email_verify");
+      }
     })
     .catch(error => {
       console.log(error.message);
 
-      //Send the error message to the client side
-      res.send(
-        '<h1 style="text-align: center; font-family: sans-serif; font-weight: bold; color: green;">' +
-          error.message +
-          '</h1><a href="/authenticate/sign_up" style="text-decoration: none;  color: green; text-align: center; font-family: sans-serif;" class="btn">Go Back</a> '
-      );
+    
     });
 });
 
-app.post("/authenticate/sign_up", (req, res) => {
+app.post("/Authenticate/signUp", (req, res) => {
   let username, email, password;
 
-  username = req.body.username;
-  email = req.body.email;
-  password = req.body.password;
+  username = req.body.SignUpFirstname + req.body.SignUpLastname;
+  FirstName = req.body.SignUpFirstname;
+  LastName = req.body.SignUpLastname;
+  email = req.body.signUpEmail;
+  password = req.body.signUpPassword;
 
   firebase
     .auth()
@@ -263,38 +269,21 @@ app.post("/authenticate/sign_up", (req, res) => {
       docref
         .set({
           name: username,
+          first_name: FirstName,
+          last_name: LastName,
           email: email,
           password: password
         })
         // eslint-disable-next-line promise/always-return
         .then(() => {
           //Add An Alert notifying user they have been authenticated
-          console.log("User has successfully been added!");
-          console.log("Success Creatings user!!");
-          let transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-              user: "chanda.lupambo@gmail.com",
-              pass: "Bangweulu3"
-            }
-          });
-
-          let mailOptions = {
-            from: "chanda.lupambo@gmail.com",
-            to: req.body.email_log_in,
-            subject: "Welcome To Edubirdie!",
-            text: "Get Started Learn Something New!"
-          };
-
-          // eslint-disable-next-line consistent-return
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              console.log(error);
-            } else {
-              console.log("Email Sent: " + info.response);
-            }
-          });
-          res.redirect("/home");
+          if (firebase.auth().currentUser.emailVerified === true) {
+            //redirect home if user is verified
+            return res.redirect("/");
+          } else {
+            //Redirect to email verification page if user not verified
+            return res.redirect("/authenticate/email_verify");
+          }
         })
         .catch(error => {
           //Handle the authentication error
@@ -992,6 +981,7 @@ app.get("/edubird/school/remove/user", (req, res) => {
       //let SchoolDataRef = db.collection("schools").doc().
       //TODO: ADD REMOVE FUNCTIONALITY
     } else {
+      //user isn't the proper user to remove.
     }
   });
 });
