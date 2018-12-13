@@ -58,7 +58,7 @@ app.use(flash());
 // $ curl http://localhost:3000/notfound -H "Accept: application/json"
 // $ curl http://localhost:3000/notfound -H "Accept: text/plain"
 
-app.use(express.static("public"));
+app.use(express.static(__dirname + "public"));
 app.engine(
   "hbs",
   expressHbs({
@@ -147,6 +147,8 @@ app.get("/", (req, res) => {
                   //Search is incorrect
                   console.log("Search doesnt equal anything");
                 }
+               
+
               } else {
                 //document does not exist
                 console.log("document does not exist");
@@ -164,24 +166,22 @@ app.get("/", (req, res) => {
             querySnapshot.forEach(doc => {
               lessons.push(doc.data());
             });
+            res.render("./MainFolders/home", {
+              lessons: lessons,
+              user: firebase.auth().currentUser,
+              user_id: firebase.auth().currentUser.uid,
+              searchedUsers: users
+            }); 
           })
           .catch(error => {
             console.log(error.message);
           });
-
-        return res.render("./MainFolders/home", {
-          lessons: lessons,
-          user: firebase.auth().currentUser,
-          user_id: user.uid,
-          searchedUsers: users
-        });
       } else {
         //User search is evaluated at undefined
         console.log("User search == none");
       }
     } else {
-      //Render home with no parameters if user is not authenticated
-      return res.render("./MainFolders/home");
+    //User isn't authenticated
     }
   });
 });
@@ -218,7 +218,7 @@ app.get("/authentication/main", (req, res) => {
     if (user) {
       //User is already authenticated
       //redirect user to home page
-      return res.redirect("/")
+      return res.redirect("/");
     } else {
       return res.render("./AuthFolders/Authenticate");
     }
@@ -228,7 +228,7 @@ app.get("/authentication/main", (req, res) => {
 app.post("/authenticate/signIn", (req, res) => {
   firebase
     .auth()
-    .signInWithEmailAndPassword(req.body.SignInEmail, req.body.SignInPassword)
+    .signInWithEmailAndPassword(req.body.signInEmail, req.body.signInPassword)
     .then(firebaseUser => {
       console.log("Successfully Signed In!");
       console.log(firebaseUser.email);
@@ -236,7 +236,8 @@ app.post("/authenticate/signIn", (req, res) => {
       //Send a success email to user!
       if (firebase.auth().currentUser.emailVerified) {
         //User is verified and can proceed to home page
-        return res.redirect("/");
+         res.redirect("/");
+         res.end();
       } else {
         //User is not verified
         //Send verification email
@@ -245,8 +246,6 @@ app.post("/authenticate/signIn", (req, res) => {
     })
     .catch(error => {
       console.log(error.message);
-
-    
     });
 });
 
@@ -279,8 +278,8 @@ app.post("/Authenticate/signUp", (req, res) => {
           //Add An Alert notifying user they have been authenticated
           if (firebase.auth().currentUser.emailVerified === true) {
             //redirect home if user is verified
-            return res.redirect("/");
-          } else {
+            res.redirect("/");
+          } else if (firebase.auth().currentUser.emailVerified === false) {
             //Redirect to email verification page if user not verified
             return res.redirect("/authenticate/email_verify");
           }
@@ -543,7 +542,7 @@ app.get("/profile/:user_id", (req, res) => {
 app.get("/authenticated/create/create_school", (req, res) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      res.render("create_school");
+      res.render("./MainFolders/create_school");
     } else {
       console.log("Not ALLLLOOOOWWWWEEEED");
     }
@@ -985,6 +984,29 @@ app.get("/edubird/school/remove/user", (req, res) => {
     }
   });
 });
-app.post("/home", (req, res) => {
-  res.redirect("/home?search=" + req.body.SearchBarParam);
+
+//Post search query to homescreen
+app.post("/", (req, res) => {
+  res.redirect("/?search=" + req.body.SearchBarParam);
+});
+
+app.get("/educator/hub/start", (req, res) => {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        res.render("./MainFolders/EducatorsPage", {
+          user_id: firebase.auth().currentUser.uid,
+          first_name: user.first_name,
+          last_name: user.last_name,
+        })
+    } else {
+        res.redirect("/authentication/main")
+    }
+  })
+ 
+});
+
+app.get("/educator/hub/dashboard/", (req,res) => {
+  firebase.auth().onAuthStateChanged((user) => {
+    res.render("./MainFolders/EducatorDashboard")
+  })
 });

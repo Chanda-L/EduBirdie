@@ -13,13 +13,27 @@
 <nav>
     <div class="teal nav-wrapper">
         <a href="/" class="white-text logo brand-logo center">Edu-Ezi</a>
+        <a href="#" id="side-trigger" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li><a href="/">Home</a></li>
-            <li><a href="/contact">Contact Us </a></li>
+            <li><a href="/">Home<i class="material-icons left">
+                home
+            </i></a></li>
+            <li><a href="/contact">Contact Us <i class="material-icons left">
+                phone
+            </i></a></li>
             <li><a href="/TermsOfService">Terms Of Service</a></li>
         </ul>
     </div>
 </nav>
+ <ul id="slide-out" class="sidenav">
+    <li><a href="#!"><i class="material-icons">cloud</i>Terms Of Service</a></li>
+    <li><a href="#!"><i class="material-icons">home</i>Home</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Information</a></li>
+    <li><a class="waves-effect" href="#!"><i class="material-icons">phone</i>Contact Us</a></li>
+  </ul>
+
+        
 
 
 <div style="margin-top: 150px" class="container">
@@ -38,7 +52,7 @@
                 Sign Up
             </h2>
             <div class="row">
-                <form action="/Authenticate/SignUp" method="POST" class="col s12">
+                <form action="/Authenticate/signUp" method="POST" class="col s12">
                     <div class="row">
                         <div class="input-field col s6">
                             <input placeholder="Placeholder" name="SignUpFirstname" id="first_name" type="text" class="validate">
@@ -105,5 +119,6 @@
 <script>
     $(document).ready(function () {
         $('.tabs').tabs();
+        $('.sidenav').sidenav();
     });
 </script>

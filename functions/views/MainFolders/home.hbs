@@ -51,12 +51,19 @@
           </div>
         </li>
         <li> <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Search<i class="material-icons left">search</i></a></li>
-        <li><a href="sass.html" class="white-text">Create School<i class="right material-icons">add</i></a></li>
         <li><a href="badges.html" class="white-text">Record Lesson<i class="material-icons right">camera</i></a></li>
         <li><a href="/profile/{{user_id}}" class="white-text">Profile<i class="material-icons right">contacts</i></a></li>
+           <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Become an educator<i class="material-icons right">arrow_drop_down</i></a></li>
       </ul>
     </div>
   </nav>
+
+<ul id="dropdown1" class="dropdown-content">
+   <li><a href="/educator/hub/start">Learn More...</a></li>
+  {{!<li><a href="#!">S</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">three</a></li> --}}
+</ul>
 
 
   {{!-- <nav class="nav-extended teal">
@@ -91,7 +98,7 @@
   <div id="modal1" class="modal">
     <div class="modal-content">
       <h4>Search for users</h4>
-      <form method="POST" action="/home">
+      <form method="POST" action="/">
 
         <div class="row">
           <div class="col s12">
@@ -192,8 +199,6 @@
    display: inline-block;
  }
 </style>
-  {{!-- <div class="row">
-    <div class=" col l10 s12 m12"> --}}
       <div id="home">
         <div class="section no-pad-bot" id="index-banner">
           <div class="container">
@@ -217,22 +222,12 @@
 
 
           {{/each}}
-          <div class="row center">
-            <h5 class="header col s12 light">Learning made easy.</h5>
-          </div>
           <br><br>
 
         </div>
       </div>
+  
 
-    </div>
-    {{!-- <div class=" col l2 s12 m12"> --}}
-
-
-      {{!--
-    </div> --}}
-    {{!--
-  </div> --}}
 
 
 
@@ -289,8 +284,8 @@
 
       <a id="logo" href="#" class="brand-logo">Edu-Ezi</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authenticate/sign_in">Log In</a></li>
-        <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authenticate/sign_up">Sign Up</a></li>
+        <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authentication/main">Log In</a></li>
+        <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authentication/main">Sign Up</a></li>
         <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/edubirdy/contact">Contact Us</a></li>
         <li><button style="font-weight: bold" class="modal-trigger btn grey-text text-lighten-3 pulse">Edu-Ezi For
             Schools</button></li>
@@ -309,8 +304,8 @@
     </li>
     <li><a class="subheader">Join Edu-Ezi</a></li>
 
-    <li><a href="/authenticate/sign_up"><i class="material-icons">email</i>Sign Up</a></li>
-    <li><a href="/authenticate/sign_in"><i class="material-icons">phone</i>Sign In</a></li>
+    <li><a href="/authenticate/signUp"><i class="material-icons">email</i>Sign Up</a></li>
+    <li><a href="/authenticate/signIn"><i class="material-icons">phone</i>Sign In</a></li>
     <li><a href="/edubirdie/terms_of_service"><i class="material-icons">T</i>Terms of service</a></li>
     <li>
       <div class="divider"></div>
@@ -322,7 +317,7 @@
 
   <h1 id="logo" class="white-text center-align " style="font-weight: bold;">Edu-Ezi</h1>
   <h5 class="white-text center-align" style="font-weight: bold;">Education Made Easy!</h5>
-  <a id="join_button" href="authenticate/sign_up" style="font-weight: bold;" class=" black-text center-align btn-large pulse teal accent-3 ">Join
+  <a id="join_button" href="/authentication/main" style="font-weight: bold;" class=" black-text center-align btn-large pulse teal accent-3 ">Join
     Edu-Ezi!</a>
 
   <footer class="teal accent-4 z-depth-4 page-footer">
@@ -382,6 +377,7 @@
       $('.sidenav').sidenav();
       $('.slider').slider();
       $('.fixed-action-btn').floatingActionButton();
+      $(".dropdown-trigger").dropdown();
     });
   </script>
 
