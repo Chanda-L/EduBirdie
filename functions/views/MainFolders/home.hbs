@@ -1,7 +1,6 @@
 {{> home}}
 
 
-
 <body>
 
 
@@ -53,13 +52,20 @@
         <li> <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Search<i class="material-icons left">search</i></a></li>
         <li><a href="badges.html" class="white-text">Record Lesson<i class="material-icons right">camera</i></a></li>
         <li><a href="/profile/{{user_id}}" class="white-text">Profile<i class="material-icons right">contacts</i></a></li>
-           <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Become an educator<i class="material-icons right">arrow_drop_down</i></a></li>
+          {{#if educator}}
+           <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Educator<i class="material-icons right">arrow_drop_down</i></a></li>
+          {{else}}
+           <li><a href="#!">Become an educator<i class="material-icons right">info</i></a></li>
+          {{/if}}
       </ul>
     </div>
   </nav>
 
 <ul id="dropdown1" class="dropdown-content">
-   <li><a href="/educator/hub/start">Learn More...</a></li>
+   <li><a href="/educator/hub/dashboard"> Dashboard<i class="material-icons left">dashboard</i></a></li>
+   <li><a href="/educator/hub/news"> News & Resources<i class="material-icons left">assignment</i></a></li>
+     <li class="divider"></li>
+   <li><a href="/authenticated/create/create_school"> Create A School<i class="material-icons left">school</i></a></li>
   {{!<li><a href="#!">S</a></li>
   <li class="divider"></li>
   <li><a href="#!">three</a></li> --}}

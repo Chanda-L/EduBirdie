@@ -126,7 +126,7 @@ app.listen(3000, () => {
 app.get("/", (req, res) => {
   let lessons = [];
   let users = [];
-
+  let educator;
   let search = req.query.search;
 
   firebase.auth().onAuthStateChanged(user => {
@@ -158,6 +158,25 @@ app.get("/", (req, res) => {
             console.log(err);
           });
 
+        //get data and check if user is an educator
+        //if user is an educator use educator variable and add the found data
+        db.collection("users")
+          .doc(user.uid)
+          .get()
+          .then(doc => {
+            if (doc.exists) {
+              if (doc.data().educator === true) {
+                educator = true;
+              }
+            } else {
+              //The document does not exist
+            }
+          }).catch((err) => {
+            //An error has occured in the application
+            console.log(err);
+          });
+        
+          //Get all the lessons that'll be represented on the home screen
         db.collection("lessons")
           .get()
           .then(querySnapshot => {
@@ -168,7 +187,8 @@ app.get("/", (req, res) => {
               lessons: lessons,
               user: firebase.auth().currentUser,
               user_id: firebase.auth().currentUser.uid,
-              searchedUsers: users
+              searchedUsers: users,
+              educator: educator,
             });
           })
           .catch(error => {
