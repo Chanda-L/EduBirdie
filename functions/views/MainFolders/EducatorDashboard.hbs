@@ -88,12 +88,12 @@
             <div class="card-image">
 
 
-                <img src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/JrbItQz/videoblocks-blue-glowing-lines-loopable-technology-background-4k-uhd-3840x2160_rpboetz1yz_thumbnail-full01.png">
-                <span class="card-title">
-                    <h1>$0</h1>Revenue
+                <img src="https://flordemilonga.files.wordpress.com/2009/12/blank-white-page.jpg">
+                <span class="black-text card-title">
+                    <h1 class="black-text">$0</h1>Revenue
                 </span>
 
-                <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">info</i></a>
+                <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">info_outline</i></a>
             </div>
             {{!-- <div class="card-content">
                 <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
@@ -105,11 +105,13 @@
     <div class="col s12 m3">
         <div class="card">
             <div class="card-image">
-                <img src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/JrbItQz/videoblocks-blue-glowing-lines-loopable-technology-background-4k-uhd-3840x2160_rpboetz1yz_thumbnail-full01.png">
-                <span class="card-title">
-                    <h1>0</h1>Views
+                <img src="https://flordemilonga.files.wordpress.com/2009/12/blank-white-page.jpg">
+                <span class="black-text card-title">
+                    <h1 class=" black-text">0</h1>Views
+
+
                 </span>
-                <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">info</i></a>
+                <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">info_outline</i></a>
             </div>
             {{!-- <div class="card-content">
                 <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
@@ -121,11 +123,11 @@
     <div class="col s12 m3">
         <div class="card">
             <div class="card-image">
-                <img src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/JrbItQz/videoblocks-blue-glowing-lines-loopable-technology-background-4k-uhd-3840x2160_rpboetz1yz_thumbnail-full01.png">
-                <span class="card-title">
-                    <h1>0</h1>Likes
+                <img src="https://flordemilonga.files.wordpress.com/2009/12/blank-white-page.jpg">
+                <span class="black-text card-title">
+                    <h1 class="black-text">0</h1>Likes
                 </span>
-                <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">info</i></a>
+                <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">info_outline</i></a>
             </div>
             {{!-- <div class="card-content">
                 <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
@@ -137,9 +139,9 @@
     <div class="col s12 m3">
         <div class="card">
             <div class="card-image">
-                <img src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/JrbItQz/videoblocks-blue-glowing-lines-loopable-technology-background-4k-uhd-3840x2160_rpboetz1yz_thumbnail-full01.png">
-                <span class="card-title">Profile</span>
-                <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">info</i></a>
+                <img src="https://flordemilonga.files.wordpress.com/2009/12/blank-white-page.jpg">
+                <span class="black-text card-title"><h1 class="black-text">0</h1>Subscribers</span>
+                <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">info_outline</i></a>
             </div>
             {{!-- <div class="card-content">
                 <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
@@ -180,28 +182,63 @@
                                             class="material-icons left">cast</i></a>
                                 </p>
                             </li>
+
                             {{/each}}
                         </div>
                     </ul>
+                    {{#each lessons}}
+                    {{else}}
+                    <div>
+                        <h3 class="center-align teal-text">You have no lessons</h3>
+                        <p class="center-align teal-text">How about uploading a lesson?</p>
+                        <div style="margin-top: 100px; text-align: center">
+                            <a href="#" class="btn teal center-align">Upload<i class="material-icons left">cloud_upload</i></a>
+                        </div>
+                    </div>
+                    {{/each}}
                 </div>
-                <div id="test5">Test 2</div>
+                <div id="test5">
+                    <ul class="collection">
+                        {{#each schools}}
+                        <li style="font-weight: bold;" class="black-text collection-item">{{{name}}}<br><a class="btn red"
+                                href="/{{{secretSchoolCode}}}/join/school/">Remove<i class="material-icons left">delete</i></a><a
+                                href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson" class="waves-effect waves-light btn blue">Edit<i
+                                    class="material-icons left">edit</i></a></li>
+
+
+                        {{!-- Join School Button --}}
+
+                        {{/each}}
+                    </ul>
+                    {{#each schools}}
+                    {{else}}
+                    <h3 class="center-align teal-text">You have no Schools</h3>
+                    <p class="center-align teal-text">How about creating a school?</p>
+                    <div style="margin-top: 100px; text-align: center">
+                        <a href="/authenticated/create/create_school" class="btn teal center-align">Create School<i
+                                class="material-icons left">add</i></a>
+                    </div>
+                    {{/each}}
+
+                </div>
                 <div id="test6">Test 3</div>
             </div>
         </div>
     </div>
 </div>
 {{!-- Modal to agree to changes --}}
- <div id="modal1" class="modal">
+<div id="modal1" class="modal">
     <div class="modal-content">
-      <h4>Are You Sure?</h4>
-      <p>You won't be able to view it after you delete the video</p>
+        <h4>Are You Sure?</h4>
+        <p>You won't be able to view it after you delete the video</p>
     </div>
     <div class="modal-footer">
-      <button id="remove_lesson_confirmation" href="#!" class=" waves-effect waves-green btn-flat blue white-text">Remove<i class="material-icons left white-text">delete</i></button>
-      <button class="modal-close waves-effect waves-green btn-flat red white-text">Cancel<i class="material-icons left white-text">cancel</i></button>
+        <button id="remove_lesson_confirmation" href="#!" class=" waves-effect waves-green btn-flat blue white-text">Remove<i
+                class="material-icons left white-text">delete</i></button>
+        <button class="modal-close waves-effect waves-green btn-flat red white-text">Cancel<i class="material-icons left white-text">cancel</i></button>
     </div>
-  </div>
-          
+</div>
+
 {{!-- <div class="row">
     <div id="test1" class="col s12">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
         incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -257,7 +294,7 @@
     const RemoveLessonButton = document.getElementById("remove_lesson");
     const RemoveLessonConfirmation = document.getElementById("remove_lesson_confirmation");
     const HiddenLessonCode = document.getElementById("hidden_lesson_code");
-    const HiddenLessonUrl = document.getElementById("hidden_lesson_code").textContent;
+    const HiddenLessonUrl = document.getElementById("hidden_lesson_url").textContent;
 
     RemoveLessonButton.addEventListener('click', () => {
         $('.modal').modal('open');
@@ -267,27 +304,27 @@
             $('.modal').modal('close')
 
             db.collection("lessons")
-              .doc(HiddenLessonCode.textContent)
-              .delete()
-              .then(() => {
-                //Document Successfully deleted!
-                 M.toast({ html: 'Removed from database!' })
-                 M.toast({ html: 'Deleting from storage....' })
-                 let Reference = storage.ref("videos/" + HiddenLessonUrl)
-                 .delete()
-                 .then(() => {
-                    //File deleted Successfully
-                    M.toast({ html: 'Removed From storage' })
-                    M.toast({ html: 'Successfully removed lesson' })
-                    location.reload();
-                 }).catch((err) => {
-                  M.toast({html: "An Error occured!"})
-                  M.toast({html: err.message})
-                 })
-              }).catch((err) => {
-                  M.toast({html: "An Error occured!"})
-                  M.toast({html: err.message})
-              })
+                .doc(HiddenLessonCode.textContent)
+                .delete()
+                .then(() => {
+                    //Document Successfully deleted!
+                    M.toast({ html: 'Removed from database!' })
+                    M.toast({ html: 'Deleting from storage....' })
+                    let Reference = storage.ref("videos/" + HiddenLessonUrl)
+                        .delete()
+                        .then(() => {
+                            //File deleted Successfully
+                            M.toast({ html: 'Removed From storage' })
+                            M.toast({ html: 'Successfully removed lesson' })
+                            location.reload();
+                        }).catch((err) => {
+                            M.toast({ html: "An Error occured!" })
+                            M.toast({ html: err.message })
+                        })
+                }).catch((err) => {
+                    M.toast({ html: "An Error occured!" })
+                    M.toast({ html: err.message })
+                })
         })
     });
 </script>

@@ -37,9 +37,9 @@ var config = {
   messagingSenderId: "1077918538165"
 };
 
-let serviceAccount = require("./service-accounts.json");
+var serviceAccount = require("./service-accounts.json");
 firebase.initializeApp(config);
-let database = firebase.database();
+var database = firebase.database();
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -118,7 +118,7 @@ function sendMailThroughApp(email, password, html) {
 
 //DefaultFirebaseApp Initialization for WebApp:
 //Listen for port on application localhost server
-app.listen(3000, () => {
+app.listen(3000,() => {
   console.log("Running on: localhost:3000");
   console.log("port = 3000, server = localhost;");
 });
@@ -200,6 +200,7 @@ app.get("/", (req, res) => {
       }
     } else {
       //User isn't authenticated
+      // res.render("./MainFolders/home");
     }
   });
 });
@@ -289,7 +290,8 @@ app.post("/Authenticate/signUp", (req, res) => {
           first_name: FirstName,
           last_name: LastName,
           email: email,
-          password: password
+          password: password,
+          user_id: firebase.auth().currentUser.uid,
         })
         // eslint-disable-next-line promise/always-return
         .then(() => {
@@ -627,7 +629,7 @@ app.get("/class/main/info/:school_id/:class_id/add_lesson", (req, res) => {
             databaseData = doc.data();
 
             //Render with context
-            res.render("./AuthFolders/Class", {
+            res.render("./MainFolders/Class", {
               id: user.uid,
               data: databaseData,
               user_id: user.uid,
@@ -680,7 +682,7 @@ app.get("/:school_id/:class_id/:lesson_id/view_lesson", (req, res) => {
               });
 
               console.table(comments);
-              res.render("./AuthFolders/Lesson", {
+              res.render("./MainFolders/Lesson", {
                 data: data,
                 user_email: user.email,
                 user_code: user.uid,
@@ -725,7 +727,7 @@ app.get("/class/main/info/:school_id/:class_id/ClassInfo", (req, res) => {
         .get()
         .then(doc => {
           if (doc.exists) {
-            res.render("./AuthFolders/ClassInfo", {
+            res.render("./MainFolders/ClassInfo", {
               lessons: lessons,
               classData: doc.data()
             });
@@ -1040,8 +1042,26 @@ app.get("/educator/hub/start", (req, res) => {
 
 app.get("/educator/hub/dashboard/", (req, res) => {
   const lessons = [];
+  const schools = [];
+  
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
+      //Get the educator's schools
+      db.collection("schools")
+        .where("admin", "==", user.uid)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            if (doc.exists) {
+              schools.push(doc.data())
+            }
+          })
+          
+        }).catch((err) => {
+          //Error occured
+            console.log(err.message)
+        });
+      //Get the educator's lessons
         db.collection("lessons")
         .where("uploader", "==", user.uid) 
         .get()
@@ -1051,7 +1071,7 @@ app.get("/educator/hub/dashboard/", (req, res) => {
               lessons.push(doc.data())
             }
           })
-          res.render("./MainFolders/EducatorDashboard", {lessons: lessons});
+          res.render("./MainFolders/EducatorDashboard", {lessons: lessons, schools: schools});
         }).catch((error) => {
           console.log(error.message);
         })
