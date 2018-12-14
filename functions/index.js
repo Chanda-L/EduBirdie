@@ -147,8 +147,6 @@ app.get("/", (req, res) => {
                   //Search is incorrect
                   console.log("Search doesnt equal anything");
                 }
-               
-
               } else {
                 //document does not exist
                 console.log("document does not exist");
@@ -171,7 +169,7 @@ app.get("/", (req, res) => {
               user: firebase.auth().currentUser,
               user_id: firebase.auth().currentUser.uid,
               searchedUsers: users
-            }); 
+            });
           })
           .catch(error => {
             console.log(error.message);
@@ -181,7 +179,7 @@ app.get("/", (req, res) => {
         console.log("User search == none");
       }
     } else {
-    //User isn't authenticated
+      //User isn't authenticated
     }
   });
 });
@@ -236,8 +234,8 @@ app.post("/authenticate/signIn", (req, res) => {
       //Send a success email to user!
       if (firebase.auth().currentUser.emailVerified) {
         //User is verified and can proceed to home page
-         res.redirect("/");
-         res.end();
+        res.redirect("/");
+        res.end();
       } else {
         //User is not verified
         //Send verification email
@@ -991,22 +989,56 @@ app.post("/", (req, res) => {
 });
 
 app.get("/educator/hub/start", (req, res) => {
-  firebase.auth().onAuthStateChanged((user) => {
+  //Check if user is aleady an educator
+  //Perform actions and redirect if user is already an educator
+  firebase.auth().onAuthStateChanged(user => {
     if (user) {
-        res.render("./MainFolders/EducatorsPage", {
-          user_id: firebase.auth().currentUser.uid,
-          first_name: user.first_name,
-          last_name: user.last_name,
+      db.collection("users")
+        .doc(user.uid)
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            if (doc.data().educator !== true) {
+              res.render("./MainFolders/EducatorsPage", {
+                user_id: firebase.auth().currentUser.uid,
+                first_name: user.first_name,
+                last_name: user.last_name
+              });
+            } else {
+              res.redirect("/educator/hub/dashboard");
+            }
+          } else {
+            res.redirect("/educator/hub/start")
+          }
         })
+        .catch(error => {console.log(error.message)});
     } else {
-        res.redirect("/authentication/main")
+      res.redirect("/authentication/main");
     }
-  })
- 
+  });
 });
 
-app.get("/educator/hub/dashboard/", (req,res) => {
-  firebase.auth().onAuthStateChanged((user) => {
-    res.render("./MainFolders/EducatorDashboard")
-  })
+app.get("/educator/hub/dashboard/", (req, res) => {
+  const lessons = [];
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+        db.collection("lessons")
+        .where("uploader", "==", user.uid) 
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            if (doc.exists) {
+              lessons.push(doc.data())
+            }
+          })
+          res.render("./MainFolders/EducatorDashboard", {lessons: lessons});
+        }).catch((error) => {
+          console.log(error.message);
+        })
+        
+    } else {
+      //User is not authenticated
+      res.redirect("/authentication/main");
+    }
+  });
 });
