@@ -183,7 +183,7 @@ app.get("/", (req, res) => {
             querySnapshot.forEach(doc => {
               lessons.push(doc.data());
             });
-            res.render("./MainFolders/home", {
+            return res.render("./MainFolders/home", {
               lessons: lessons,
               user: firebase.auth().currentUser,
               user_id: firebase.auth().currentUser.uid,
@@ -200,7 +200,8 @@ app.get("/", (req, res) => {
       }
     } else {
       //User isn't authenticated
-      // res.render("./MainFolders/home");
+       return res.render("./MainFolders/home");
+    
     }
   });
 });
