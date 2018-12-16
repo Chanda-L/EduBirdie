@@ -46,7 +46,8 @@ admin.initializeApp({
 });
 
 let db = admin.firestore();
-
+const settings = {/* your settings... */ timestampsInSnapshots: true};
+db.settings(settings);
 console.log("hi");
 app.use(flash());
 
@@ -57,7 +58,7 @@ app.use(flash());
 // $ curl http://localhost:3000/notfound
 // $ curl http://localhost:3000/notfound -H "Accept: application/json"
 // $ curl http://localhost:3000/notfound -H "Accept: text/plain"
-
+// app.set("views", './views')
 app.use(express.static(__dirname + "public"));
 app.engine(
   "hbs",
@@ -129,8 +130,10 @@ app.get("/", (req, res) => {
   let educator;
   let search = req.query.search;
 
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
+  // firebase.auth().onAuthStateChanged(user => {
+    console.log("something")
+    if (firebase.auth().currentUser !== null) {
+      console.log("Authenticated")
       if (search !== "undefined") {
         //Get all the user data
         //Return the searched for users...
@@ -145,7 +148,7 @@ app.get("/", (req, res) => {
                   users.push(doc.data());
                 } else {
                   //Search is incorrect
-                  console.log("Search doesnt equal anything");
+                  // console.log("Search doesnt equal anything");
                 }
               } else {
                 //document does not exist
@@ -157,11 +160,11 @@ app.get("/", (req, res) => {
             //console.log the error
             console.log(err);
           });
-
+         
         //get data and check if user is an educator
         //if user is an educator use educator variable and add the found data
         db.collection("users")
-          .doc(user.uid)
+          .doc(firebase.auth().currentUser.uid)
           .get()
           .then(doc => {
             if (doc.exists) {
@@ -183,6 +186,7 @@ app.get("/", (req, res) => {
             querySnapshot.forEach(doc => {
               lessons.push(doc.data());
             });
+            console.log("Eish")
             return res.render("./MainFolders/home", {
               lessons: lessons,
               user: firebase.auth().currentUser,
@@ -191,19 +195,22 @@ app.get("/", (req, res) => {
               educator: educator,
             });
           })
+      
+          
           .catch(error => {
             console.log(error.message);
           });
+          
       } else {
         //User search is evaluated at undefined
         console.log("User search == none");
       }
     } else {
       //User isn't authenticated
-       return res.render("./MainFolders/home");
-    
+      console.log("Eish")
+      return res.redirect("/authentication/main")
     }
-  });
+  
 });
 
 //Email verification steps
@@ -215,18 +222,18 @@ app.get("/authenticate/email_verify", (req, res) => {
       .currentUser.sendEmailVerification()
       .then(() => {
         //Successfully sent email.
-        res.redirect("/");
+        return res.redirect("/");
       })
       .catch(error => {
         //Email verification failed
         //show error message
         console.log(error.message);
       });
-    return res.render("./AuthFolders/VerifyEmail");
   } else {
     //Users email is already verified
     //redirect back to home screen
-    res.redirect("/");
+    console.log("Verified")
+    return res.redirect("/");
   }
 });
 
@@ -236,11 +243,12 @@ app.get("/authenticate/email_verify", (req, res) => {
 app.get("/authentication/main", (req, res) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      //User is already authenticated
-      //redirect user to home page
-      return res.redirect("/");
+      // //User is already authenticated
+      // //redirect user to home page
+      //  return res.redirect("/");
     } else {
-      return res.render("./AuthFolders/Authenticate");
+       return res.render("./AuthFolders/Authenticate");
+
     }
   });
 });
@@ -254,15 +262,18 @@ app.post("/authenticate/signIn", (req, res) => {
       console.log(firebaseUser.email);
 
       //Send a success email to user!
-      if (firebase.auth().currentUser.emailVerified) {
-        //User is verified and can proceed to home page
-        res.redirect("/");
-        res.end();
-      } else {
-        //User is not verified
-        //Send verification email
-        return res.redirect("/authenticate/email_verify");
-      }
+      // if (firebase.auth().currentUser.emailVerified === true) {
+      //   //User is verified and can proceed to home page
+      //   console.log("Verified")
+    
+
+      // } else {
+      //   //User is not verified
+      //   //Send verification email
+      //   console.log("Not verified")
+      //   return res.redirect("/authenticate/email_verify");
+      // }
+      return res.redirect("/");
     })
     .catch(error => {
       console.log(error.message);
@@ -299,7 +310,7 @@ app.post("/Authenticate/signUp", (req, res) => {
           //Add An Alert notifying user they have been authenticated
           if (firebase.auth().currentUser.emailVerified === true) {
             //redirect home if user is verified
-            res.redirect("/");
+            return res.redirect("/");
           } else if (firebase.auth().currentUser.emailVerified === false) {
             //Redirect to email verification page if user not verified
             return res.redirect("/authenticate/email_verify");
@@ -322,11 +333,11 @@ app.post("/Authenticate/signUp", (req, res) => {
       console.log("code" + errorCode);
 
       //Send the error message to the client side
-      res.send(
-        '<h1 style="text-align: center; font-family: sans-serif; font-weight: bold; color: green;">' +
-          errorMessage +
-          '</h1><a href="/authenticate/sign_up" style="text-decoration: none;  color: green; text-align: center; font-family: sans-serif;" class="btn">Go Back</a> '
-      );
+      // return res.send(
+      //   '<h1 style="text-align: center; font-family: sans-serif; font-weight: bold; color: green;">' +
+      //     errorMessage +
+      //     '</h1><a href="/authenticate/sign_up" style="text-decoration: none;  color: green; text-align: center; font-family: sans-serif;" class="btn">Go Back</a> '
+      // );
     });
 });
 
@@ -343,7 +354,7 @@ app.get("/authenticate/log_out", (req, res) => {
       console.log(error.message);
 
       //Send error message to user that log in was unsuccessful
-      res.send(
+      return res.send(
         "<h1>There was an error logging you out</h1>" +
           "<h4>" +
           error.message +
