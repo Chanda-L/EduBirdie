@@ -16,24 +16,26 @@
         <a href="#" id="side-trigger" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
             <li><a href="/">Home<i class="material-icons left">
-                home
-            </i></a></li>
+                        home
+                    </i></a></li>
             <li><a href="/contact">Contact Us <i class="material-icons left">
-                phone
-            </i></a></li>
+                        phone
+                    </i></a></li>
             <li><a href="/TermsOfService">Terms Of Service</a></li>
         </ul>
     </div>
 </nav>
- <ul id="slide-out" class="sidenav">
+<ul id="slide-out" class="sidenav">
     <li><a href="#!"><i class="material-icons">cloud</i>Terms Of Service</a></li>
     <li><a href="#!"><i class="material-icons">home</i>Home</a></li>
-    <li><div class="divider"></div></li>
+    <li>
+        <div class="divider"></div>
+    </li>
     <li><a class="subheader">Information</a></li>
     <li><a class="waves-effect" href="#!"><i class="material-icons">phone</i>Contact Us</a></li>
-  </ul>
+</ul>
 
-        
+
 
 
 <div style="margin-top: 150px" class="container">
@@ -55,7 +57,7 @@
                 <form action="/Authenticate/signUp" method="POST" class="col s12">
                     <div class="row">
                         <div class="input-field col s6">
-                            <input placeholder="Placeholder" name="SignUpFirstname" id="first_name" type="text" class="validate">
+                            <input placeholder="First name" name="SignUpFirstname" id="first_name" type="text" class="validate">
                             <label for="first_name">First Name</label>
                         </div>
                         <div class="input-field col s6">
@@ -63,6 +65,10 @@
                             <label for="last_name">Last Name</label>
                         </div>
                     </div>
+                
+                            <input name="birthdate" type="text" class="datepicker">
+                            <label for="birthdate">Birth Date</label>
+
                     <div class="row">
                         <div class="input-field col s12">
                             <input id="password" name="signUpPassword" type="password" class="validate">
@@ -76,10 +82,11 @@
                         </div>
                     </div>
                     <div style="text-align: center">
-                        <button style="border-radius: 2px" class="blue waves-effect waves-light btn z-depth-1">Sign Up<i class="material-icons left">email</i></button>
+                        <button style="border-radius: 2px" class="blue waves-effect waves-light btn z-depth-1">Sign Up<i
+                                class="material-icons left">email</i></button>
                         <div style="margin-top: 20px;" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
                     </div>
-                           
+
                 </form>
             </div>
         </div>
@@ -102,8 +109,9 @@
                             <label for="email">Email</label>
                         </div>
                     </div>
-                     <div style="text-align: center">
-                        <button style="border-radius: 2px" class="blue waves-effect waves-light btn z-depth-1">Sign In<i class="material-icons left">email</i></button>
+                    <div style="text-align: center">
+                        <button style="border-radius: 2px" class="blue waves-effect waves-light btn z-depth-1">Sign In<i
+                                class="material-icons left">email</i></button>
                         <div style="margin-top: 20px;" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
                     </div>
                 </form>
@@ -120,5 +128,6 @@
     $(document).ready(function () {
         $('.tabs').tabs();
         $('.sidenav').sidenav();
+        $('.datepicker').datepicker();
     });
 </script>

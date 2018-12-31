@@ -1,0 +1,351 @@
+{{>home}}
+<style>
+    /* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+p {
+  line-height: 2rem;
+}
+
+.sidenav-trigger {
+  color: #26a69a;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+  .parallax-container .section {
+    width: 100%;
+  }
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+</style>
+
+{{!-- <h1>Become An Educator</h1> --}}
+<ul id="slide-out" class="sidenav">
+    <li>
+        <div class="user-view">
+
+            <a href="#name"><span class="white-text name">John Doe</span></a>
+            <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+        </div>
+    </li>
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+</ul>
+
+<nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+        <a style="font-size: 32px" id="logo-container" href="#" class="logo teal-text brand-logo">Edu-Ezi</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a class="blue-text" href="#">Log in<i class="material-icons left">portrait</i></a></li>
+            <li><a class="modal-trigger blue-text" href="#schoolInfo">Edu-Eezi For Schools<i class="material-icons left">school</i></a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="sidenav">
+            <li><a href="/">Home<i class="material-icons left">home</i></a></li>
+        </ul>
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+</nav>
+
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <br><br>
+            <h1 class="header center blue-text text-lighten-2">Education made easy</h1>
+            <div class="row center">
+                <h5 class="header col s12 light">Join and upload & watch lessons, earn money, create schools and more!</h5>
+            </div>
+            <div class="row center">
+                <a id="get_started_as_educator" href="/authentication/main" class=" pulse btn-large blue lighten-1">Get
+                    Started
+                    Today!</a>
+            </div>
+            <br><br>
+
+        </div>
+    </div>
+    <div class="parallax"><img src="https://wallpaperplay.com/walls/full/2/b/3/100299.jpg" alt="Unsplashed background img 1"></div>
+</div>
+
+
+<div class="container">
+    <div class="section">
+
+        <!--   Icon Section   -->
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h1></h1>
+                    <h2 class="center green-text"><i class="material-icons">money</i></h2>
+                    <h5 class="center">Earn Money</h5>
+
+                    <p class="light">Grow your online income flow by becoming an educator on Edu-Eezi by creating
+                        lessons. Simply add monetization and We'll do the rest for you! The more views you rake in, the
+                        more money follows!</p>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center blue-text"><i class="material-icons">group</i></h2>
+                    <h5 class="center">Create your digital community</h5>
+
+                    <p class="light">With Edu-Eezi, you can create your own community to share, chat, create and learn
+                        all as one. Communities can grow to a large scale and there is no limit to how you can
+                        collaborate, you can make them public or private; which ever suits you! </p>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center cyan-text"><i class="material-icons">settings</i></h2>
+                    <h5 class="center">Easy to work with</h5>
+
+                    <p class="light">Edu-Eezi was created with simplicity in mind. The interface is easy to navigate
+                        while still having very powerful capabilities such as the educator dashboard and allows you to
+                        navigate the app and watch lessons. As simple as <strong>YouTube!</strong></p>
+                </div>
+            </div>
+            <div class="col s12 m6">
+                <div class="icon-block">
+                    <h1></h1>
+                    <h2 class="center purple-text accent-4"><i class="material-icons">money_off</i></h2>
+                    <h5 class="center">Learn more. Pay less.</h5>
+
+                    <p class="light">No more subscription fees. Learning on our platform is completely <strong>Free</strong>If
+                        you choose to be an educator, it is still free! Learn, create, enjoy for free. Make your wallet
+                        and mind happy!</p>
+                </div>
+            </div>
+            <div class="col s12 m6">
+                <div class="icon-block">
+                    <h1></h1>
+                    <h2 class="center red-text accent-2"><i class="material-icons">chat</i></h2>
+                    <h5 class="center">Support</h5>
+
+                    <p class="light">Give us feedback by simply sending us an email! Chat on the community chat and ask
+                        questions you might have!</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <div class="row center">
+                <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+            </div>
+        </div>
+    </div>
+    <div class="parallax"><img src="http://s1.picswalls.com/wallpapers/2016/06/10/4k-desktop-wallpaper_065227602_309.jpg"
+            alt="Unsplashed background img 2"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+
+        <div class="row">
+            <div class="col s12 center">
+                <h3><i class="mdi-content-send brown-text"></i></h3>
+                <h4>Contact Us?</h4>
+                <p class="left-align light">
+
+                    <div class="row">
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="email" type="email" class="validate">
+                                    <label for="email">Your Email</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input id="message" type="text" class="validate">
+                                    <label for="message">Your Message</label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn teal z-depth-3">Submit</button>
+                        </form>
+                    </div>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <div class="row center">
+                <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+            </div>
+        </div>
+    </div>
+    <div class="parallax"><img src="https://wallpaperaccess.com/full/211093.jpg" alt="Unsplashed background img 3"></div>
+</div>
+
+<footer class="page-footer teal">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text logo">Edu-Eezi</h5>
+                <p class="grey-text text-lighten-4">Edu-Eezi is a platform for users to allow them to teach their own
+                    subjects, create communities and allowing them to earn money and profit from their lessons.</p>
+
+
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">More...</h5>
+                <ul>
+                    <li><a class="white-text modal-trigger" href="#terms">terms of service</a></li>
+                    <li><a class="white-text" href="#!">how schools work?</a></li>
+                    <li><a class="white-text" href="#!">how monetization works?</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Chanda</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Modal Structure -->
+<div id="terms" class="modal">
+    <div class="modal-content">
+        <h4>Terms Of Service</h4>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nulla tortor, finibus in elit vel, venenatis
+            ornare massa. Vivamus rutrum aliquet leo consequat congue. Ut eget egestas urna. Praesent gravida, ante id
+            ultricies ornare, mauris elit bibendum velit, a mollis augue eros cursus lorem. Ut at purus quis eros
+            malesuada condimentum. Aliquam vel elementum ligula. Nam eget nulla vitae nibh pharetra rhoncus non non
+            augue. Donec cursus tincidunt hendrerit. Proin tincidunt turpis ligula, in pellentesque mauris cursus at.
+            Integer eget mi at lacus tincidunt efficitur. Nulla commodo ac massa mattis aliquam. Etiam mollis tincidunt
+            mauris id hendrerit. Donec leo erat, mollis ut erat in, ultricies fringilla lorem. Aenean dignissim neque
+            at porttitor feugiat. Curabitur id scelerisque urna. Cras finibus viverra tellus, eu volutpat quam dictum
+            vel.
+
+            Suspendisse viverra purus in libero sodales, a commodo lectus luctus. Vivamus quis erat eleifend, sodales
+            sem ut, ullamcorper diam. Suspendisse egestas odio ut facilisis tempus. Mauris auctor tellus at odio
+            tristique tincidunt. Etiam non sem suscipit, tristique est id, semper nibh. Fusce eu lorem enim. Integer ut
+            placerat nunc. Phasellus finibus dignissim dui, vulputate feugiat ipsum vulputate id. Morbi pretium ac
+            lorem id euismod. Proin sit amet risus ut risus mattis maximus nec finibus mi. Maecenas tempus arcu et
+            justo vestibulum tincidunt. Sed auctor commodo scelerisque. Curabitur ac finibus sem, nec ultrices neque.
+            Donec ut urna gravida augue dignissim pellentesque. Curabitur tempus diam enim, in convallis augue feugiat
+            a. Nullam turpis sem, aliquam nec risus ut, vulputate luctus felis.
+
+            Sed mollis quam vitae enim pulvinar, id vulputate ex fermentum. Nullam tincidunt et magna in bibendum.
+            Aenean odio nisi, accumsan ut nisl non, faucibus blandit diam. Nulla eu condimentum tortor, non pharetra
+            libero. Aliquam quis metus a mauris hendrerit molestie nec vel erat. Sed nulla ex, vestibulum quis odio in,
+            fermentum porttitor tellus. Proin vestibulum nisl vel egestas egestas. Aliquam mollis metus sed libero
+            euismod, at convallis erat placerat. Aenean at tristique leo. Phasellus et tortor nec est rutrum malesuada
+            sit amet id dui. Pellentesque et eros sollicitudin, semper sem et, porttitor metus.
+
+            Sed vel auctor lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce malesuada ut
+            felis ac pulvinar. Mauris a ex nec tortor congue vehicula in sed lacus. Aenean fermentum fringilla tempor.
+            Ut vitae urna id ante pretium mattis quis nec velit. Maecenas viverra viverra sapien at euismod. Etiam ac
+            elit sit amet eros vulputate auctor quis non odio. Aenean tincidunt, urna et blandit mattis, dolor erat
+            vulputate sem, iaculis tincidunt nulla purus ac est.
+
+            Vestibulum semper urna gravida enim luctus, eget auctor ante scelerisque. Maecenas vel erat non tellus
+            pretium placerat dictum ac nisl. Ut at convallis risus, vitae luctus ex. Nam ut eros egestas, ultrices diam
+            ac, convallis lacus. Quisque mattis tellus urna, sit amet tempus mi cursus eget. Nunc sit amet tellus
+            placerat, posuere mauris at, laoreet lorem. Mauris vel convallis ipsum, eu cursus nibh.</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>
+
+<div id="schoolInfo" class="modal">
+    <div class="modal-content">
+        <h4 class="center-align teal-text logo">For Schools</h4>
+        <p>
+            <div class="row">
+<div class="col s12 m4">
+                <div class="icon-block">
+                    <h1></h1>
+                    <h2 class="center green-text"><i class="material-icons">money</i></h2>
+                    <h5 class="center">Earn Money</h5>
+
+                    <p class="light">Grow your online income flow by becoming an educator on Edu-Eezi by creating
+                        lessons. Simply add monetization and We'll do the rest for you! The more views you rake in, the
+                        more money follows!</p>
+                </div>
+            </div>
+            </div>
+            
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>
+
+<!--  Scripts-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.sidenav').sidenav();
+        $('.modal').modal();
+        $('.datepicker').picker();
+    })
+</script>
+
+
+</body>

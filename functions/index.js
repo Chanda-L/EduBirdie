@@ -39,6 +39,7 @@ var config = {
 
 var serviceAccount = require("./service-accounts.json");
 firebase.initializeApp(config);
+
 var database = firebase.database();
 
 admin.initializeApp({
@@ -124,6 +125,11 @@ app.listen(3000,() => {
   console.log("port = 3000, server = localhost;");
 });
 
+app.get("/Introduction/", (req,res) => {
+  res.render("./MainFolders/introduction");
+});
+
+
 app.get("/", (req, res) => {
   let lessons = [];
   let users = [];
@@ -208,7 +214,7 @@ app.get("/", (req, res) => {
     } else {
       //User isn't authenticated
       console.log("Eish")
-      return res.redirect("/authentication/main")
+      return res.redirect("/Introduction/")
     }
   
 });
@@ -281,13 +287,14 @@ app.post("/authenticate/signIn", (req, res) => {
 });
 
 app.post("/Authenticate/signUp", (req, res) => {
-  let username, email, password;
+  let username, email, password, birthdate;
 
   username = req.body.SignUpFirstname + req.body.SignUpLastname;
   FirstName = req.body.SignUpFirstname;
   LastName = req.body.SignUpLastname;
   email = req.body.signUpEmail;
   password = req.body.signUpPassword;
+  birthdate = req.body.birthdate;
 
   firebase
     .auth()
@@ -303,13 +310,14 @@ app.post("/Authenticate/signUp", (req, res) => {
           last_name: LastName,
           email: email,
           password: password,
+          birthdate: birthdate,
           user_id: firebase.auth().currentUser.uid,
         })
         // eslint-disable-next-line promise/always-return
         .then(() => {
           //Add An Alert notifying user they have been authenticated
           if (firebase.auth().currentUser.emailVerified === true) {
-            //redirect home if user is verified
+            //redirect hoChanme if user is verified
             return res.redirect("/");
           } else if (firebase.auth().currentUser.emailVerified === false) {
             //Redirect to email verification page if user not verified
