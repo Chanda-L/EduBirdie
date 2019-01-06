@@ -1,3 +1,23 @@
 {{>dashboard_partial}}
 
+ <div class="row">
+{{#each lessons}}
+ 
+ 
+    <div class="col s12 m6 l4">
+      <div class="card">
+        <div class="card-image">
+          <img src="{{{thumbnail}}}"/>
+          <span class="card-title">{{{name}}}</span>
+          <a class="btn-floating btn-large waves-effect halfway-fab waves-light red"><i class="material-icons">timeline</i></a>
+             {{!-- <a class="btn-floating waves-effect halfway-fab waves-light red"><i class="material-icons">info</i></a>
+            --}}
+        </div>
+        <div class="card-content">
+         <a class="btn" href="/edu-eezi/educator/dashboard/Lessons/anylitics/{{{code}}}">edit<i class="material-icons left">create</i></a>
+        </div>
+      </div>
+    </div>
 
+{{/each}} 
+</div>

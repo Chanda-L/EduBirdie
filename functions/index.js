@@ -223,10 +223,10 @@ app.get("/", (req, res) => {
 //Main application authentication folder
 //Power authentcation in app with: SignUp, SignIn, and email verification
 
-app.post("/authenticate/signIn", (req, res) => {
+app.post("/Authenticate/signIn", (req, res) => {
   firebase
     .auth()
-    .signInWithEmailAndPassword(req.body.signInEmail, req.body.signInPassword)
+    .signInWithEmailAndPassword(req.body.email_in, req.body.password_in)
     .then(firebaseUser => {
       console.log("Successfully Signed In!");
       console.log(firebaseUser.email);
@@ -1085,11 +1085,12 @@ app.get("/edu-eezi/educator/dashboard/Lessons", (req, res) => {
               lessons.push(doc.data());
             }
           });
+          return res.render("./DashboardFolder/Lessons", { lessons: lessons });
         })
         .catch(err => {
           console.log(err.message);
         });
-      return res.render("./DashboardFolder/Lessons", { lessons: lessons });
+    
     } else {
       //User cant access
       return res.redirect("/Introduction/");
@@ -1108,4 +1109,8 @@ app.get("/edu-eezi/educator/dashboard/UploadLesson", (req, res) => {
 
 app.get("/edu-eezi/educator/dashboard/LessonBundles", (req, res) => {
   return res.render("./DashboardFolder/LessonBundles");
+});
+
+app.get("/edu-eezi/educator/dashboard/Lessons/anylitics/:lesson_id", (req, res) => {
+  
 });
