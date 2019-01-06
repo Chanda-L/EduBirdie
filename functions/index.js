@@ -28,6 +28,11 @@ const app = express();
 //----- Sync authentication wit h database data
 //----- Keep Storage low to not use to much and overload storage
 
+
+app.get("/school.edu-eezi/introduction", (req,res) => {
+  return res.render("./MainFolders/introduction_schools")
+});
+
 var config = {
   apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
   authDomain: "edubirdie-1534842942940.firebaseapp.com",
@@ -218,46 +223,10 @@ app.get("/", (req, res) => {
     }
   
 });
-
-//Email verification steps
-//Send verification email
-app.get("/authenticate/email_verify", (req, res) => {
-  if (firebase.auth().currentUser.emailVerified === true) {
-    firebase
-      .auth()
-      .currentUser.sendEmailVerification()
-      .then(() => {
-        //Successfully sent email.
-        return res.redirect("/");
-      })
-      .catch(error => {
-        //Email verification failed
-        //show error message
-        console.log(error.message);
-      });
-  } else {
-    //Users email is already verified
-    //redirect back to home screen
-    console.log("Verified")
-    return res.redirect("/");
-  }
-});
-
 //New authentication file to authenticate users
 //Main application authentication folder
 //Power authentcation in app with: SignUp, SignIn, and email verification
-app.get("/authentication/main", (req, res) => {
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      // //User is already authenticated
-      // //redirect user to home page
-      //  return res.redirect("/");
-    } else {
-       return res.render("./AuthFolders/Authenticate");
 
-    }
-  });
-});
 
 app.post("/authenticate/signIn", (req, res) => {
   firebase
@@ -316,13 +285,9 @@ app.post("/Authenticate/signUp", (req, res) => {
         // eslint-disable-next-line promise/always-return
         .then(() => {
           //Add An Alert notifying user they have been authenticated
-          if (firebase.auth().currentUser.emailVerified === true) {
             //redirect hoChanme if user is verified
             return res.redirect("/");
-          } else if (firebase.auth().currentUser.emailVerified === false) {
-            //Redirect to email verification page if user not verified
-            return res.redirect("/authenticate/email_verify");
-          }
+          
         })
         .catch(error => {
           //Handle the authentication error
