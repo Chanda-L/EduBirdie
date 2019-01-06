@@ -9,7 +9,7 @@
  */
     #form {
         border-radius: 20px;
-        padding: 20px;
+    
     }
     nav ul a,
     nav .brand-logo {
@@ -105,17 +105,21 @@
         <div class="container">
             <br><br>
             <div class="row">
-                <div class="col s12 m6">
+                <div class="col s12 m12 l6">
                     <h1>Education Made <strong style="font-weight: bold" class="logo">Eezi</strong></h1>
                     <h3 class="left-align ">
                         Learn. Create. Explore.
                     </h3>
+                    <a href="#log_in_form_modal" class="modal-trigger hide-on-large-only white blue-text btn">
+                        Log In
+                    </a>
                 </div>
 
-                <div id="form" class=" white z-depth-5 col s12 m6">
+
+                <div id="form" class="hide-on-med-and-down white z-depth-5 col  l6">
 
                     <div style="margin-top: 20px" class="row">
-                        <form method="POST" href=" /Authenticate/signUp" class="col s12">
+                        <form method="POST" action=" /Authenticate/signUp" class="col s12">
                             <div class="row">
                                 <div class="input-field col s6">
                                     <input name="First_name" placeholder="First Name" id="first_name" type="text" class="validate">
@@ -123,7 +127,7 @@
                                 </div>
                                 <div class="input-field col s6">
                                     <input name="Last_name" placeholder="Last Name" id="last_name" type="text" class="validate">
-                                    <label for="first_name">First Name</label>
+                                    <label for="Last_name">last Name</label>
                                 </div>
                             </div>
 
@@ -140,7 +144,14 @@
                                     <label for="email">Email</label>
                                 </div>
                             </div>
-                            <input type="text" class="datepicker">
+
+                            <div class="row">
+                                <div class="input-field col s12">
+
+                                    <input name="birthdate"type="text" class="datepicker">
+                                    <label for="birthdate">Birth Date</label>
+                                </div>
+                            </div>
                             <div class="center-align">
                                 <button class="btn-small blue accent-3">
                                     Sign Up<i class="material-icons left">email</i>
@@ -306,14 +317,15 @@
                 </div>
             </div>
 
-            <div class="col s6 m6">
+            <div class="col s12 m6">
                 <div class="left-align icon-block">
                     <h1></h1>
                     <h2 class="left-align purple-text accent-4"><i class="material-icons  blue-text">monetization_on
                         </i></h2>
                     <h5 class="left-align">Monetization</h5>
 
-                    <p class="light">Monetization is one way you can earn money on edu-eezi! All you have to do is enable
+                    <p class="light">Monetization is one way you can earn money on edu-eezi! All you have to do is
+                        enable
                         it, enter your credit card details, <strong>and we'll handle the rest!</strong><br>
                     </p>
 
@@ -324,14 +336,17 @@
 
                 </div>
             </div>
-            <div class="col s6 m6">
+            <div class="col s12 m6">
                 <div class="left-align icon-block">
                     <h1></h1>
                     <h2 class="left-align purple-text accent-4"><i class="material-icons  blue-text">attach_money
                         </i></h2>
                     <h5 class="left-align">Pay-per-course</h5>
 
-                    <p class="light">The other way you can earn money is by creating lesson-bundles and charging a sum for that - keep in mind - lesson bundles <strong>can't</strong> exceed <strong>$4</strong> and minimum <strong>$1</strong>!<br>Lesson bundles should have a minimum of 20 lessons, you can create documents and quizzes on the built-in editor! <br><a href="#more_model">more...</a> 
+                    <p class="light">The other way you can earn money is by creating lesson-bundles and charging a sum
+                        for that - keep in mind - lesson bundles <strong>can't</strong> exceed <strong>$4</strong> and
+                        minimum <strong>$1</strong>!<br>Lesson bundles should have a minimum of 20 lessons, you can
+                        create documents and quizzes on the built-in editor! <br><a href="#more_model">more...</a>
                     </p>
 
                     <a style="border-radius: 10px" class="z-depth-3 waves-light blue accent-3 btn-small"><i class="material-icons left">videocam</i>watch
@@ -434,6 +449,55 @@
     </div>
 </div>
 
+<div id="log_in_form_modal" class="modal">
+    <div class="modal-content">
+        <h4 class="center-align teal-text logo">Create Your Account</h4>
+        <div id="form" class="hide-on-med-and-down white z-depth-5 col  l6">
+
+            <div style="margin-top: 20px" class="row">
+                <form method="POST" action=" /Authenticate/signUp" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input name="First_name_modal" placeholder="First Name" id="first_name_modal" type="text"
+                                class="validate">
+                            <label for="first_name">First Name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input name="Last_name_modal" placeholder="Last Name" id="last_name_modal" type="text"
+                                class="validate">
+                            <label for="first_name">First Name</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input name="password_modal" id="password_modal" type="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input name="email_modal" id="email_modal" type="email" class="validate">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <input name="birthdate_modal" type="text" class="datepicker">
+                    <div class="center-align">
+                        <button type="submit" class="btn-small blue accent-3">
+                            Sign Up<i class="material-icons left">email</i>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>
 <div id="schoolInfo" class="modal">
     <div class="modal-content">
         <h4 class="center-align teal-text logo">For Schools</h4>

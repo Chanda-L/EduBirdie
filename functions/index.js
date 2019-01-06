@@ -28,9 +28,8 @@ const app = express();
 //----- Sync authentication wit h database data
 //----- Keep Storage low to not use to much and overload storage
 
-
-app.get("/school.edu-eezi/introduction", (req,res) => {
-  return res.render("./MainFolders/introduction_schools")
+app.get("/school.edu-eezi/introduction", (req, res) => {
+  return res.render("./MainFolders/introduction_schools");
 });
 
 var config = {
@@ -52,7 +51,7 @@ admin.initializeApp({
 });
 
 let db = admin.firestore();
-const settings = {/* your settings... */ timestampsInSnapshots: true};
+const settings = { /* your settings... */ timestampsInSnapshots: true };
 db.settings(settings);
 console.log("hi");
 app.use(flash());
@@ -125,15 +124,14 @@ function sendMailThroughApp(email, password, html) {
 
 //DefaultFirebaseApp Initialization for WebApp:
 //Listen for port on application localhost server
-app.listen(3000,() => {
+app.listen(3000, () => {
   console.log("Running on: localhost:3000");
   console.log("port = 3000, server = localhost;");
 });
 
-app.get("/Introduction/", (req,res) => {
+app.get("/Introduction/", (req, res) => {
   res.render("./MainFolders/introduction");
 });
-
 
 app.get("/", (req, res) => {
   let lessons = [];
@@ -142,91 +140,88 @@ app.get("/", (req, res) => {
   let search = req.query.search;
 
   // firebase.auth().onAuthStateChanged(user => {
-    console.log("something")
-    if (firebase.auth().currentUser !== null) {
-      console.log("Authenticated")
-      if (search !== "undefined") {
-        //Get all the user data
-        //Return the searched for users...
+  console.log("something");
+  if (firebase.auth().currentUser !== null) {
+    console.log("Authenticated");
+    if (search !== "undefined") {
+      //Get all the user data
+      //Return the searched for users...
 
-        db.collection("users")
-          .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-              if (doc.exists) {
-                let user_name_correct = doc.data().name;
-                if (user_name_correct.includes(search)) {
-                  users.push(doc.data());
-                } else {
-                  //Search is incorrect
-                  // console.log("Search doesnt equal anything");
-                }
-              } else {
-                //document does not exist
-                console.log("document does not exist");
-              }
-            });
-          })
-          .catch(err => {
-            //console.log the error
-            console.log(err);
-          });
-         
-        //get data and check if user is an educator
-        //if user is an educator use educator variable and add the found data
-        db.collection("users")
-          .doc(firebase.auth().currentUser.uid)
-          .get()
-          .then(doc => {
+      db.collection("users")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
             if (doc.exists) {
-              if (doc.data().educator === true) {
-                educator = true;
+              let user_name_correct = doc.data().name;
+              if (user_name_correct.includes(search)) {
+                users.push(doc.data());
+              } else {
+                //Search is incorrect
+                // console.log("Search doesnt equal anything");
               }
             } else {
-              //The document does not exist
+              //document does not exist
+              console.log("document does not exist");
             }
-          }).catch((err) => {
-            //An error has occured in the application
-            console.log(err);
           });
-        
-          //Get all the lessons that'll be represented on the home screen
-        db.collection("lessons")
-          .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-              lessons.push(doc.data());
-            });
-            console.log("Eish")
-            return res.render("./MainFolders/home", {
-              lessons: lessons,
-              user: firebase.auth().currentUser,
-              user_id: firebase.auth().currentUser.uid,
-              searchedUsers: users,
-              educator: educator,
-            });
-          })
-      
-          
-          .catch(error => {
-            console.log(error.message);
+        })
+        .catch(err => {
+          //console.log the error
+          console.log(err);
+        });
+
+      //get data and check if user is an educator
+      //if user is an educator use educator variable and add the found data
+      db.collection("users")
+        .doc(firebase.auth().currentUser.uid)
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            if (doc.data().educator === true) {
+              educator = true;
+            }
+          } else {
+            //The document does not exist
+          }
+        })
+        .catch(err => {
+          //An error has occured in the application
+          console.log(err);
+        });
+
+      //Get all the lessons that'll be represented on the home screen
+      db.collection("lessons")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            lessons.push(doc.data());
           });
-          
-      } else {
-        //User search is evaluated at undefined
-        console.log("User search == none");
-      }
+          console.log("Eish");
+          return res.render("./MainFolders/home", {
+            lessons: lessons,
+            user: firebase.auth().currentUser,
+            user_id: firebase.auth().currentUser.uid,
+            searchedUsers: users,
+            educator: educator
+          });
+        })
+
+        .catch(error => {
+          console.log(error.message);
+        });
     } else {
-      //User isn't authenticated
-      console.log("Eish")
-      return res.redirect("/Introduction/")
+      //User search is evaluated at undefined
+      console.log("User search == none");
     }
-  
+  } else {
+    //User isn't authenticated
+    console.log("Eish");
+    return res.redirect("/Introduction/");
+  }
 });
 //New authentication file to authenticate users
 //Main application authentication folder
 //Power authentcation in app with: SignUp, SignIn, and email verification
-
 
 app.post("/authenticate/signIn", (req, res) => {
   firebase
@@ -240,7 +235,6 @@ app.post("/authenticate/signIn", (req, res) => {
       // if (firebase.auth().currentUser.emailVerified === true) {
       //   //User is verified and can proceed to home page
       //   console.log("Verified")
-    
 
       // } else {
       //   //User is not verified
@@ -258,11 +252,11 @@ app.post("/authenticate/signIn", (req, res) => {
 app.post("/Authenticate/signUp", (req, res) => {
   let username, email, password, birthdate;
 
-  username = req.body.SignUpFirstname + req.body.SignUpLastname;
-  FirstName = req.body.SignUpFirstname;
-  LastName = req.body.SignUpLastname;
-  email = req.body.signUpEmail;
-  password = req.body.signUpPassword;
+  username = req.body.First_name + " " + req.body.Last_name;
+  FirstName = req.body.First_name;
+  LastName = req.body.Last_name;
+  email = req.body.email;
+  password = req.body.password;
   birthdate = req.body.birthdate;
 
   firebase
@@ -280,14 +274,13 @@ app.post("/Authenticate/signUp", (req, res) => {
           email: email,
           password: password,
           birthdate: birthdate,
-          user_id: firebase.auth().currentUser.uid,
+          user_id: firebase.auth().currentUser.uid
         })
         // eslint-disable-next-line promise/always-return
         .then(() => {
           //Add An Alert notifying user they have been authenticated
-            //redirect hoChanme if user is verified
-            return res.redirect("/");
-          
+          //redirect if user is verified
+          return res.redirect("/");
         })
         .catch(error => {
           //Handle the authentication error
@@ -1015,10 +1008,12 @@ app.get("/educator/hub/start", (req, res) => {
               res.redirect("/educator/hub/dashboard");
             }
           } else {
-            res.redirect("/educator/hub/start")
+            res.redirect("/educator/hub/start");
           }
         })
-        .catch(error => {console.log(error.message)});
+        .catch(error => {
+          console.log(error.message);
+        });
     } else {
       res.redirect("/authentication/main");
     }
@@ -1028,7 +1023,7 @@ app.get("/educator/hub/start", (req, res) => {
 app.get("/educator/hub/dashboard/", (req, res) => {
   const lessons = [];
   const schools = [];
-  
+
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
       //Get the educator's schools
@@ -1038,32 +1033,79 @@ app.get("/educator/hub/dashboard/", (req, res) => {
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
             if (doc.exists) {
-              schools.push(doc.data())
+              schools.push(doc.data());
             }
-          })
-          
-        }).catch((err) => {
+          });
+        })
+        .catch(err => {
           //Error occured
-            console.log(err.message)
+          console.log(err.message);
         });
       //Get the educator's lessons
-        db.collection("lessons")
-        .where("uploader", "==", user.uid) 
+      db.collection("lessons")
+        .where("uploader", "==", user.uid)
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
             if (doc.exists) {
-              lessons.push(doc.data())
+              lessons.push(doc.data());
             }
-          })
-          res.render("./MainFolders/EducatorDashboard", {lessons: lessons, schools: schools});
-        }).catch((error) => {
-          console.log(error.message);
+          });
+          res.render("./MainFolders/EducatorDashboard", {
+            lessons: lessons,
+            schools: schools
+          });
         })
-        
+        .catch(error => {
+          console.log(error.message);
+        });
     } else {
       //User is not authenticated
       res.redirect("/authentication/main");
     }
   });
+});
+
+app.get("/edu-eezi/educator/dashboard/home", (req, res) => {
+  return res.render("./DashboardFolder/home");
+});
+
+app.get("/edu-eezi/educator/dashboard/Lessons", (req, res) => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      const lessons = [];
+      const schools = [];
+
+      db.collection("lessons")
+        .where("uploader", "==", user.uid)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            if (doc.exists) {
+              lessons.push(doc.data());
+            }
+          });
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+      return res.render("./DashboardFolder/Lessons", { lessons: lessons });
+    } else {
+      //User cant access
+      return res.redirect("/Introduction/");
+    }
+  });
+});
+app.get("/edu-eezi/educator/dashboard/Revenue", (req, res) => {
+  return res.render("./DashboardFolder/Revenue");
+});
+app.get("/edu-eezi/educator/dashboard/Settings", (req, res) => {
+  return res.render("./DashboardFolder/Settings");
+});
+app.get("/edu-eezi/educator/dashboard/UploadLesson", (req, res) => {
+  return res.render("./DashboardFolder/UploadLesson");
+});
+
+app.get("/edu-eezi/educator/dashboard/LessonBundles", (req, res) => {
+  return res.render("./DashboardFolder/LessonBundles");
 });
