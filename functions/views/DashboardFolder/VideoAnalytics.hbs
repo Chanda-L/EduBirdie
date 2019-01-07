@@ -1,0 +1,175 @@
+{{>dashboard_partial}}
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+<div class="row">
+    <div class="col s12 m12">
+        <div class="card white darken-1">
+            <div class="card-content white-text">
+                <h3 class="center-align teal-text ">lesson: {{name}}</h3>
+                <p class="center-align teal-text">uploaded at: {{date}}</p>
+                <p class="center-align teal-text">description: {{descrip}}</p>
+            </div>
+            <div class="card-action">
+                <a href="#" class="btn blue accent-3">Information <i class="material-icons left">info</i></a>
+                <a href="#" class="btn red darken-3">Edit <i class="material-icons left">create</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m6">
+        <div class="card white darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Views</span>
+                <canvas id="ViewsChart"></canvas>
+            </div>
+            <div class="card-action">
+                <a href="#" class="btn blue accent-3">share <i class="material-icons left">share</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m3">
+        <div class="card white darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Likes</span>
+                <canvas id="LikesChart"></canvas>
+            </div>
+            <div class="card-action">
+                <a href="#" class="btn purple accent-4">share <i class="material-icons left">share</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m3">
+        <div class="card white darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Earnings</span>
+                <canvas id="EarningsChart"></canvas>
+            </div>
+            <div class="card-action">
+                <a href="#" class="btn green accent-4">share <i class="material-icons left">share</i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Views Chart --}}
+<script>
+    var ctx = document.getElementById("ViewsChart").getContext('2d');
+    var myPieChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: 'number of views',
+                data: [1200, 1648, 2730, 1830, 4530, 1080, 2430],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 163, 163, 0.2)',
+
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255,99,132,1)',
+
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+{{!-- Likes Chart --}}
+<script>
+    var ctx = document.getElementById("EarningsChart").getContext('2d');
+    var myPieChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            datasets: [{
+                label: 'Revenue earned (RANDS)',
+                data: [1200, 1648, 2730, 1830, 4530, 1080, 2430, 1200, 202, 1203, 2380, 5890],
+                backgroundColor: [
+                    'rgba(112, 219, 112,0.4)',
+
+                ],
+                borderColor: [
+                    'rgba(112, 219, 112,1)',
+
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+{{!-- Earnings Chart --}}
+<script>
+    var ctx = document.getElementById("LikesChart").getContext('2d');
+    var myPieChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            datasets: [{
+                label: 'Likes Gained',
+                data: [350, 210, 234, 134, 756, 342, 1435, 53, 23, 178, 345, 230],
+                backgroundColor: [
+                    'rgba(112, 112, 219,0.4)',
+                    'rgba(112, 112, 219,0.4)',
+                    'rgba(112, 112, 219,0.4)',
+                    'rgba(112, 112, 219,0.4)',
+                    'rgba(112, 112, 219,0.4)',
+                    'rgba(112, 112, 219,0.4)',
+                    'rgba(112, 112, 219,0.4)',
+                    'rgba(112, 112, 219,0.4)',
+                    'rgba(112, 112, 219,0.4)',
+                    'rgba(112, 112, 219,0.4)',
+                    'rgba(112, 112, 219,0.4)',
+                    'rgba(112, 112, 219,0.4)',
+                ],
+                borderColor: [
+                    'rgb(112, 112, 219)',
+                    'rgb(112, 112, 219)',
+                    'rgb(112, 112, 219)',
+                    'rgb(112, 112, 219)',
+                    'rgb(112, 112, 219)',
+                    'rgb(112, 112, 219)',
+                    'rgb(112, 112, 219)',
+                    'rgb(112, 112, 219)',
+                    'rgb(112, 112, 219)',
+                    'rgb(112, 112, 219)',
+                    'rgb(112, 112, 219)',
+                    'rgb(112, 112, 219)',
+
+
+
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>

@@ -1066,11 +1066,6 @@ app.get("/educator/hub/dashboard/", (req, res) => {
   });
 });
 
-
-
-
-
-
 //Dashboard Files for dashboard
 //Educator Dashboard files
 //////
@@ -1078,7 +1073,6 @@ app.get("/educator/hub/dashboard/", (req, res) => {
 //////
 //////
 //////
-
 
 app.get("/edu-eezi/educator/dashboard/home", (req, res) => {
   return res.render("./DashboardFolder/home");
@@ -1104,7 +1098,6 @@ app.get("/edu-eezi/educator/dashboard/Lessons", (req, res) => {
         .catch(err => {
           console.log(err.message);
         });
-    
     } else {
       //User cant access
       return res.redirect("/Introduction/");
@@ -1112,101 +1105,130 @@ app.get("/edu-eezi/educator/dashboard/Lessons", (req, res) => {
   });
 });
 
-
 app.get("/edu-eezi/educator/dashboard/Revenue", (req, res) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-  return res.render("./DashboardFolder/Revenue");
+      return res.render("./DashboardFolder/Revenue");
     } else {
-    return res.redirect("/Introduction")
+      return res.redirect("/Introduction");
     }
   });
 });
 app.get("/edu-eezi/educator/dashboard/Settings", (req, res) => {
-
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-  return res.render("./DashboardFolder/Settings");
+      return res.render("./DashboardFolder/Settings");
     } else {
-    return res.redirect("/Introduction")
+      return res.redirect("/Introduction");
     }
   });
-
 });
 app.get("/edu-eezi/educator/dashboard/UploadLesson", (req, res) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      
-  return res.render("./DashboardFolder/UploadLesson");
+      return res.render("./DashboardFolder/UploadLesson");
     } else {
-    return res.redirect("/Introduction")
+      return res.redirect("/Introduction");
     }
   });
-
 });
 
 app.get("/edu-eezi/educator/dashboard/LessonBundles", (req, res) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-  return res.render("./DashboardFolder/LessonBundles");
+      return res.render("./DashboardFolder/LessonBundles");
     } else {
-    return res.redirect("/Introduction")
+      return res.redirect("/Introduction");
     }
   });
-
 });
 
 app.get("/edu-eezi/educator/dashboard/messages", (req, res) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-  return res.render("./DashboardFolder/messages");
+      return res.render("./DashboardFolder/messages");
     } else {
-    return res.redirect("/Introduction")
+      return res.redirect("/Introduction");
     }
   });
-
 });
 
 app.get("/edu-eezi/educator/dashboard/profile", (req, res) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-  return res.render("./DashboardFolder/profile");
+      return res.render("./DashboardFolder/profile");
     } else {
-    return res.redirect("/Introduction")
+      return res.redirect("/Introduction");
     }
   });
-
 });
 
 app.get("/edu-eezi/educator/dashboard/search", (req, res) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-  return res.render("./DashboardFolder/search");
+      return res.render("./DashboardFolder/search");
     } else {
-    return res.redirect("/Introduction")
+      return res.redirect("/Introduction");
     }
   });
 });
 
-
 app.get("/edu-eezi/educator/dashboard/monetization", (req, res) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-  return res.render("./DashboardFolder/monetization");
+      return res.render("./DashboardFolder/monetization");
     } else {
-    return res.redirect("/Introduction")
+      return res.redirect("/Introduction");
     }
   });
-
 });
 
 app.get("/edu-eezi/educator/dashboard/help", (req, res) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-  return res.render("./DashboardFolder/help");
+      return res.render("./DashboardFolder/help");
     } else {
-    return res.redirect("/Introduction")
+      return res.redirect("/Introduction");
     }
   });
-
 });
+
+app.get(
+  "/edu-eezi/educator/dashboard/analytics/video/:lesson_id",
+  (req, res) => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        let lessonRef = db.collection("lessons").doc(req.params.lesson_id);
+        let name, descrip, date, url;
+
+        lessonRef
+          .get()
+          .then(doc => {
+            if (doc.exists) {
+              name = doc.data().name;
+              descrip = doc.data().description;
+              date = doc.data().uploaded_at;
+              url = doc.data().url;
+            } else {
+              //document doesn't exist
+              //Send client error message
+            }
+            return res.render("./DashboardFolder/VideoAnalytics", {
+              name: name,
+              descrip: descrip,
+              date: date,
+              url: url
+            });
+          })
+          .catch(err => {
+            //Error getting data
+            //TODO: send client error message
+            console.log(err.message);
+          });
+      } else {
+        //Redirect to intro page
+        return res.redirect("/introduction");
+      }
+    });
+  }
+);
