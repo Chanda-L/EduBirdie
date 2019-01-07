@@ -2,7 +2,7 @@
 
 
 <body>
-<p style="display: none" id="hidden_user_id">{{user_id}}</p>
+  <p style="display: none" id="hidden_user_id">{{user_id}}</p>
 
   <style>
 
@@ -123,7 +123,7 @@
         {{#each searchedUsers}}
         <p id='other_id' style="display: none">{{{user_id}}}</p>
         <li><a href="/profile/{{{user_id}}}" class="collection-item">{{{name}}}
-        </a>
+          </a>
           <button id="subscribeButton" class="btn">
             Subscribe
           </button></li>
@@ -145,6 +145,13 @@
     <li><a href="/home"><i class="material-icons left">home</i>Home</a></li>
     <li><a href="/profile/{{user_id}}"><i class="material-icons left">portrait</i>Profile</a></li>
 
+    <li><a href="badges.html" class="">Record Lesson<i class="material-icons right">camera</i></a></li>
+    <li><a href="/profile/{{user_id}}" class="">Profile<i class="material-icons right">contacts</i></a></li>
+    {{#if educator}}
+    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Educator<i class="material-icons right">arrow_drop_down</i></a></li>
+    {{else}}
+    <li><a href="/educator/hub/start">Become an educator<i class="material-icons right">info</i></a></li>
+    {{/if}}
     <li><button id="MobileHelpTrigger" style="margin-left: 20px;" class="btn black-text white"><i class="material-icons grey-text left">info</i>Help</button>
     </li>
 
@@ -405,48 +412,48 @@
   </script>
 
   <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
-<script>
-  var config = {
-    apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
-    authDomain: "edubirdie-1534842942940.firebaseapp.com",
-    databaseURL: "https://edubirdie-1534842942940.firebaseio.com",
-    projectId: "edubirdie-1534842942940",
-    storageBucket: "edubirdie-1534842942940.appspot.com",
-    messagingSenderId: "1077918538165"
-  };
-  firebase.initializeApp(config);
+  <script>
+    var config = {
+      apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
+      authDomain: "edubirdie-1534842942940.firebaseapp.com",
+      databaseURL: "https://edubirdie-1534842942940.firebaseio.com",
+      projectId: "edubirdie-1534842942940",
+      storageBucket: "edubirdie-1534842942940.appspot.com",
+      messagingSenderId: "1077918538165"
+    };
+    firebase.initializeApp(config);
 
-  document.getElementBy
-  let db = firebase.firestore();
-  const subscribeButton = document.getElementById("subscribeButton");
+    document.getElementBy
+    let db = firebase.firestore();
+    const subscribeButton = document.getElementById("subscribeButton");
 
-  subscribeButton.addEventListener('click', () => {
-    db.collection("users")
-      .doc(document.getElementById("hidden_user_id").textContent)
-      .collection('subscribed')
-      .doc(document.getElementById('other_id'))
-      .add({
-        subscribed: true,
-      })
-      .then(() => {
-        db.collection("users")
-        .doc(document.getElementById('other_id').textContent)
-        .collection("subscribers")
+    subscribeButton.addEventListener('click', () => {
+      db.collection("users")
         .doc(document.getElementById("hidden_user_id").textContent)
+        .collection('subscribed')
+        .doc(document.getElementById('other_id'))
         .add({
           subscribed: true,
-        }).then(() => {
-            M.toast("Successfully followed user!")
-        }).catch((err) => {
-        //Catch the users error and use a toast to display it.
-        M.toast({ html: 'An error occured!' })
-      })
+        })
+        .then(() => {
+          db.collection("users")
+            .doc(document.getElementById('other_id').textContent)
+            .collection("subscribers")
+            .doc(document.getElementById("hidden_user_id").textContent)
+            .add({
+              subscribed: true,
+            }).then(() => {
+              M.toast("Successfully followed user!")
+            }).catch((err) => {
+              //Catch the users error and use a toast to display it.
+              M.toast({ html: 'An error occured!' })
+            })
 
-      }).catch((err) => {
-        //Catch the users error and use a toast to display it.
-        M.toast({ html: 'An error occured!' })
-      })
-  });
+        }).catch((err) => {
+          //Catch the users error and use a toast to display it.
+          M.toast({ html: 'An error occured!' })
+        })
+    });
   </script>
 
 

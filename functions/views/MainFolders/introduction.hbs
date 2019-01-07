@@ -69,34 +69,25 @@
 
 {{!-- <h1>Become An Educator</h1> --}}
 <ul id="slide-out" class="sidenav">
-    <li>
-        <div class="user-view">
 
-            <a href="#name"><span class="white-text name">John Doe</span></a>
-            <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
-        </div>
-    </li>
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
+    <li><a href="/">Home<i class="material-icons left">home</i></a></li>
+    <li><a class="" href="/school.edu-eezi/introduction">Edu-Eezi For Schools<i class="material-icons left">school</i></a></li>
     <li>
         <div class="divider"></div>
     </li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+
 </ul>
 <div class="navbar-fixed">
 
-    <nav style="opacity: 0.8" class="blue accent-5" role="navigation">
+    <nav style="" class="blue accent-5" role="navigation">
         <div class=" nav-wrapper container">
             <a style="font-size: 32px" id="main-logo logo-container" href="#" class="logo white-text brand-logo">Edu-Ezi</a>
             <ul class="right hide-on-med-and-down">
                 <li><a class=" white-text" href="/school.edu-eezi/introduction">Edu-Eezi For Schools<i class="material-icons left">school</i></a></li>
             </ul>
 
-            <ul id="nav-mobile" class="sidenav">
-                <li><a href="/">Home<i class="material-icons left">home</i></a></li>
-            </ul>
-            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+            <a href="#" data-target="slide-out" class="white-text sidenav-trigger"><i class="material-icons">menu</i></a>
         </div>
     </nav>
 </div>
@@ -115,15 +106,15 @@
                     </a>
                 </div>
 
-              
+
                 <div id="form" class="hide-on-med-and-down white z-depth-5 col  l6">
-   <div class="col s12">
-            <ul class="tabs">
-                <li class="tab col s6"><a href="#SignUp">Sign Up</a></li>
-                <li class="tab col s6"><a href="#SignIn">Sign In</a></li>
-            </ul>
-        </div>
-                    <div id="SignUp"style="margin-top: 20px" class="row">
+                    <div class="col s12">
+                        <ul class="tabs">
+                            <li class="tab col s6"><a href="#SignUp">Sign Up</a></li>
+                            <li class="tab col s6"><a href="#SignIn">Sign In</a></li>
+                        </ul>
+                    </div>
+                    <div id="SignUp" style="margin-top: 20px" class="row">
                         <form method="POST" action=" /Authenticate/signUp" class="col s12">
                             <div class="row">
                                 <div class="input-field col s6">
@@ -153,7 +144,7 @@
                             <div class="row">
                                 <div class="input-field col s12">
 
-                                    <input name="birthdate"type="text" class="datepicker">
+                                    <input name="birthdate" type="text" class="datepicker">
                                     <label for="birthdate">Birth Date</label>
                                 </div>
                             </div>
@@ -165,7 +156,7 @@
 
                         </form>
                     </div>
-                    <div id="SignIn"style="margin-top: 20px" class="row">
+                    <div id="SignIn" style="margin-top: 20px" class="row">
                         <form method="POST" action=" /Authenticate/signIn" class="col s12">
                             <div class="row">
                                 <div class="input-field col s12">
@@ -188,7 +179,7 @@
 
                         </form>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </div>
@@ -402,18 +393,59 @@
     <div class="parallax"><img src="https://wallpapersite.com/images/wallpapers/stars-3840x2160-galaxy-4k-6362.jpg" alt="Unsplashed background img 3"></div>
 </div>
 
-<footer class="page-footer teal">
+<footer class="page-footer cyan">
     <div class="container">
         <div class="row">
-            <div class="col l6 s12">
+            <div class="col l4 s12">
                 <h5 class="white-text logo">Edu-Eezi</h5>
                 <p class="grey-text text-lighten-4">Edu-Eezi is a platform for users to allow them to teach their own
                     subjects, create communities and allowing them to earn money and profit from their lessons.</p>
 
 
             </div>
-            <div class="col l3 s12">
-                <h5 class="white-text">More...</h5>
+            <div class="col l2 s12">
+                <h5 class="white-text">About Us</h5>
+                <ul>
+                    <li><a class="white-text modal-trigger" href="#terms">Project</a></li>
+                    <li><a class="white-text" href="#!">Meet the creator</a></li>
+                    <li><a class="white-text" href="#!">The team</a></li>
+                     <li><a class="white-text" href="#!">The story</a></li>
+                      <li><a class="white-text" href="#!">Creation</a></li>
+                       <li><a class="white-text" href="#!">Contact</a></li>
+                        <li><a class="white-text" href="#!">Learn more</a></li>
+                </ul>
+            </div>
+            <div class="col l2 s12">
+                <h5 class="white-text">Connect</h5>
+                <ul>
+                    <li><a class="white-text modal-trigger" href="#terms">Contact</a></li>
+                    <li><a class="white-text" href="#!">Spread the word</a></li>
+                    <li><a class="white-text" href="#!">Youtube Channel </a></li>
+                     <li><a class="white-text" href="#!">Instagram Account </a></li>
+                      <li><a class="white-text" href="#!">Twitter Account </a></li>
+                </ul>
+            </div>
+            <div class="col l2 s12">
+                <h5 class="white-text">Privacy & terms</h5>
+                <ul>
+                    <li><a class="white-text modal-trigger" href="#terms">terms of service</a></li>
+                    <li><a class="white-text" href="#!">Privacy</a></li>
+                    <li><a class="white-text" href="#!">Community Guidelines</a></li>
+                    <li><a class="white-text" href="#!">Copy right</a></li>
+                </ul>
+            </div>
+            <div class="col l2 s12">
+                <h5 class="white-text">Apps</h5>
+                <ul>
+                    <li><a class="white-text modal-trigger" href="#terms">Android</a></li>
+                    <li><a class="white-text" href="#!">Ios</a></li>
+                    <li><a class="white-text" href="#!">Portfolio</a></li>
+                      <li><a class="white-text" href="#!">Edu-eezi Suite</a></li>
+                        <li><a class="white-text" href="#!">Work-it </a></li>
+                </ul>
+            </div>
+            <div class="col l2 s12">
+                <h5 class="white-text">Help & Support</h5>
                 <ul>
                     <li><a class="white-text modal-trigger" href="#terms">terms of service</a></li>
                     <li><a class="white-text" href="#!">how schools work?</a></li>
@@ -476,43 +508,76 @@
     </div>
 </div>
 
-<div id="log_in_form_modal" class="modal">
+<div id="log_in_form_modal" class="white modal">
     <div class="modal-content">
-        <h4 class="center-align teal-text logo">Create Your Account</h4>
-        <div id="form" class="hide-on-med-and-down white z-depth-5 col  l6">
-
-            <div style="margin-top: 20px" class="row">
+        <h6 class="center-align teal-text logo">Create Your Account</h6>
+        <div id="form" class=" col  s12 l6">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s6"><a href="#SignUpModal">Sign Up</a></li>
+                    <li class="tab col s6"><a href="#SignInModal">Sign In</a></li>
+                </ul>
+            </div>
+            <div id="SignUpModal" style="margin-top: 20px" class="row">
                 <form method="POST" action=" /Authenticate/signUp" class="col s12">
                     <div class="row">
                         <div class="input-field col s6">
-                            <input name="First_name_modal" placeholder="First Name" id="first_name_modal" type="text"
-                                class="validate">
+                            <input name="First_name" placeholder="First Name" id="first_name" type="text" class="validate">
                             <label for="first_name">First Name</label>
                         </div>
                         <div class="input-field col s6">
-                            <input name="Last_name_modal" placeholder="Last Name" id="last_name_modal" type="text"
-                                class="validate">
-                            <label for="first_name">First Name</label>
+                            <input name="Last_name" placeholder="Last Name" id="last_name" type="text" class="validate">
+                            <label for="Last_name">last Name</label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="input-field col s12">
-                            <input name="password_modal" id="password_modal" type="password" class="validate">
+                            <input name="password" id="password" type="password" class="validate">
                             <label for="password">Password</label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="input-field col s12">
-                            <input name="email_modal" id="email_modal" type="email" class="validate">
+                            <input name="email" id="email" type="email" class="validate">
                             <label for="email">Email</label>
                         </div>
                     </div>
-                    <input name="birthdate_modal" type="text" class="datepicker">
+
+                    <div class="row">
+                        <div class="input-field col s12">
+
+                            <input name="birthdate" type="text" class="datepicker">
+                            <label for="birthdate">Birth Date</label>
+                        </div>
+                    </div>
                     <div class="center-align">
-                        <button type="submit" class="btn-small blue accent-3">
+                        <button class="btn-small blue accent-3">
                             Sign Up<i class="material-icons left">email</i>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+            <div id="SignInModal">
+                <form method="POST" action=" /Authenticate/signIn" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input name="password_in" id="password_in" type="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input name="email_in" id="email_in" type="email" class="validate">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="center-align">
+                        <button class="btn-small blue accent-3">
+                            Sign In<i class="material-icons left">email</i>
                         </button>
                     </div>
 
@@ -521,10 +586,9 @@
 
         </div>
     </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
+
 </div>
+
 <div id="schoolInfo" class="modal">
     <div class="modal-content">
         <h4 class="center-align teal-text logo">For Schools</h4>
