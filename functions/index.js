@@ -1066,6 +1066,20 @@ app.get("/educator/hub/dashboard/", (req, res) => {
   });
 });
 
+
+
+
+
+
+//Dashboard Files for dashboard
+//Educator Dashboard files
+//////
+//////
+//////
+//////
+//////
+
+
 app.get("/edu-eezi/educator/dashboard/home", (req, res) => {
   return res.render("./DashboardFolder/home");
 });
@@ -1097,20 +1111,102 @@ app.get("/edu-eezi/educator/dashboard/Lessons", (req, res) => {
     }
   });
 });
+
+
 app.get("/edu-eezi/educator/dashboard/Revenue", (req, res) => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
   return res.render("./DashboardFolder/Revenue");
+    } else {
+    return res.redirect("/Introduction")
+    }
+  });
 });
 app.get("/edu-eezi/educator/dashboard/Settings", (req, res) => {
+
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
   return res.render("./DashboardFolder/Settings");
+    } else {
+    return res.redirect("/Introduction")
+    }
+  });
+
 });
 app.get("/edu-eezi/educator/dashboard/UploadLesson", (req, res) => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      
   return res.render("./DashboardFolder/UploadLesson");
+    } else {
+    return res.redirect("/Introduction")
+    }
+  });
+
 });
 
 app.get("/edu-eezi/educator/dashboard/LessonBundles", (req, res) => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
   return res.render("./DashboardFolder/LessonBundles");
+    } else {
+    return res.redirect("/Introduction")
+    }
+  });
+
 });
 
-app.get("/edu-eezi/educator/dashboard/Lessons/anylitics/:lesson_id", (req, res) => {
-  
+app.get("/edu-eezi/educator/dashboard/messages", (req, res) => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+  return res.render("./DashboardFolder/messages");
+    } else {
+    return res.redirect("/Introduction")
+    }
+  });
+
+});
+
+app.get("/edu-eezi/educator/dashboard/profile", (req, res) => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+  return res.render("./DashboardFolder/profile");
+    } else {
+    return res.redirect("/Introduction")
+    }
+  });
+
+});
+
+app.get("/edu-eezi/educator/dashboard/search", (req, res) => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+  return res.render("./DashboardFolder/search");
+    } else {
+    return res.redirect("/Introduction")
+    }
+  });
+});
+
+
+app.get("/edu-eezi/educator/dashboard/monetization", (req, res) => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+  return res.render("./DashboardFolder/monetization");
+    } else {
+    return res.redirect("/Introduction")
+    }
+  });
+
+});
+
+app.get("/edu-eezi/educator/dashboard/help", (req, res) => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+  return res.render("./DashboardFolder/help");
+    } else {
+    return res.redirect("/Introduction")
+    }
+  });
+
 });
