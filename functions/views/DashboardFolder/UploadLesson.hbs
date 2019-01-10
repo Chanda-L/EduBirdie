@@ -14,7 +14,7 @@
 
                 <div class="upload">
 
-                    <a class="waves-effect waves-light btn-large"><i class="material-icons left">cloud</i>Upload</a>
+                    <button id="uploadLesson" class="waves-effect waves-light btn-large"><i class="material-icons left">cloud</i>Upload</button>
                 </div>
 
             </div>
@@ -31,34 +31,28 @@
                                 <form class="col s12">
                                     <div class="row">
                                         <div class="input-field col s6">
-                                            <input  id="first_name" type="text" class="validate">
+                                            <input id="VideoName" type="text" class="validate">
                                             <label for="first_name">Name</label>
                                         </div>
                                         <div class="input-field col s6">
-                                            <input id="last_name" type="text" class="validate">
+                                            <input id="VideoDescription" type="text" class="validate">
                                             <label for="last_name">Description</label>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="input-field col s12">
-                                            <input id="password" type="text" class="validate">
-                                            <label for="password">Password</label>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="input-field col s12">
-                                            <input id="email" type="email" class="validate">
-                                            <label for="email">Email</label>
-                                        </div>
-                                    </div>
-                                    
                                 </form>
                             </div>
                         </div>
                     </li>
                     <li>
                         <div class="collapsible-header"><i class="material-icons">portrait</i>Privacy</div>
-                        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                        <div class="collapsible-body">
+                            <p>
+                                <label>
+                                    <input video="privacy" type="checkbox" />
+                                    <span>Public</span>
+                                </label>
+                            </p>
+                        </div>
                     </li>
                 </ul>
 
@@ -70,6 +64,49 @@
 <script>
     $(document).ready(function () {
         $('.collapsible').collapsible();
+    });
+
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
+        authDomain: "edubirdie-1534842942940.firebaseapp.com",
+        databaseURL: "https://edubirdie-1534842942940.firebaseio.com",
+        projectId: "edubirdie-1534842942940",
+        storageBucket: "edubirdie-1534842942940.appspot.com",
+        messagingSenderId: "1077918538165"
+    };
+    firebase.initializeApp(config);
+
+    var db = firebase.firestore();
+
+    db.settings({
+        timestampsInSnapshots: true
+    })
+
+    let uploadButton = document.getElementById("uploadButton");
+    let VideoName = document.getElementById("VideoName");
+    let VideoDescription = document.getElementById("VideoDescription");
+    let privacy = document.getElementById("privacy");
+
+
+    function Video(VideoName, VideoDescription, privacy) {
+        this.VideoName = VideoName.textContent;
+        this.VideoDescription = VideoDescription.textContent;
+        this.privacy = privacy.textContent;
+    }
+
+
+    uploadButton.addEventListener("click", () => {
+        //Check if video has all data
+        //check
+        var video = new Video(VideoName.textContent, VideoDescription.textContent, privacy.textContent);
+        console.table(video)
+
     });
 
 </script>

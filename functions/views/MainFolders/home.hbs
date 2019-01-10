@@ -1,6 +1,5 @@
 {{> home}}
 
-
 <body>
   <p style="display: none" id="hidden_user_id">{{user_id}}</p>
 
@@ -10,6 +9,12 @@
     @import url('https://fonts.googleapis.com/css?family=Pacifico');
 #logo {
   font-family: 'Pacifico'
+}
+p {
+     width: 250px;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
 }
 
  #join_button {
@@ -53,13 +58,22 @@
         <li><a href="badges.html" class="white-text">Record Lesson<i class="material-icons right">camera</i></a></li>
         <li><a href="/profile/{{user_id}}" class="white-text">Profile<i class="material-icons right">contacts</i></a></li>
         {{#if educator}}
-        <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Educator<i class="material-icons right">arrow_drop_down</i></a></li>
+        <li><a class="dropdown-trigger" href="#!" data-target="educatorMenu">Educator<i class="material-icons right">arrow_drop_down</i></a></li>
         {{else}}
         <li><a href="/educator/hub/start">Become an educator<i class="material-icons right">info</i></a></li>
         {{/if}}
       </ul>
     </div>
   </nav>
+  <ul id="educatorMenu" class="dropdown-content">
+    <li><a href="/edu-eezi/educator/dashboard/home"> Dashboard<i class="material-icons left">dashboard</i></a></li>
+    <li><a href="/educator/hub/news"> News & Resources<i class="material-icons left">assignment</i></a></li>
+    <li class="divider"></li>
+    <li><a href="/authenticated/create/create_school"> Create A School<i class="material-icons left">school</i></a></li>
+    {{!<li><a href="#!">S</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">three</a></li> --}}
+  </ul>
 
   <ul id="dropdown1" class="dropdown-content">
     <li><a href="/edu-eezi/educator/dashboard/home"> Dashboard<i class="material-icons left">dashboard</i></a></li>
@@ -70,34 +84,6 @@
     <li class="divider"></li>
     <li><a href="#!">three</a></li> --}}
   </ul>
-
-
-  {{!-- <nav class="nav-extended teal">
-    <div class="nav-wrapper ">
-      <a href="#" id="side-trigger" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
-      <a id="logo" href="#" class="brand-logo">Edu-Ezi</a>
-
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="/profile">Record Lesson<i class="material-icons right">camera</i></a></li>
-        <li><a href="/authenticated/create/create_school">Create School<i class="material-icons left">add</i></a></li>
-        <li><a class="btn" href="/profile" id="profile-button">Profile</a></li>
-        <li>
-          <button id="helpTrigger" class="btn">
-            Help
-
-          </button>
-        </li>
-      </ul>
-    </div>
-    <div class="nav-content">
-      <ul class="tabs tabs-transparent">
-        <li class="tab col s12"><a class="active" href="#home"><i class="material-icons left">home</i>Home</a></li>
-      </ul>
-
-
-    </div>
-
-  </nav> --}}
 
 
   <!-- Modal Structure -->
@@ -145,10 +131,10 @@
     <li><a href="/home"><i class="material-icons left">home</i>Home</a></li>
     <li><a href="/profile/{{user_id}}"><i class="material-icons left">portrait</i>Profile</a></li>
 
-    <li><a href="badges.html" class="">Record Lesson<i class="material-icons right">camera</i></a></li>
-    <li><a href="/profile/{{user_id}}" class="">Profile<i class="material-icons right">contacts</i></a></li>
+    <li><a href="badges.html" class="">Record Lesson<i class="material-icons left">camera</i></a></li>
+    <li><a href="/profile/{{user_id}}" class="">Profile<i class="material-icons left">contacts</i></a></li>
     {{#if educator}}
-    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Educator<i class="material-icons right">arrow_drop_down</i></a></li>
+    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Educator<i class="material-icons left">arrow_drop_down</i></a></li>
     {{else}}
     <li><a href="/educator/hub/start">Become an educator<i class="material-icons right">info</i></a></li>
     {{/if}}
@@ -156,11 +142,11 @@
     </li>
 
 
-    <li><a class="subheader">Your Schools: </a></li>
+    {{!-- <li><a class="subheader">Your Schools: </a></li>
     {{#each lessons}}
     <li><a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">{{{name}}}</a>
     <li>
-      {{/each}}
+      {{/each}} --}}
 
   </ul>
 
@@ -205,256 +191,219 @@
 
   <style>
     @media only screen and (max-width: 768px) {
-   #video-container {
+      #video-container {
 
-    margin: auto;
-    width: 50%;
+        margin: auto;
+        width: 50%;
 
-  
-   }
- }
 
- #video-container {
-   display: inline-block;
- }
-</style>
+      }
+    }
+
+    #video-container {
+      display: inline-block;
+    }
+  </style>
   <div id="home">
     <div class="section no-pad-bot" id="index-banner">
       <div class="container">
         <br><br>
-        <h5 class="header teal-text">Top Content: </h5>
-        {{#each lessons}}
-        <div id="video-container" class="z-depth-1">
-          <a href="/{{{BySchool}}}/{{{InClass}}}/{{{code}}}/view_lesson">
-            <div id="show_video" class="">
-
-              <video class="" style="width: 250px;" class=" responsive-video" preload="metadata">
-                <source src="{{{downloadURL}}}" type="video/mp4">
-              </video>
-
-          </a>
-          <p class="bold">{{{name}}}<br></p>
-          <small class="text-gray">by: {{{SchoolName}}} • {{{uploaded_at}}}</small>
-
-        </div>
-      </div>
+        <h5 class="header teal-text">New Content: </h5>
+        <div class="row">
+          {{#each lessons}}
 
 
-      {{/each}}
-      <br><br>
-
-    </div>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-  {{/if}}
-
-
-  {{#if user}}
-  <div class="container">
-    <div class="section">
-
-
-      <ul id="slide-out" class="sidenav">
-        <li>
-          <div class="user-view">
-
-            <a href="#name"><span class="white-text name"></span></a>
-            <a href="#email"><span class="teal-text email">{{user.email}}</span></a>
+          <div class="col s12 m3">
+            <div class="card">
+              <div class="card-image">
+                <img height="200px" width="100px" src="{{{thumbnail}}}">
+                <span class="card-title">{{{name}}}</span>
+                <a href="/{{{code}}}/view_lesson" class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">cast</i></a>
+              </div>
+              <div class="card-content">
+                <p id="descrip" style="font-size: 15px"><strong>{{{description }}}</strong>
+                <br>
+                {{{uploaded_at}}}</p>
+              </div>
+            </div>
           </div>
-        </li>
-        <li><a href="#!"><i class="material-icons">add</i>Create School</a></li>
-        <li><a href="#!">Second Link</a></li>
-        <li>
-          <div class="divider"></div>
-        </li>
-        <li><a class="subheader">profile</a></li>
-        <li><a class="waves-effect" href="#!">EduBirdy Profile<i class="material-icons">portrait</i></a></li>
-
-      </ul>
-      {{else}}
-
-      <!--   Icon Section   -->
-      <style>
-        html {
-          background-image: url(https://wallpapersite.com/images/wallpapers/blur-background-3840x2160-spectrum-electromagnetic-4k-901.jpg);
-          background-repeat: no-repeat;
-          background-position: center;
-
-        }
-      </style>
-    </div>
-    <br><br>
-  </div>
 
 
-  <nav>
-    <div class="teal accent-4 z-depth-4 nav-wrapper">
-      <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
-      <a id="logo" href="#" class="brand-logo">Edu-Ezi</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authentication/main">Log In</a></li>
-        <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authentication/main">Sign Up</a></li>
-        <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/edubirdy/contact">Contact Us</a></li>
-        <li><button style="font-weight: bold" class="modal-trigger btn grey-text text-lighten-3 pulse">Edu-Ezi For
-            Schools</button></li>
-      </ul>
-    </div>
-  </nav>
-
-
-  <ul id="slide-out" class="sidenav">
-    <li>
-      <div class="user-view">
-        <div class="background">
-          <img src="https://cdn.hipwallpaper.com/i/70/22/P1Nzdt.jpg">
+          {{/each}}
         </div>
+        <br><br>
+
       </div>
-    </li>
-    <li><a class="subheader">Join Edu-Ezi</a></li>
+    </div>
 
-    <li><a href="/authenticate/signUp"><i class="material-icons">email</i>Sign Up</a></li>
-    <li><a href="/authenticate/signIn"><i class="material-icons">phone</i>Sign In</a></li>
-    <li><a href="/edubirdie/terms_of_service"><i class="material-icons">T</i>Terms of service</a></li>
-    <li>
-      <div class="divider"></div>
-    </li>
-    <li><a class="subheader">Support</a></li>
-    <li><a class="waves-effect" href="/edubirdie/help">Help</a></li>
-    <li><a href="/edubirdy/contact"><i class="material-icons">contact_phone</i>Contact Us</a></li>
-  </ul>
+<script>
+  function truncateText(selector, maxLength) {
+    var element = document.querySelector(selector),
+        truncated = element.innerText;
 
-  <h1 id="logo" class="white-text center-align " style="font-weight: bold;">Edu-Ezi</h1>
-  <h5 class="white-text center-align" style="font-weight: bold;">Education Made Easy!</h5>
-  <a id="join_button" href="/authentication/main" style="font-weight: bold;" class=" black-text center-align btn-large pulse teal accent-3 ">Join
-    Edu-Ezi!</a>
+    if (truncated.length > maxLength) {
+        truncated = truncated.substr(0,maxLength) + '...';
+    }
+    return truncated;
+}
+//You can then call the function with something like what i have below.
+document.querySelector('p').innerText = truncateText('p', 20);
+</script>
 
-  <footer class="teal accent-4 z-depth-4 page-footer">
+
+
+
+
+
+
+
+
+
+    {{/if}}
+
+
+    {{#if user}}
     <div class="container">
-      <div class="row">
-        <div class="col l6 s12">
-          <h5 style="font-weight: bold;" id="logo" class="white-text">Edu-Ezi</h5>
-          <p class="grey-text "></p>
-        </div>
-        <div class="col l4 offset-l2 s12">
-          <h5 class="white-text">Navigate</h5>
-          <ul>
-            <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="/edubirdie/contact">Contact</a></li>
-            <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="#!">Help</a></li>
-            <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="/authenticate/log_in">Log in</a></li>
-            <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="#!">Terms Of Service</a></li>
-            <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="#!">Sign Up</a></li>
-          </ul>
-        </div>
+      <div class="section">
+
+
+        <ul id="slide-out" class="sidenav">
+          <li>
+            <div class="user-view">
+
+              <a href="#name"><span class="white-text name"></span></a>
+              <a href="#email"><span class="teal-text email">{{user.email}}</span></a>
+            </div>
+          </li>
+          <li><a href="#!"><i class="material-icons">add</i>Create School</a></li>
+          <li><a href="#!">Second Link</a></li>
+          <li>
+            <div class="divider"></div>
+          </li>
+          <li><a class="subheader">profile</a></li>
+          <li><a class="waves-effect" href="#!">EduBirdy Profile<i class="material-icons">portrait</i></a></li>
+
+        </ul>
+        {{else}}
+
+        <!--   Icon Section   -->
+        <style>
+          html {
+            background-image: url(https://wallpapersite.com/images/wallpapers/blur-background-3840x2160-spectrum-electromagnetic-4k-901.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+
+          }
+        </style>
       </div>
+      <br><br>
     </div>
-    <div class="footer-copyright">
-      <div class="container">
-        © 2018 Copyright Text
 
+
+    <nav>
+      <div class="teal accent-4 z-depth-4 nav-wrapper">
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+        <a id="logo" href="#" class="brand-logo">Edu-Ezi</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authentication/main">Log In</a></li>
+          <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/authentication/main">Sign Up</a></li>
+          <li><a style="font-weight: bold" class="grey-text text-lighten-3" href="/edubirdy/contact">Contact Us</a></li>
+          <li><button style="font-weight: bold" class="modal-trigger btn grey-text text-lighten-3 pulse">Edu-Ezi For
+              Schools</button></li>
+        </ul>
       </div>
-    </div>
-  </footer>
+    </nav>
 
 
-  {{/if}}
+    <ul id="slide-out" class="sidenav">
+      <li>
+        <div class="user-view">
+          <div class="background">
+            <img src="https://cdn.hipwallpaper.com/i/70/22/P1Nzdt.jpg">
+          </div>
+        </div>
+      </li>
+      <li><a class="subheader">Join Edu-Ezi</a></li>
 
-  {{#if user}}
-  <div class="fixed-action-btn">
-    <a id="menu" class="btn-floating btn-large light-blue">
-      <i class="large material-icons">menu</i>
-    </a>
-    <ul>
-      <li><a href="edubird/search/" class="btn-floating red"><i class="material-icons">search</i></a></li>
-      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+      <li><a href="/authenticate/signUp"><i class="material-icons">email</i>Sign Up</a></li>
+      <li><a href="/authenticate/signIn"><i class="material-icons">phone</i>Sign In</a></li>
+      <li><a href="/edubirdie/terms_of_service"><i class="material-icons">T</i>Terms of service</a></li>
+      <li>
+        <div class="divider"></div>
+      </li>
+      <li><a class="subheader">Support</a></li>
+      <li><a class="waves-effect" href="/edubirdie/help">Help</a></li>
+      <li><a href="/edubirdy/contact"><i class="material-icons">contact_phone</i>Contact Us</a></li>
     </ul>
-  </div>
 
-  {{/if}}
+    <h1 id="logo" class="white-text center-align " style="font-weight: bold;">Edu-Ezi</h1>
+    <h5 class="white-text center-align" style="font-weight: bold;">Education Made Easy!</h5>
+    <a id="join_button" href="/authentication/main" style="font-weight: bold;" class=" black-text center-align btn-large pulse teal accent-3 ">Join
+      Edu-Ezi!</a>
+
+    <footer class="teal accent-4 z-depth-4 page-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 style="font-weight: bold;" id="logo" class="white-text">Edu-Ezi</h5>
+            <p class="grey-text "></p>
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Navigate</h5>
+            <ul>
+              <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="/edubirdie/contact">Contact</a></li>
+              <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="#!">Help</a></li>
+              <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="/authenticate/log_in">Log in</a></li>
+              <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="#!">Terms Of Service</a></li>
+              <li><a style="font-weight: bold;" class="grey-text text-lighten-3" href="#!">Sign Up</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          © 2018 Copyright Text
+
+        </div>
+      </div>
+    </footer>
+
+
+    {{/if}}
+
+    {{#if user}}
+    <div class="fixed-action-btn">
+      <a id="menu" class="btn-floating btn-large light-blue">
+        <i class="large material-icons">menu</i>
+      </a>
+      <ul>
+        <li><a href="edubird/search/" class="btn-floating red"><i class="material-icons">search</i></a></li>
+        <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+        <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+        <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+      </ul>
+    </div>
+
+    {{/if}}
 
 
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-  {{!-- Materialize CSS inits and button events --}}
-  <script>
-    $(document).ready(function () {
-      $('.modal').modal();
-      $('.sidenav').sidenav();
-      $('.slider').slider();
-      $('.fixed-action-btn').floatingActionButton();
-      $(".dropdown-trigger").dropdown();
-      $('.tabs').tabs();
-      $('.tap-target').tapTarget();
-    });
-
-    document.getElementById("helpTrigger").addEventListener('click', () => {
-      $('.tap-target').tapTarget('open');
-
-    })
-    document.getElementById("MobileHelpTrigger").addEventListener('click', () => {
-      $('.tap-target').tapTarget('open');
-    });
-
-  </script>
-
-  <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
-  <script>
-    var config = {
-      apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
-      authDomain: "edubirdie-1534842942940.firebaseapp.com",
-      databaseURL: "https://edubirdie-1534842942940.firebaseio.com",
-      projectId: "edubirdie-1534842942940",
-      storageBucket: "edubirdie-1534842942940.appspot.com",
-      messagingSenderId: "1077918538165"
-    };
-    firebase.initializeApp(config);
-
-    document.getElementBy
-    let db = firebase.firestore();
-    const subscribeButton = document.getElementById("subscribeButton");
-
-    subscribeButton.addEventListener('click', () => {
-      db.collection("users")
-        .doc(document.getElementById("hidden_user_id").textContent)
-        .collection('subscribed')
-        .doc(document.getElementById('other_id'))
-        .add({
-          subscribed: true,
-        })
-        .then(() => {
-          db.collection("users")
-            .doc(document.getElementById('other_id').textContent)
-            .collection("subscribers")
-            .doc(document.getElementById("hidden_user_id").textContent)
-            .add({
-              subscribed: true,
-            }).then(() => {
-              M.toast("Successfully followed user!")
-            }).catch((err) => {
-              //Catch the users error and use a toast to display it.
-              M.toast({ html: 'An error occured!' })
-            })
-
-        }).catch((err) => {
-          //Catch the users error and use a toast to display it.
-          M.toast({ html: 'An error occured!' })
-        })
-    });
-  </script>
+    {{!-- Materialize CSS inits and button events --}}
+    <script>
+      $(document).ready(function () {
+        $('.modal').modal();
+        $('.sidenav').sidenav();
+        $('.slider').slider();
+        $('.fixed-action-btn').floatingActionButton();
+        $(".dropdown-trigger").dropdown();
+        $('.tabs').tabs();
+      });
+    </script>
 
 
 </body>

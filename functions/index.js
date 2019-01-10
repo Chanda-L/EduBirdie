@@ -142,80 +142,48 @@ app.get("/", (req, res) => {
   // firebase.auth().onAuthStateChanged(user => {
   console.log("something");
   if (firebase.auth().currentUser !== null) {
-    console.log("Authenticated");
-    if (search !== "undefined") {
-      //Get all the user data
-      //Return the searched for users...
-
-      db.collection("users")
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            if (doc.exists) {
-              let user_name_correct = doc.data().name;
-              if (user_name_correct.includes(search)) {
-                users.push(doc.data());
-              } else {
-                //Search is incorrect
-                // console.log("Search doesnt equal anything");
-              }
-            } else {
-              //document does not exist
-              console.log("document does not exist");
-            }
-          });
-        })
-        .catch(err => {
-          //console.log the error
-          console.log(err);
-        });
-
-      //get data and check if user is an educator
-      //if user is an educator use educator variable and add the found data
-      db.collection("users")
-        .doc(firebase.auth().currentUser.uid)
-        .get()
-        .then(doc => {
-          if (doc.exists) {
-            if (doc.data().educator === true) {
-              educator = true;
-            }
+    db.collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          if (doc.data().educator === true) {
+            console.log("educator is true");
+            educator = true;
           } else {
-            //The document does not exist
+            console.log("educator is false");
           }
-        })
-        .catch(err => {
-          //An error has occured in the application
-          console.log(err);
-        });
+        } else {
+          //The document does not exist
+          
+        }
+      })
+      .catch(err => {
+        //An error has occured in the application
+        console.log(err);
+      });
 
-      //Get all the lessons that'll be represented on the home screen
-      db.collection("lessons")
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            lessons.push(doc.data());
-          });
-          console.log("Eish");
-          return res.render("./MainFolders/home", {
-            lessons: lessons,
-            user: firebase.auth().currentUser,
-            user_id: firebase.auth().currentUser.uid,
-            searchedUsers: users,
-            educator: educator
-          });
-        })
-
-        .catch(error => {
-          console.log(error.message);
+    //Get all the lessons that'll be represented on the home screen
+    db.collection("lessons")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          lessons.push(doc.data());
         });
-    } else {
-      //User search is evaluated at undefined
-      console.log("User search == none");
-    }
+        console.log("User educator variable: " + educator);
+        return res.render("./MainFolders/home", {
+          lessons: lessons,
+          user: firebase.auth().currentUser,
+          user_id: firebase.auth().currentUser.uid,
+          searchedUsers: users,
+          educator: educator
+        });
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
   } else {
     //User isn't authenticated
-    console.log("Eish");
     return res.redirect("/Introduction/");
   }
 });
@@ -627,7 +595,7 @@ app.get("/class/main/info/:school_id/:class_id/add_lesson", (req, res) => {
   });
 });
 
-app.get("/:school_id/:class_id/:lesson_id/view_lesson", (req, res) => {
+app.get("/:lesson_id/view_lesson", (req, res) => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
       let comments = [];
@@ -1005,63 +973,16 @@ app.get("/educator/hub/start", (req, res) => {
                 last_name: user.last_name
               });
             } else {
-              res.redirect("/educator/hub/dashboard");
+              console.log("redirecting");
+              res.redirect("/edu-eezi/educator/dashboard/home");
             }
-          } else {
-            res.redirect("/educator/hub/start");
           }
         })
         .catch(error => {
           console.log(error.message);
         });
     } else {
-      res.redirect("/authentication/main");
-    }
-  });
-});
-
-app.get("/educator/hub/dashboard/", (req, res) => {
-  const lessons = [];
-  const schools = [];
-
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      //Get the educator's schools
-      db.collection("schools")
-        .where("admin", "==", user.uid)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            if (doc.exists) {
-              schools.push(doc.data());
-            }
-          });
-        })
-        .catch(err => {
-          //Error occured
-          console.log(err.message);
-        });
-      //Get the educator's lessons
-      db.collection("lessons")
-        .where("uploader", "==", user.uid)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            if (doc.exists) {
-              lessons.push(doc.data());
-            }
-          });
-          res.render("./MainFolders/EducatorDashboard", {
-            lessons: lessons,
-            schools: schools
-          });
-        })
-        .catch(error => {
-          console.log(error.message);
-        });
-    } else {
-      //User is not authenticated
-      res.redirect("/authentication/main");
+      res.redirect("/introduction");
     }
   });
 });
