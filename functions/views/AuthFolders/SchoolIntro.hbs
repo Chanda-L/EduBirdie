@@ -1,0 +1,34 @@
+{{>home}}
+
+<style>
+    #form {
+        margin-left: 100px;
+         margin-right: 100px;
+         border-radius: 20px;
+    }
+</style>
+<h1 class="center-align teal-text ">Getting Started</h1>
+
+{{#if user_auth}}
+<p>authenticated</p>
+{{else}}
+
+
+
+{{/if}}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.sidenav').sidenav();
+        $('.modal').modal();
+        $('.parallax').parallax();
+        $('.tabs').tabs()
+        $('.datepicker').datepicker();
+    })
+
+</script>

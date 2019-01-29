@@ -28,29 +28,20 @@ const app = express();
 //----- Sync authentication wit h database data
 //----- Keep Storage low to not use to much and overload storage
 
-app.get("/school.edu-eezi/introduction", (req, res) => {
-  return res.render("./MainFolders/introduction_schools");
-});
 
 var config = {
-  apiKey: "AIzaSyBNo2Ht5eM9m4AqXIEBJwEPFU8yiQL81Uc",
-  authDomain: "edubirdie-1534842942940.firebaseapp.com",
-  databaseURL: "https://edubirdie-1534842942940.firebaseio.com",
-  projectId: "edubirdie-1534842942940",
-  storageBucket: "edubirdie-1534842942940.appspot.com",
-  messagingSenderId: "1077918538165"
+  apiKey: "AIzaSyAJ4JH6ULCvmsxtaPRbNaUBeoAGIag7oMg",
+  authDomain: "edueezi.firebaseapp.com",
+  databaseURL: "https://edueezi.firebaseio.com",
+  projectId: "edueezi",
+  storageBucket: "edueezi.appspot.com",
+  messagingSenderId: "450061088039"
 };
-
-var serviceAccount = require("./service-accounts.json");
 firebase.initializeApp(config);
 
-var database = firebase.database();
+var firebaseApp = admin.initializeApp(functions.config().firebase);
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-
-let db = admin.firestore();
+let db = firebaseApp.firestore();
 const settings = { /* your settings... */ timestampsInSnapshots: true };
 db.settings(settings);
 console.log("hi");
@@ -64,6 +55,7 @@ app.use(flash());
 // $ curl http://localhost:3000/notfound -H "Accept: application/json"
 // $ curl http://localhost:3000/notfound -H "Accept: text/plain"
 // app.set("views", './views')
+
 app.use(express.static(__dirname + "public"));
 app.engine(
   "hbs",
@@ -129,6 +121,19 @@ app.listen(3000, () => {
   console.log("port = 3000, server = localhost;");
 });
 
+
+app.get("/school.edu-eezi/introduction", (req, res) => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      return res.render("./MainFolders/introduction_schools", {authed: true});
+    } else {
+      return res.render("./MainFolders/introduction_schools" ,{authed: false});
+    } 
+    
+  });
+ 
+});
+
 app.get("/Introduction/", (req, res) => {
   res.render("./MainFolders/introduction");
 });
@@ -155,7 +160,6 @@ app.get("/", (req, res) => {
           }
         } else {
           //The document does not exist
-          
         }
       })
       .catch(err => {
@@ -298,6 +302,19 @@ app.get("/authenticate/log_out", (req, res) => {
 });
 //School Info Get Route:
 //School Info school_id params
+app.get("/school_intro/getting_start", (req, res) => {
+  let userAuth;
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      userAuth = true;
+      return res.render("./AuthFolders/SchoolIntro", { user_auth: userAuth });
+    } else {
+      userAuth = false;
+      return res.render("./AuthFolders/SchoolIntro", { user_auth: userAuth });
+    }
+  });
+});
+
 app.get("/school/main/info/:school_id", (req, res) => {
   let SchoolData;
   let messages = [];
@@ -1153,3 +1170,8 @@ app.get(
     });
   }
 );
+
+//Google Cloud Function
+//App to power web server and hosting:
+// ---- //
+exports.app = functions.https.onRequest(app);

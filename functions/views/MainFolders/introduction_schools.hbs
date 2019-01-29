@@ -33,15 +33,175 @@
         <br><br>
         <h2 class="header left-align white-text">Make your classroom modern with <strong class="logo">Edu-Eezi</strong></h2>
         <div class="row left-align">
-            <a href="http://materializecss.com/getting-started.html" id="download-button" class="left-align pulse btn-large waves-effect waves-light white blue-text accent-4">Get
-                Started</a>
-                <a class="btn-large white blue-text accent-5 ">Get Help<i class="material-icons left">
-                  help_outline
+            {{#if authed}}
+            <a id="download-button" class="left-align pulse btn-large white blue-text accent-4" href="/school_intro/getting_start">
+                Get Started</a>
+            {{else}}
+            <button id="download-button" class="left-align pulse btn-large white blue-text accent-4 modal-trigger"
+                data-target="authenticationModal">
+                Get Started</button>
+            {{/if}}
+
+            <a class="btn-large white blue-text accent-5 ">Get Help<i class="material-icons left">
+                    help_outline
                 </i></a>
         </div>
-        
+
         <br><br>
 
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="authenticationModal" class="modal">
+    <div class="modal-content">
+        <h4 class="center-align teal-text">Sign up with Edu-eezi</h4>
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s6"><a href="#signUp">Sign Up</a></li>
+                    <li class="tab col s6"><a href="#signIn">Sign In</a></li>
+                </ul>
+            </div>
+            <div class="z-depth-2" id="signUp" class="col s12">
+                {{!-- Sign Up tab --}}
+                <h2 class="teal-text logo center-align">
+                    Sign Up
+                </h2>
+                <div class="row">
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input placeholder="First name" name="SignUpFirstname" id="first_name" type="text" class="validate">
+                            <label for="first_name">First Name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="last_name" name="SignUpLastname" type="text" class="validate">
+                            <label for="last_name">Last Name</label>
+                        </div>
+                    </div>
+
+                    <input id="birthdate" name="birthdate" type="text" class="datepicker">
+                    <label for="birthdate">Birth Date</label>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="password" name="signUpPassword" type="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="email" name="signUpEmail" type="email" class="validate">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div style="text-align: center">
+                        <button style="border-radius: 2px" class="blue waves-effect waves-light btn z-depth-1">Sign Up<i
+                                class="material-icons left">email</i></button>
+                        <div style="margin-top: 20px;" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
+            <script>
+
+                let first_name, last_name, birthdate, password, email;
+                // Initialize Firebase
+                var config = {
+                    apiKey: "AIzaSyAJ4JH6ULCvmsxtaPRbNaUBeoAGIag7oMg",
+                    authDomain: "edueezi.firebaseapp.com",
+                    databaseURL: "https://edueezi.firebaseio.com",
+                    projectId: "edueezi",
+                    storageBucket: "edueezi.appspot.com",
+                    messagingSenderId: "450061088039"
+                };
+                firebase.initializeApp(config);
+
+                let db = firebase.firestore();
+
+                first_name = document.getElementById("first_name");
+                last_name = document.getElementById("last_name");
+                birthdate = document.getElementById("birthdate");
+                password = document.getElementById("password");
+                email = document.getElementById("email");
+
+                //TODO: add conditionals for form 
+                //Perform authentication sign up
+                
+                //Add (is_school_account) = true;
+                db.settings({
+                    timestampsInSnapshots: true
+                });
+
+                firebase.auth().createUserWithEmailAndPassword(email, password).then(user => {
+
+                    let docref = db.collection("users").doc(user.uid);
+
+                    //Set document data
+                    docref.set({
+                        name: username,
+                        first_name: first_name,
+                        last_name: last_name,
+                        email: email,
+                        password: password,
+                        birthdate: birthdate,
+                        user_id: user.uid,
+                    }).then(function () {
+                        //Successfully signed the user up
+                         M.toast({ html: "Successfully Signed Up!" })
+                         //Redirect to school introduction
+                         window.location.pathname = '/school_intro/getting_start'
+                    }).catch((error) => {
+                        //Error occured// log error.
+                        console.log(error.message);
+                        M.toast({ html: error.message })
+                    })
+
+
+                }).catch(function (error) {
+                    //function errors
+                    var error_code = error.code;
+                    var error_message = error.message;
+
+
+                }); 
+            </script>
+            <div class="z-depth-2" id="signIn" class="col s12">
+                {{!-- Sign In tab --}}
+                <h2 class="teal-text logo center-align">
+                    Sign In
+                </h2>
+                <div class="row">
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="password" name="signInPassword" type="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="email" name="signInEmail" type="email" class="validate">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div style="text-align: center">
+                        <button style="border-radius: 2px" class="blue waves-effect waves-light btn z-depth-1">Sign In<i
+                                class="material-icons left">email</i></button>
+                        <div style="margin-top: 20px;" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
     </div>
 </div>
 
@@ -88,15 +248,15 @@
                         in the school, in lessons, classes, and the school itself! Now communication has been made a
                         breeze!</p>
                 </div>
-                
+
             </div>
             <div class="center-align">
                 <a class="btn blue accent-5 white-text">Watch the video<i class="material-icons left">
-                    play_circle_outline
-                </i></a>
-                 
+                        play_circle_outline
+                    </i></a>
+
             </div>
-            
+
         </div>
 
     </div>
@@ -121,9 +281,9 @@
                     <li><a class="white-text" href="#!">Creator</a></li>
                     <li><a class="white-text" href="#!">Terms Of Service</a></li>
                     <li><a class="white-text" href="#!">Guidelines</a></li>
-                     <li><a class="white-text" href="#!">Help Center</a></li>
-                      <li><a class="white-text" href="#!">Lessons</a></li>
-                       <li><a class="white-text" href="#!">Uploading</a></li>
+                    <li><a class="white-text" href="#!">Help Center</a></li>
+                    <li><a class="white-text" href="#!">Lessons</a></li>
+                    <li><a class="white-text" href="#!">Uploading</a></li>
                 </ul>
             </div>
             <div class="col l3 s12">
@@ -142,3 +302,15 @@
         </div>
     </div>
 </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.sidenav').sidenav();
+        $('.modal').modal();
+        $('.parallax').parallax();
+        $('.tabs').tabs()
+        $('.datepicker').datepicker();
+    })
+</script>
